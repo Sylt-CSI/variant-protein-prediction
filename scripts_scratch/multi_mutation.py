@@ -37,16 +37,18 @@ class MultiMutator:
         # NEW PDB different mutation
         1,9Z3X:F:27:PRO
         """
-
         with open(mutation_file, "r") as mutants:
             for line in mutants:
-                pdb_file_mutation, pdb_chain, pdb_position, amino_acid = line.split(":")
-                if pdb_file_mutation in self._mutant_dict:
-                    self._mutant_dict[pdb_file_mutation].extend([pdb_chain.strip(" \n"),
-                                                                 pdb_position.strip(" \n"),
-                                                                 amino_acid.strip(" \n")])
+                if line.startswith("#"):
+                    pass
                 else:
-                    self._mutant_dict[pdb_file_mutation] = [pdb_chain.strip(" \n"),
+                    pdb_file_mutation, pdb_chain, pdb_position, amino_acid = line.split(":")
+                    if pdb_file_mutation in self._mutant_dict:
+                        self._mutant_dict[pdb_file_mutation].extend([pdb_chain.strip(" \n"),
+                                                                     pdb_position.strip(" \n"),
+                                                                     amino_acid.strip(" \n")])
+                    else:
+                        self._mutant_dict[pdb_file_mutation] = [pdb_chain.strip(" \n"),
                                                             pdb_position.strip(" \n"),
                                                             amino_acid.strip(" \n")]
 
@@ -113,75 +115,89 @@ class MultiMutator:
         protein_environment.libs.parameters.read(file='$(LIB)/par.lib')
         protein_environment.io.hetatm = False
 
+        # Structure as it will be read:
+        #{'1,133l': [['A', 'Cys', '40'], '/Users/gcc/Downloads/crap_tastic_pdbs/133l.pdb'], '1,134l': [['A', 'Val', '32'], '/Users/gcc/Downloads/crap_tastic_pdbs/134l.pdb']}
+
         for mutant_pdb_file_dict in self._pdb_file_mutants:
             # Get iteration number of the same pdb file.
             mutant_number = mutant_pdb_file_dict.split(",")[0]
             # Get file name that was matched to the mutation.
             protein_data_bank_file = self._pdb_file_mutants[mutant_pdb_file_dict][-1]
             protein_mutation_information = self._pdb_file_mutants[mutant_pdb_file_dict][0]
-            # Create the path to the resulting mutated structure.
-            mutant_protein_data_bank_file_name = protein_data_bank_file.rsplit("/", 1)
-            # Put the name and the iteration number together of the mutant.
-            mutant_protein_data_bank_file_name[-1] = mutant_number + "_" + mutant_protein_data_bank_file_name[-1]
-            # Start correcting the PDB.
+            
+            # Find the path to the file by splitting the last right slash of from the file.
+            mutant_protein_data_bank_path_and_file = protein_data_bank_file.rsplit("/", 1)
+
+            # Put the name of the original protein together with the mutant iteration number.
+            protein_file_name = mutant_protein_data_bank_path_and_file[-1].split(".")[0]+"_"+mutant_number
+
+            # # Put the name and the iteration number together of the mutant.
+            # mutant_protein_data_bank_path_and_file[-1] = mutant_number + "_" + mutant_protein_data_bank_path_and_file[-1]
+
+            # Start correcting the missing atoms from the pdb, reads the file and adds the atoms.
             complemented_pdb = modeller.scripts.complete_pdb(protein_environment,
                                                              protein_data_bank_file)
-            # complemented_pdb = modeller.model(protein_environment, file=protein_data_bank_file)
-            complemented_pdb_alignment_array = modeller.alignment(protein_environment)
-            complemented_pdb_alignment_array.append_model(complemented_pdb,
+
+            pdb_alignment_array = modeller.alignment(protein_environment)
+            pdb_alignment_array.append_model(complemented_pdb,
                                                           atom_files=protein_data_bank_file,
                                                           align_codes=protein_data_bank_file)
-            for protein_chain_index in range(0, len(protein_mutation_information), 3):
-                #   [CHAIN              , RESIDUE_TYPE          , RESIDUE_POSITION]
-                #   [protein_chain_index, protein_chain_index +1, protein_chain_index +2]
-                protein_selection = modeller.selection(
-                    complemented_pdb.chains[protein_mutation_information[protein_chain_index]].residues[
-                        protein_mutation_information[protein_chain_index + 1]])
-                protein_selection.mutate(residue_type=protein_mutation_information[protein_chain_index + 2])
+            # for protein_chain_index in range(0, len(protein_mutation_information), 3):
+            #     #   [CHAIN              , RESIDUE_TYPE          , RESIDUE_POSITION]
+            #     #   [protein_chain_index, protein_chain_index +1, protein_chain_index +2]
+            #     protein_selection = modeller.selection(
+            #         complemented_pdb.chains[protein_mutation_information[protein_chain_index]].residues[
+            #             protein_mutation_information[protein_chain_index + 1]])
+            #     protein_selection.mutate(residue_type=protein_mutation_information[protein_chain_index + 2])
+            #
+            # pdb_alignment_array.append_model(complemented_pdb, align_codes=protein_data_bank_file)
+            # complemented_pdb.clear_topology()
+            # complemented_pdb.generate_topology(pdb_alignment_array[-1])
+            # complemented_pdb.transfer_xyz(pdb_alignment_array)
+            # complemented_pdb.build(initialize_xyz=False, build_method='INTERNAL_COORDINATES')
+            # revised_model = modeller.model(env=protein_environment, file=protein_data_bank_file)
+            # complemented_pdb.res_num_from(revised_model, pdb_alignment_array)
+            # # Guess disulfide since if a cys is mutated it could depend to much on a template.
+            # complemented_pdb.patch_ss()
+            # all_atom_selection = modeller.selection(complemented_pdb)
+            # complemented_pdb.restraints.make(all_atom_selection, restraint_type='stereo', spline_on_site=False)
+            # all_atom_selection.energy()
+            # complemented_pdb.write(file="".join(mutant_protein_data_bank_path_and_file))
 
-            complemented_pdb_alignment_array.append_model(complemented_pdb, align_codes=protein_data_bank_file)
-            complemented_pdb.clear_topology()
-            complemented_pdb.generate_topology(complemented_pdb_alignment_array[-1])
-            complemented_pdb.transfer_xyz(complemented_pdb_alignment_array)
-            complemented_pdb.build(initialize_xyz=False, build_method='INTERNAL_COORDINATES')
-            revised_model = modeller.model(env=protein_environment, file=protein_data_bank_file)
-            complemented_pdb.res_num_from(revised_model, complemented_pdb_alignment_array)
-            complemented_pdb.write(file="".join(mutant_protein_data_bank_file_name))
-    #
-    # def optimize(self, atmsel, sched):
-    #     # conjugate gradient
-    #     for step in sched:
-    #         step.optimize(atmsel, max_iterations=200, min_atom_shift=0.001)
-    #     # md
-    #     self.refine(atmsel)
-    #     cg = modeller.optimizers.conjugate_gradients()
-    #     cg.optimize(atmsel, max_iterations=200, min_atom_shift=0.001)
-    #
-    # # molecular dynamics
-    # def refine(self, atmsel):
-    #     # at T=1000, max_atom_shift for 4fs is cca 0.15 A.
-    #     md = modeller.optimizers.molecular_dynamics(cap_atom_shift=0.39, md_time_step=4.0,
-    #                                                 md_return='FINAL')
-    #     init_vel = True
-    #     for (its, equil, temps) in ((200, 20, (150.0, 250.0, 400.0, 700.0, 1000.0)),
-    #                                 (200, 600,
-    #                                  (1000.0, 800.0, 600.0, 500.0, 400.0, 300.0))):
-    #         for temp in temps:
-    #             md.optimize(atmsel, init_velocities=init_vel, temperature=temp,
-    #                         max_iterations=its, equilibrate=equil)
-    #             init_vel = False
-    #
-    # # use homologs and dihedral library for dihedral angle restraints
-    # def make_restraints(self, mdl1, aln):
-    #     rsr = mdl1.restraints
-    #     rsr.clear()
-    #     s = modeller.selection(mdl1)
-    #     for typ in ('stereo', 'phi-psi_binormal'):
-    #         rsr.make(s, restraint_type=typ, aln=aln, spline_on_site=True)
-    #     for typ in ('omega', 'chi1', 'chi2', 'chi3', 'chi4'):
-    #         rsr.make(s, restraint_type=typ + '_dihedral', spline_range=4.0,
-    #                  spline_dx=0.3, spline_min_points=5, aln=aln,
-    #                  spline_on_site=True)
+    def optimize(self, atmsel, sched):
+        # conjugate gradient
+        for step in sched:
+            step.optimize(atmsel, max_iterations=200, min_atom_shift=0.001)
+        # md
+        self.refine(atmsel)
+        cg = modeller.optimizers.conjugate_gradients()
+        cg.optimize(atmsel, max_iterations=200, min_atom_shift=0.001)
+
+    # molecular dynamics
+    def refine(self, atmsel):
+        # at T=1000, max_atom_shift for 4fs is cca 0.15 A.
+        md = modeller.optimizers.molecular_dynamics(cap_atom_shift=0.39, md_time_step=4.0,
+                                                    md_return='FINAL')
+        init_vel = True
+        for (its, equil, temps) in ((200, 20, (150.0, 250.0, 400.0, 700.0, 1000.0)),
+                                    (200, 600,
+                                     (1000.0, 800.0, 600.0, 500.0, 400.0, 300.0))):
+            for temp in temps:
+                md.optimize(atmsel, init_velocities=init_vel, temperature=temp,
+                            max_iterations=its, equilibrate=equil)
+                init_vel = False
+
+    # use homologs and dihedral library for dihedral angle restraints
+    def make_restraints(self, mdl1, aln):
+        rsr = mdl1.restraints
+        rsr.clear()
+        s = modeller.selection(mdl1)
+        for typ in ('stereo', 'phi-psi_binormal'):
+            rsr.make(s, restraint_type=typ, aln=aln, spline_on_site=True)
+        for typ in ('omega', 'chi1', 'chi2', 'chi3', 'chi4'):
+            rsr.make(s, restraint_type=typ + '_dihedral', spline_range=4.0,
+                     spline_dx=0.3, spline_min_points=5, aln=aln,
+                     spline_on_site=True)
 
     def _execute_deletion(self):
         # TODO Biopython implementation
@@ -190,32 +206,6 @@ class MultiMutator:
         # modelname, respos, restyp, chain, = sys.argv[1:]
 
 
-# modeller.log.none()
-#
-# kaas = "/Users/gcc/Desktop/GCC/pipeline/data_scratch/2C35_fixed_missing.pdb"
-#
-# environment = modeller.environ(rand_seed=-49837)
-# modelname, respos, restyp, chain, = sys.argv[1:]
-#
-# # Disables extra atoms/ligands, for uniformity in assessment of many different proteins.
-
-# #soft sphere potential
-# environment.edat.dynamic_sphere=False
-# #lennard-jones potential (more accurate)
-# environment.edat.dynamic_lennard=True
-# environment.edat.contact_shell = 4.0
-# environment.edat.update_dynamic = 0.39
-#
-#
-# environment.libs.topology.read(file='$(LIB)/top_heav.lib')
-#
-# environment.libs.parameters.read(file='$(LIB)/par.lib')
-#
-# # Instantiate model object of the given structure.
-# original_protein_model = modeller.model(environment, file=kaas)
-# alignment_original_protein_model_environment = modeller.alignment(environment)
-# alignment_original_protein_model_environment.append_model(original_protein_model,atom_files=kaas, align_codes=kaas)
-# print(alignment_original_protein_model_environment)
 
 
 if __name__ == "__main__":
