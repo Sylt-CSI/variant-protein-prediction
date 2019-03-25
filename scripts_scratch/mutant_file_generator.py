@@ -119,7 +119,7 @@ class MutantFileGenerator:
             print(
                 str(final_number) + "," + self._pdb_file,
                 self._chain,
-                replacing_amino_acid,
+                replacing_amino_acid.upper(),
                 residue_number,
                 sep=":",
                 file=self._resulting_mutant_file)
