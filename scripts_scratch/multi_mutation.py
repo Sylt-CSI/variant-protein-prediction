@@ -1,26 +1,72 @@
 import sys
 import os
 import glob
+import argparse
 import modeller
 import modeller.scripts
 import modeller.optimizers
 import modeller.automodel
-from modeller.automodel import autosched
 
 
 class MultiMutator:
 
-    def __init__(self, file_with_mutations=sys.argv[1], file_extensions=""):
+    def __init__(self):
         self._pdb_file_mutants = {}
         self._mutant_dict = {}
         self._found_proteins_structures = {}
 
-        # Construction of the object.
-        self._folder_search(file_extensions)
-        self._read_mutation_file(file_with_mutations)
-        self._available_files_planned_mutation_filtering()
-        self._execute_deletion()
-        self._execute_insertion()
+        # (Construction aka) execution.
+
+        arguments = self._multi_mutation_argument_parser()
+
+        folder_name = self._quick_fix_folder_name(arguments.FO[0])
+
+        self._folder_search(folder_name, arguments.E)
+        self._read_mutation_file(arguments.M[0])
+        # self._available_files_mutation_filtering()
+        # self._execute_deletion()
+        # self._execute_insertion()
+
+    @staticmethod
+    def _multi_mutation_argument_parser():
+        multi_mutator_argument_parser = argparse.ArgumentParser(
+            description="Prints this message and shows all option the script has.")
+        file_or_folder_group_argument = multi_mutator_argument_parser.add_mutually_exclusive_group(required=True)
+
+        file_or_folder_group_argument.add_argument("-fo",
+                                                   dest="FO",
+                                                   nargs=1,
+                                                   type=str,
+                                                   help="Requires a single folder that holds the pdb files.")
+        file_or_folder_group_argument.add_argument("-fi",
+                                                   dest="FI",
+                                                   nargs=1,
+                                                   type=str,
+                                                   help="Requires a single pdb file (CURRENTLY NOT WORKING)")
+
+        multi_mutator_argument_parser.add_argument("-mm",
+                                                   required=True,
+                                                   help="Give a mutation file that describes which residues at which chain it should mutate.",
+                                                   nargs=1,
+                                                   type=str,
+                                                   dest="M")
+        multi_mutator_argument_parser.add_argument("-ep",
+                                                   required=False,
+                                                   nargs="+",
+                                                   type=str,
+                                                   default="",
+                                                   help="Specify extra file extensions that should be looked for when searching for PDB. (CURRENTLY NO CIF SUPPORT)",
+                                                   dest="E")
+
+        return multi_mutator_argument_parser.parse_args()
+
+    def _quick_fix_folder_name(self,folder_name):
+        if not folder_name.endswith("/"):
+            return folder_name+"/"
+        else:
+            return folder_name
+
+
 
     def _read_mutation_file(self, mutation_file):
         """
@@ -53,27 +99,27 @@ class MultiMutator:
                                                                 pdb_position.strip(" \n"),
                                                                 amino_acid.strip(" \n")]
 
-    def _folder_search(self, expanded_patterns=""):
+    def _folder_search(self, pdb_folder, expanded_patterns=""):
         """
         Searches the targeted folder for files with a specfic extension, by default it focuses on pdb and
         :param expanded_patterns: String separated by comma's containing file extensions, it is CASE sensitive.
         :return: A numpy array containing all found file.
         """
         number_of_found_files = 0
-        file_extension_search_patterns = ["[Cc][Ii][Ff]", "[Pp][Dd][Bb]"]
+        file_extension_search_patterns = ["[Pp][Dd][Bb]"]
         if expanded_patterns == "":
             pass
         else:
             file_extension_search_patterns.extend(expanded_patterns.split(","))
         for file_extension in file_extension_search_patterns:
-            checked_folder = glob.glob("/Users/gcc/Downloads/crap_tastic_pdbs/*.{}".format(file_extension))
+            checked_folder = glob.glob("{}*.{}".format(pdb_folder, file_extension))
             extension_found_proteins = {found_file.split("/")[5].split(".")[0]: found_file
                                         for found_file in checked_folder}
             number_of_found_files += len(checked_folder)
             self._found_proteins_structures.update(extension_found_proteins.copy())
         print("Potential protein structure files found: {}".format(number_of_found_files))
 
-    def _available_files_planned_mutation_filtering(self):
+    def _available_files_mutation_filtering(self):
         """
         Match the found pdb files that are related to a mutation.
         """
@@ -106,43 +152,43 @@ class MultiMutator:
         since it is hard to guarantee that all structures have ligands.
         """
 
-        # protein_environment.edat.dynamic_sphere = False
-        # # lennard-jones potential (more accurate)
-        # protein_environment.edat.dynamic_lennard = True
-        # protein_environment.edat.contact_shell = 4.0
-        # protein_environment.edat.update_dynamic = 0.39
         protein_environment = modeller.environ(rand_seed=-49837)
         protein_environment.libs.topology.read(file='$(LIB)/top_heav.lib')
         protein_environment.libs.parameters.read(file='$(LIB)/par.lib')
         protein_environment.io.hetatm = False
 
         # Structure as it will be read:
-        # {'1,133l': [['A', 'Cys', '40'], '/Users/gcc/Downloads/crap_tastic_pdbs/133l.pdb'], '1,134l': [['A', 'Val', '32'], '/Users/gcc/Downloads/crap_tastic_pdbs/134l.pdb']}
+        # {'1,133l': [['A', 'CYS', '40'], '/Users/gcc/Downloads/crap_tastic_pdbs/133l.pdb'],
+        # '1,134l': [['A', 'VAL', '32'], '/Users/gcc/Downloads/crap_tastic_pdbs/134l.pdb']}
 
         for mutant_pdb_file_dict in self._pdb_file_mutants:
-            # Get iteration number of the same pdb file.
-            mutant_number = mutant_pdb_file_dict.split(",")[0]
-            # Get file name that was matched to the mutation.
+            # Get file name to which the mutation it matched.
             protein_data_bank_file = self._pdb_file_mutants[mutant_pdb_file_dict][-1]
+
+            # Information regarding the mutation itself : chain, new residue and position.
             protein_mutation_information = self._pdb_file_mutants[mutant_pdb_file_dict][0]
 
             # Find the path to the file by splitting the last right slash of from the file.
             mutant_protein_data_bank_path_and_file = protein_data_bank_file.rsplit("/", 1)
 
-            # Put the name of the original protein together with the mutant iteration number.
-            mutant_protein_data_bank_path_and_file[-1] = mutant_protein_data_bank_path_and_file[-1].split(".")[0] + "_" + mutant_number
+            # Get iteration number of the pdb file, in case different mutations are made within the same pdb.
+            mutant_number = mutant_pdb_file_dict.split(",")[0]
 
-            # # Put the name and the iteration number together of the mutant.
-            # mutant_protein_data_bank_path_and_file[-1] = mutant_number + "_" + mutant_protein_data_bank_path_and_file[-1]
+            # Put the name of the original protein together with the mutant iteration number together for the filename.
+            mutant_protein_data_bank_path_and_file[-1] = mutant_protein_data_bank_path_and_file[-1].split(".")[
+                                                             0] + "_" + mutant_number
 
-            # Start correcting the missing atoms from the pdb, reads the file and adds the atoms.
+            # Execute a script which adds missing atoms to the PDB structure, returns a model.
             complemented_pdb = modeller.scripts.complete_pdb(protein_environment,
                                                              protein_data_bank_file)
 
+            # Instantiate an alignment object and add the model to it.
             pdb_alignment_array = modeller.alignment(protein_environment)
             pdb_alignment_array.append_model(complemented_pdb,
                                              atom_files=protein_data_bank_file,
                                              align_codes=protein_data_bank_file)
+
+            # Apply each mutation to the current protein databank file.
             for protein_chain_index in range(0, len(protein_mutation_information), 3):
                 #   [CHAIN              , RESIDUE_TYPE          , RESIDUE_POSITION]
                 #   [protein_chain_index, protein_chain_index +1, protein_chain_index +2]
@@ -151,90 +197,32 @@ class MultiMutator:
                         protein_mutation_information[protein_chain_index + 2]])
                 protein_selection.mutate(residue_type=protein_mutation_information[protein_chain_index + 1])
 
+            # Add the mutated model to the alignment.
             pdb_alignment_array.append_model(complemented_pdb, align_codes=protein_data_bank_file)
+
+            # Remove the topology from the model.
             complemented_pdb.clear_topology()
+            # Copy over the topology from the the mutated model that resides within the alignment.
             complemented_pdb.generate_topology(pdb_alignment_array[-1])
+
+            # Transfer the coordinates from the template native structure to the mutant.
             complemented_pdb.transfer_xyz(pdb_alignment_array)
+            # In case of missing coordinates initialize_xyz=False generates coordinates.
+            # Build method defines how the atoms are placed, with INTERNAL_COORDINATES the topology library is used.
             complemented_pdb.build(initialize_xyz=False, build_method='INTERNAL_COORDINATES')
+
             revised_model = modeller.model(env=protein_environment, file=protein_data_bank_file)
             complemented_pdb.res_num_from(revised_model, pdb_alignment_array)
-            # # Guess disulfide since if a cys is mutated it could depend to much on a template.
-            # complemented_pdb.patch_ss()
-            all_atom_selection = modeller.selection(complemented_pdb)
-            complemented_pdb.restraints.make(all_atom_selection, restraint_type='stereo', spline_on_site=False)
-            all_atom_selection.energy()
-            # complemented_pdb.write(file="".join(mutant_protein_data_bank_path_and_file))
-
-            # Modeller idiocy or something, has to do with some information not being update in ram, so it has to be dumped.
-            complemented_pdb.write(file="".join(mutant_protein_data_bank_path_and_file) + ".tmp")
-            complemented_pdb.read(file="".join(mutant_protein_data_bank_path_and_file) + ".tmp")
-
-            self.make_restraints(complemented_pdb, pdb_alignment_array)
-
-            # a non-bonded pair has to have at least as many selected atoms
-            complemented_pdb.env.edat.nonbonded_sel_atoms = 1
-
-            sched = autosched.loop.make_for_model(complemented_pdb)
-            # mutatation_selection = modeller.selection(complemented_pdb)
-
-            for protein_chain_index in range(0, len(protein_mutation_information), 3):
-                #   [CHAIN              , RESIDUE_TYPE          , RESIDUE_POSITION]
-                #   [protein_chain_index, protein_chain_index +1, protein_chain_index +2]
-                mutated_residue_selection = modeller.selection(
-                    complemented_pdb.chains[protein_mutation_information[protein_chain_index]].residues[
-                        protein_mutation_information[protein_chain_index + 2]])
-                mutated_residue_selection.mutate(residue_type=protein_mutation_information[protein_chain_index + 1])
-                complemented_pdb.restraints.unpick_all()
-                complemented_pdb.restraints.pick(mutated_residue_selection)
-                mutated_residue_selection.energy()
-                mutated_residue_selection.randomize_xyz(deviation=4)
-                complemented_pdb.env.edat.nonbonded_sel_atoms = 2
-                self.optimize(mutated_residue_selection, sched)
-                mutated_residue_selection.energy()
-                print("".join(mutant_protein_data_bank_path_and_file) + ".pdb")
-            complemented_pdb.write(file="".join(mutant_protein_data_bank_path_and_file) + ".pdb")
-            # os.remove(file="".join(mutant_protein_data_bank_path_and_file) + ".tmp")
-
-    def optimize(self, atmsel, sched):
-        # conjugate gradient
-        for step in sched:
-            step.optimize(atmsel, max_iterations=200, min_atom_shift=0.001)
-        # md
-        self.refine(atmsel)
-        cg = modeller.optimizers.conjugate_gradients()
-        cg.optimize(atmsel, max_iterations=200, min_atom_shift=0.001)
-
-    # molecular dynamics
-    def refine(self, atmsel):
-        # at T=1000, max_atom_shift for 4fs is cca 0.15 A.
-        md = modeller.optimizers.molecular_dynamics(cap_atom_shift=0.39, md_time_step=4.0,
-                                                    md_return='FINAL')
-        init_vel = True
-        for (its, equil, temps) in ((200, 20, (150.0, 250.0, 400.0, 700.0, 1000.0)),
-                                    (200, 600,
-                                     (1000.0, 800.0, 600.0, 500.0, 400.0, 300.0))):
-            for temp in temps:
-                md.optimize(atmsel, init_velocities=init_vel, temperature=temp,
-                            max_iterations=its, equilibrate=equil)
-                init_vel = False
-
-    # use homologs and dihedral library for dihedral angle restraints
-    def make_restraints(self, mdl1, aln):
-        rsr = mdl1.restraints
-        rsr.clear()
-        s = modeller.selection(mdl1)
-        for typ in ('stereo', 'phi-psi_binormal'):
-            rsr.make(s, restraint_type=typ, aln=aln, spline_on_site=True)
-        for typ in ('omega', 'chi1', 'chi2', 'chi3', 'chi4'):
-            rsr.make(s, restraint_type=typ + '_dihedral', spline_range=4.0,
-                     spline_dx=0.3, spline_min_points=5, aln=aln,
-                     spline_on_site=True)
+            complemented_pdb.write(file="/".join(mutant_protein_data_bank_path_and_file) + ".pdb")
 
     def _execute_deletion(self):
         # TODO Biopython implementation
         pass
 
         # modelname, respos, restyp, chain, = sys.argv[1:]
+
+    def _calculate_disulfide(self):
+        pass
 
 
 if __name__ == "__main__":
