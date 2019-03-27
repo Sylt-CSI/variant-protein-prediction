@@ -1,5 +1,4 @@
 import sys
-import os
 import glob
 import argparse
 import modeller
@@ -14,32 +13,35 @@ class MultiMutator:
         self._pdb_file_mutants = {}
         self._mutant_dict = {}
         self._found_proteins_structures = {}
+        self._stored_mutant_structures = []
 
         # (Construction aka) execution.
 
         arguments = self._multi_mutation_argument_parser()
+        pdb_input_folder_name = self._fix_missing_backslash_folder(arguments.IFO[0])
+        if arguments.OFO is None or arguments.OFO == "":
+            pdb_output_folder_name = pdb_input_folder_name
+        else:
+            pdb_output_folder_name = self._fix_missing_backslash_folder(arguments.OFO[0])
 
-        folder_name = self._quick_fix_folder_name(arguments.FO[0])
-
-        self._folder_search(folder_name, arguments.E)
+        self._folder_search(pdb_input_folder_name, arguments.E)
         self._read_mutation_file(arguments.M[0])
-        # self._available_files_mutation_filtering()
-        # self._execute_deletion()
-        # self._execute_insertion()
+        self._available_files_mutation_filtering()
+        self._execute_insertion(pdb_output_folder_name)
 
     @staticmethod
     def _multi_mutation_argument_parser():
         multi_mutator_argument_parser = argparse.ArgumentParser(
-            description="Prints this message and shows all option the script has.")
+            description="A script to generate mutation pdbs.")
         file_or_folder_group_argument = multi_mutator_argument_parser.add_mutually_exclusive_group(required=True)
 
-        file_or_folder_group_argument.add_argument("-fo",
-                                                   dest="FO",
+        file_or_folder_group_argument.add_argument("-ifo",
+                                                   dest="IFO",
                                                    nargs=1,
                                                    type=str,
                                                    help="Requires a single folder that holds the pdb files.")
-        file_or_folder_group_argument.add_argument("-fi",
-                                                   dest="FI",
+        file_or_folder_group_argument.add_argument("-ifi",
+                                                   dest="IFI",
                                                    nargs=1,
                                                    type=str,
                                                    help="Requires a single pdb file (CURRENTLY NOT WORKING)")
@@ -58,15 +60,23 @@ class MultiMutator:
                                                    help="Specify extra file extensions that should be looked for when searching for PDB. (CURRENTLY NO CIF SUPPORT)",
                                                    dest="E")
 
+        multi_mutator_argument_parser.add_argument("-ofo",
+                                                   required=False,
+                                                   nargs=1,
+                                                   type=str,
+                                                   default="",
+                                                   help="Output folder where the mutated pdb\\'s will be stored, if nothing specified it will go to the input directory.",
+                                                   dest="OFO")
+
         return multi_mutator_argument_parser.parse_args()
 
-    def _quick_fix_folder_name(self,folder_name):
+    @staticmethod
+    def _fix_missing_backslash_folder(folder_name):
+        # TODO add folder check, if it exists and use folder if exists, if not make the folder. Also check permissions.
         if not folder_name.endswith("/"):
-            return folder_name+"/"
+            return folder_name + "/"
         else:
             return folder_name
-
-
 
     def _read_mutation_file(self, mutation_file):
         """
@@ -106,6 +116,7 @@ class MultiMutator:
         :return: A numpy array containing all found file.
         """
         number_of_found_files = 0
+
         file_extension_search_patterns = ["[Pp][Dd][Bb]"]
         if expanded_patterns == "":
             pass
@@ -146,7 +157,7 @@ class MultiMutator:
         # TODO alter _execute_insertion function that makes the generic part which is also necessary for mutations
         pass
 
-    def _execute_insertion(self):
+    def _execute_insertion(self, output_folder):
         """
         Makes mutations to a protein structure, ligands will be removed,
         since it is hard to guarantee that all structures have ligands.
@@ -160,7 +171,6 @@ class MultiMutator:
         # Structure as it will be read:
         # {'1,133l': [['A', 'CYS', '40'], '/Users/gcc/Downloads/crap_tastic_pdbs/133l.pdb'],
         # '1,134l': [['A', 'VAL', '32'], '/Users/gcc/Downloads/crap_tastic_pdbs/134l.pdb']}
-
         for mutant_pdb_file_dict in self._pdb_file_mutants:
             # Get file name to which the mutation it matched.
             protein_data_bank_file = self._pdb_file_mutants[mutant_pdb_file_dict][-1]
@@ -176,7 +186,10 @@ class MultiMutator:
 
             # Put the name of the original protein together with the mutant iteration number together for the filename.
             mutant_protein_data_bank_path_and_file[-1] = mutant_protein_data_bank_path_and_file[-1].split(".")[
-                                                             0] + "_" + mutant_number
+                                                             0] + "_" + mutant_number + self._generate_mutant_file_name(
+                protein_mutation_information)
+
+            mutant_protein_data_bank_path_and_file[0] = output_folder
 
             # Execute a script which adds missing atoms to the PDB structure, returns a model.
             complemented_pdb = modeller.scripts.complete_pdb(protein_environment,
@@ -213,7 +226,11 @@ class MultiMutator:
 
             revised_model = modeller.model(env=protein_environment, file=protein_data_bank_file)
             complemented_pdb.res_num_from(revised_model, pdb_alignment_array)
-            complemented_pdb.write(file="/".join(mutant_protein_data_bank_path_and_file) + ".pdb")
+            # Write the new pdb file.
+            # Collect the mutated_structures in a dict.
+            self._stored_mutant_structures.append("".join(mutant_protein_data_bank_path_and_file) + ".pdb")
+            print("".join(mutant_protein_data_bank_path_and_file) + ".pdb")
+            # complemented_pdb.write(file="/".join(mutant_protein_data_bank_path_and_file) + ".pdb")
 
     def _execute_deletion(self):
         # TODO Biopython implementation
@@ -221,8 +238,23 @@ class MultiMutator:
 
         # modelname, respos, restyp, chain, = sys.argv[1:]
 
-    def _calculate_disulfide(self):
-        pass
+    @staticmethod
+    def _generate_mutant_file_name(protein_mutations):
+
+        # In case too many mutations the name cannot be handled by the filesystem.
+        if len(protein_mutations) * (1 / 3) > 10:
+            file_mutation_name = "{}___{}".format("_".join(protein_mutations[1:3]), "_".join(protein_mutations[-2:]))
+        else:
+            residues = protein_mutations[2::3]
+            residue_positions = protein_mutations[1::3]
+            file_mutation_name = [None] * int(len(protein_mutations) * (2.0 / 3.0))
+            file_mutation_name[0::2] = residue_positions
+            file_mutation_name[1::2] = residues
+            file_mutation_name = "_".join(file_mutation_name)
+        return "_"+file_mutation_name
+
+    # def _calculate_disulfide(self):
+    #     for
 
 
 if __name__ == "__main__":
