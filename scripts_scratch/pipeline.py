@@ -2,14 +2,26 @@
 
 import argparse
 import subprocess
+import time
+import threading
+import glob
 
 
 class ProteinFeatureGeneratorPipeline:
 
     def __init__(self):
-        self._load_cluster_modules()
+        # self._load_cluster_modules()
         protein_pipeline_arguments = self._protein_feature_pipeline_argument_parser()
-        self._execute_rosetta_ddg_monomer(protein_pipeline_arguments.ddgpdb)
+        # threading.Thread(self._rosetta_relax_progress_monitoring(protein_pipeline_arguments.rrnstruct[0]))
+        # print(protein_pipeline_arguments)
+        self._execute_rosetta_relax(
+            protein_pipeline_arguments.script[0],
+            protein_pipeline_arguments.out[0],
+            protein_pipeline_arguments.seed[0],
+            protein_pipeline_arguments.nstruct[0],
+            protein_pipeline_arguments.pdb[0],
+            protein_pipeline_arguments.rdb[0]
+        )
 
     @staticmethod
     def _protein_feature_pipeline_argument_parser():
@@ -17,125 +29,117 @@ class ProteinFeatureGeneratorPipeline:
         protein_feature_pipeline_arguments.add_argument("-rdb",
                                                         type=str,
                                                         help="Specify the path to the full Rosetta database for the ddg monomer application.",
-                                                        required=True,
+                                                        required=False,
+                                                        default=[
+                                                            "/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database"],
                                                         nargs=1,
                                                         dest="rdb")
 
-        protein_feature_pipeline_arguments.add_argument("-ddgpdb",
-                                                        type=str,
-                                                        help="The original pdb structure.",
-                                                        required=True,
-                                                        nargs=1,
-                                                        dest="ddgpdb")
-
-        protein_feature_pipeline_arguments.add_argument("-ddgmut",
-                                                        type=str,
-                                                        help="Mutation file that contains the mutations for the PDB file to be calculated by ddg monomer.",
-                                                        required=True,
-                                                        nargs=1,
-                                                        dest="ddgmut")
-
-        protein_feature_pipeline_arguments.add_argument("-rrnstruct",
+        protein_feature_pipeline_arguments.add_argument("-nstruct",
                                                         type=int,
-                                                        default=50,
+                                                        default=[5],
                                                         help="Amount of structures made by rosetta relax, more is better but 50 is default.",
                                                         nargs=1,
                                                         required=False,
-                                                        dest="-rrnstruct")
+                                                        dest="nstruct")
 
-        protein_feature_pipeline_arguments.add_argument("-PSIdb",
+        protein_feature_pipeline_arguments.add_argument("-pdb",
                                                         type=str,
-                                                        help="Give the full path of the protein database (nr) to PSIblast. (it is a different one than used by Rosetta.)",
+                                                        help="The pdb structure that must be relaxed and for which the properties must be acquired",
                                                         nargs=1,
+                                                        required=True,
+                                                        dest="pdb")
+
+        protein_feature_pipeline_arguments.add_argument("-rscri",
+                                                        type=str,
+                                                        default=[
+                                                            "/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/rosetta_relax.sh"],
+                                                        help="The path to the rosetta relax script.",
                                                         required=False,
-                                                        default="/groups/umcg-gcc/tmp03/umcg-sschuurmans/db/nr",
-                                                        dest="PSIdb")
+                                                        nargs=1,
+                                                        dest="script")
+
+        protein_feature_pipeline_arguments.add_argument("-out",
+                                                        type=str,
+                                                        help="The output name and folder",
+                                                        nargs=1,
+                                                        required=True,
+                                                        dest="out")
+
+        protein_feature_pipeline_arguments.add_argument("-seed",
+                                                        type=int,
+                                                        help="Seed number",
+                                                        nargs=1,
+                                                        default=[17],
+                                                        required=False,
+                                                        dest="seed")
+
+        # protein_feature_pipeline_arguments.add_argument("-PSIdb",
+        #                                                 type=str,
+        #                                                 help="Give the full path of the protein database (nr) to PSIblast. (it is a different one than used by Rosetta.)",
+        #                                                 nargs=1,
+        #                                                 required=False,
+        #                                                 default="/groups/umcg-gcc/tmp03/umcg-sschuurmans/db/nr",
+        #                                                 dest="PSIdb")
+        #
+        # protein_feature_pipeline_arguments.add_argument("-PSIscript",
+        #                                                 type=str,
+        #                                                 help="directory for execution script for psiblast",
+        #                                                 nargs=1,
+        #                                                 required=False,
+        #                                                 default="/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/psi_blast_run.sh")
 
         return protein_feature_pipeline_arguments.parse_args()
 
     @staticmethod
     def _load_cluster_modules():
         subprocess.call(
-            ['module purge\n',
-             'module load  BLAST+/2.7.1-foss-2015b\n',
-             'module load Python/2.7.11-foss-2015b\n',
-             'module load libffi/3.2.1-foss-2015b\n',
-             'module load foss/2015b\n',
-             'module load libtool/2.4.6-GNU-4.9.3-2.25\n',
-             'module load zlib/1.2.11-foss-2015b\n'])
-
-    def _execute_rosetta_ddg_monomer(self, ddg_protein):
-        self._pdb_renumber(ddg_protein)
-        subprocess.Popen(
             [
-                "/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/source/bin/ddg_monomer",
-                '-database', '{}',
-                '-in:file:s', 'renumbered_{}'.format(ddg_protein),  # /groups/umcg-gcc/tmp03/umcg-sschuurmans/github-archive/example_input/2C35_VIPUR/2C35_renumbered.pdb
-                '-ddg::mut_file',  # '/groups/umcg-gcc/tmp03/umcg-sschuurmans/github-archive/example_input/2C35_VIPUR/2C35.txt',
-                '-ddg::output_silent', 'false',
-                '-ddg::dump_pdbs', 'false',
-                '-ddg::output_silent', 'false',
-                '-ddg::suppress_checkpointing', 'true',
-                '-ddg::iterations', '50',
-                '-ddg::weight_file', 'soft_rep_design',
-                '-ddg::local_opt_only', 'true',
-                '-ddg::min_cst', 'false',
-                '-ddg::mean', 'true',
-                '-ddg::min', 'false',
-                '-ddg::sc_min_only', 'false',
-                '-ddg::ramp_repulsive', 'false',
-                '-ddg::opt_radius', '8.0',
-                '-ddg::debug_output', 'false',
-                '-linmem_ig', '10',
-                '-ignore_zero_occupancy', 'false',
-                '-run:ignore_zero_occupancy', 'false',
-                '-run:constant_seed',
-                '-run:jran', '17']
-        )
+                'module purge\n',
+                # 'module load  BLAST+/2.7.1-foss-2015b\n',
+                'module load Python/2.7.11-foss-2015b\n',
+                # 'module load libffi/3.2.1-foss-2015b\n',
+                # 'module load foss/2015b\n',
+                # 'module load libtool/2.4.6-GNU-4.9.3-2.25\n',
+                # 'module load zlib/1.2.11-foss-2015b\n'
+            ])
 
     def _execute_rosetta_rescore(self):
         pass
 
-    def _pdb_renumber(self, ddg_protein):
-        subprocess.call(["python",
-                         "/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/tools/protein_tools/scripts/pdb_renumber.py",
-                         "{}".format(ddg_protein),  # Input pdb file that needs to be renumbered
-                         "{}".format("renumbered_"+ddg_protein)])  # Name of the new file that has the new pdb order.
+    def _rosetta_relax_progress_monitoring(self, required_structures_to_start):
+        while required_structures_to_start < len(glob.glob("/*.pdb")):
+            time.sleep(10)
+        self._execute_probe()
 
-    def _renumbered_pdb_name_generator(self):
-        pass
-
-    def _execute_rosetta_relax(self):
-        pass
+    def _execute_rosetta_relax(self, script, out_folder, seed, nstruct, pdb, database):
+        protein_name = pdb.rsplit("/", 1)[-1][:-4]
+        score_file = out_folder + protein_name + ".sc"
+        subprocess.call(["sbatch", script, out_folder, str(seed), score_file, pdb, database, str(nstruct)])
 
     def _execute_probe(self):
+        """
+        Execute probe locally since it runs relative fast.
+        """
         subprocess.Popen(
             ["/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/probe.2.16.130520.linuxi386",
              "-Q",  # quiet mode
              "{}"  # residue position, not very well mentioned in the doc. all is the whole molecule.
              "-rad1.4",  # radius of the rolling sphere used for marking contact dots and spikes.
              "-C",  # count produced dots
-             "-out {}".format("worst", "kaas")]  #
+             "-out {}".format("kaas")]  #
         )
 
         pass
 
-    def _execute_psi_blast(self):
-        ['-num_threads 46 \n',
-         '-outfmt 7 \n',
-         '-num_iterations 2 \n',
-         '-evalue 1 \n',
-         '-db /home/evan/bio/databases/blast/nr/nr \n',
-         '-comp_based_stats 1 \n',
-         '-inclusion_ethresh 0.001 \n',
-         '-num_descriptions 3000 \n',
-         '-pseudocount 2 \n',
-         '-export_search_strategy /home/evan/VIPUR_pipeline/VIPUR/example_input/2C35_VIPUR/2C35.ss \n',
-         '-query /home/evan/VIPUR_pipeline/VIPUR/example_input/2C35_VIPUR/2C35.fa \n',
-         '-out_ascii_pssm /home/evan/VIPUR_pipeline/VIPUR/example_input/2C35_VIPUR/2C35.pssm \n',
-         '-num_alignments 300 \n',
-         '-out_pssm /home/evan/VIPUR_pipeline/VIPUR/example_input/2C35_VIPUR/2C35.cp \n',
-         '-out /home/evan/VIPUR_pipeline/VIPUR/example_input/2C35_VIPUR/2C35.pb\n']
+    @staticmethod
+    def _execute_psi_blast():
+        """
+        Execute psi blast as slurm job.
+        """
+        subprocess.call(
+            ["sbatch",
+             "psi_blast_run.sh"])
 
 
 if __name__ == "__main__":

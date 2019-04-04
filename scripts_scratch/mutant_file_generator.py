@@ -36,6 +36,7 @@ class MutantFileGenerator:
 
         csv_file, mutant_file, pdb_file, self._chain = self._mutant_file_generator_argument_parser()
         self._pdb_residue_order = self._pdb_residue_order_mapper(pdb_file)
+        self._write_fasta_file(pdb_file)
         _ddg_file = mutant_file.replace(".", "_") + ".mut"
         self._pdb_file = pdb_file.split("/")[-1].split(".")[0]
         with open(mutant_file, "w") as self._resulting_mutant_file, open(_ddg_file, "w") as self._ddg_file:
@@ -53,7 +54,7 @@ class MutantFileGenerator:
                                      type=str,
                                      nargs=1,
                                      metavar="O",
-                                     help="The name and where the the file will be stored.")
+                                     help="The name of the file where the mutants will be stored in.")
         argument_parser.add_argument("-P",
                                      required=True,
                                      type=str,
@@ -97,8 +98,6 @@ class MutantFileGenerator:
         # DDG_monomer generator
         total 3
 
-
-
         :param csv_reader: reads the CSV pattern
         """
         final_number = 0
@@ -109,6 +108,7 @@ class MutantFileGenerator:
             line = csv_reader.readline().split(",", 3)
             replacing_amino_acid = line[0][-4:-1]
             residue_number = line[0][6:-4]
+            # End of the procedure, quickly write down how many mutations are called from the file and write it down on top.
             if len(line) == 1:
                 self._ddg_file.seek(0)
                 print("total {}".format(final_number), file=self._ddg_file)
@@ -133,10 +133,13 @@ class MutantFileGenerator:
             except KeyError:
                 print("Requested residue mutation not matching with PDB residue appearance at position: {}"
                       .format(int(residue_number)))
-        # self._resulting_mutant_file.seek(0)
-        # print("total", number, file=self._resulting_mutant_file)
 
     def _pdb_residue_order_mapper(self, pdb_file):
+        """
+        Reads from a pdb file only the lines that start with ATOM and collects the residue name and position.
+        :param pdb_file: Pdb file itself that contains the residue names.
+        :return: Gives back a dictionary where the position of the residue is the key and the value the residue.
+        """
         residue_dict = {}
         start = 0
         current_number = None
@@ -152,6 +155,20 @@ class MutantFileGenerator:
                         pass
 
         return residue_dict
+
+    def _write_fasta_file(self, pdb_file):
+        """
+        Write a fasta file from the pdb file sequence.
+        :param pdb_file: PDB file of which a fasta must be generated
+        """
+        original_fasta_protein_order = []
+        with open(pdb_file.rsplit(".", 1)[0]+"_flattened.fa", "w") as aa_fasta_file:
+            for i in range(1,len(self._pdb_residue_order)+1):
+                original_fasta_protein_order.append(self._pdb_residue_order[i])
+            print(">{}".format(pdb_file.rsplit(".", 1)[0].split("/")[-1]),
+                  "".join(original_fasta_protein_order),
+                  sep="\n",
+                  file=aa_fasta_file)
 
 
 if __name__ == "__main__":
