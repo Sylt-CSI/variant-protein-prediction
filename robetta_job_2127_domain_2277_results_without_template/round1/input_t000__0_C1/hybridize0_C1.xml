@@ -1,0 +1,48 @@
+<ROSETTASCRIPTS>
+    <TASKOPERATIONS></TASKOPERATIONS>
+    <SCOREFXNS>
+        <ScoreFunction name="stage1" weights="input_t000__0_C1/stage1.wts" symmetric="0">
+            <Reweight scoretype="atom_pair_constraint" weight="0.5"/>
+        </ScoreFunction>
+        <ScoreFunction name="stage2" weights="input_t000__0_C1/stage2.wts" symmetric="0">
+            <Reweight scoretype="atom_pair_constraint" weight="0.3"/>
+        </ScoreFunction>
+        <ScoreFunction name="fullatom" weights="input_t000__0_C1/ref2015_cart.wts" symmetric="0">
+            <Reweight scoretype="atom_pair_constraint" weight="0.3"/>
+        </ScoreFunction>
+    </SCOREFXNS>
+    <FILTERS></FILTERS>
+    <MOVERS>
+        <Hybridize name="hybridize" stage1_scorefxn="stage1" stage2_scorefxn="stage2" fa_scorefxn="fullatom" disulf_file="input_t000__0_C1/cluster0.filt.disulf" batch="1" stage1_increase_cycles="1" stage2_increase_cycles="1" linmin_only="0" skip_long_min="1">
+            <Fragments three_mers="input_t000__0_C1/t000_.200.3mers.index.gz" nine_mers="input_t000__0_C1/t000_.200.9mers.index.gz"/>
+            <Template pdb="input_t000__0_C1/1extA_101_aln.cl0.pdb" weight="0.429876796488921" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1extA_201_aln.cl0.pdb" weight="0.420409827451227" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1extA_301_aln.cl0.pdb" weight="0.465387141113311" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1sg1X_104_aln.cl0.pdb" weight="0.018456532133844" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1sg1X_310_aln.cl0.pdb" weight="0.0131423025921155" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1tnrR_102_aln.cl0.pdb" weight="0.0248774399509945" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1tnrR_204_aln.cl0.pdb" weight="0.0109886231786727" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/1tnrR_302_aln.cl0.pdb" weight="0.0263125312393908" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3alqR_106_aln.cl0.pdb" weight="0.015825859646154" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3alqR_307_aln.cl0.pdb" weight="0.0145297370262658" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3bukC_105_aln.cl0.pdb" weight="0.0168525431083464" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3bukC_308_aln.cl0.pdb" weight="0.0138831620808716" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3ij2X_103_aln.cl0.pdb" weight="0.0209624464576444" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3ij2X_306_aln.cl0.pdb" weight="0.0154785608301221" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3me2R_108_aln.cl0.pdb" weight="0.0147480622482527" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3me4A_107_aln.cl0.pdb" weight="0.0151686987087765" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/3qbqB_109_aln.cl0.pdb" weight="0.014478820694383" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/4msvB_309_aln.cl0.pdb" weight="0.0134425542901392" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/5dmjA_303_aln.cl0.pdb" weight="0.0219125343352131" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/5dmjD_110_aln.cl0.pdb" weight="0.0143064841968766" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/5dmjD_304_aln.cl0.pdb" weight="0.0189141612479331" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/5ihlA_206_aln.cl0.pdb" weight="0.0105411124747214" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+            <Template pdb="input_t000__0_C1/5ihlA_305_aln.cl0.pdb" weight="0.0168709231806542" cst_file="input_t000__0_C1/cluster0.filt.dist_csts" />
+        </Hybridize>
+    </MOVERS>
+    <APPLY_TO_POSE></APPLY_TO_POSE>
+    <PROTOCOLS>
+        <Add mover="hybridize"/>
+    </PROTOCOLS>
+    <OUTPUT scorefxn="fullatom"/>
+</ROSETTASCRIPTS>
