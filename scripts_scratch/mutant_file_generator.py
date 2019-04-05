@@ -33,6 +33,8 @@ class MutantFileGenerator:
                 "TYR": "Y",
                 "VAL": "V"
             }
+        # TODO make it public to access it by different scripts, lines 136-141
+        self.stored_mutation_index = {}
 
         csv_file, mutant_file, pdb_file, self._chain = self._mutant_file_generator_argument_parser()
         self._pdb_residue_order = self._pdb_residue_order_mapper(pdb_file)
@@ -103,6 +105,7 @@ class MutantFileGenerator:
         final_number = 0
         # Skip the header
         csv_reader.readline()
+        # Just a fillup line so the total amount can replace it.
         print("ikmaakkat", file=self._ddg_file)
         while True:
             line = csv_reader.readline().split(",", 3)
@@ -130,6 +133,12 @@ class MutantFileGenerator:
                         residue_number,
                         self._amino_acid_three_letter_one_letter_translation_dict[replacing_amino_acid.upper()]),
                     file=self._ddg_file)
+                if residue_number in self.stored_mutation_index:
+                    self.stored_mutation_index[residue_number].append(
+                        self._amino_acid_three_letter_one_letter_translation_dict[replacing_amino_acid.upper()])
+                else:
+                    self.stored_mutation_index[residue_number] = [
+                        self._amino_acid_three_letter_one_letter_translation_dict[replacing_amino_acid.upper()]]
             except KeyError:
                 print("Requested residue mutation not matching with PDB residue appearance at position: {}"
                       .format(int(residue_number)))
@@ -162,8 +171,8 @@ class MutantFileGenerator:
         :param pdb_file: PDB file of which a fasta must be generated
         """
         original_fasta_protein_order = []
-        with open(pdb_file.rsplit(".", 1)[0]+"_flattened.fa", "w") as aa_fasta_file:
-            for i in range(1,len(self._pdb_residue_order)+1):
+        with open(pdb_file.rsplit(".", 1)[0] + "_flattened.fa", "w") as aa_fasta_file:
+            for i in range(1, len(self._pdb_residue_order) + 1):
                 original_fasta_protein_order.append(self._pdb_residue_order[i])
             print(">{}".format(pdb_file.rsplit(".", 1)[0].split("/")[-1]),
                   "".join(original_fasta_protein_order),
