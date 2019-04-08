@@ -1,7 +1,8 @@
-import re
+from __future__ import print_function
 
 
-class PssmFilter():
+class OutputAnalysisFilters():
+    # Amino acids group made by Evan Baugh.
     # https://en.wikipedia.org/wiki/File:Amino_Acids.svg        With some extra fantasy.
     AMINOCHANGE_GROUPS = [
         'GP',  # special cases (small + large)
@@ -13,13 +14,26 @@ class PssmFilter():
         'CST'  # special + small polar uncharged
     ]
 
-    def __init__(self, pssm_file, mutation_file):
+    def __init__(self, pssm_file, mutation_file, ddg_ouput_file):
 
-        self._point_mutation_dict = {}
-        self._read_mutation_file(mutation_file)
-        self._read_pssm(pssm_file)
+        # self._point_mutation_dict = {}
+        self._read_ddg_ouput_file(ddg_ouput_file)
+        # self._read_mutation_file(mutation_file)
+        # self._read_pssm(pssm_file)
+
+    def _read_ddg_ouput_file(self, ddg_ouput_file):
+        with open(ddg_ouput_file, "r") as ddg_file:
+            for line in ddg_file:
+                if len(line.strip("\n")) == 0:
+                    pass
+                else:
+                    print([feature for feature in line.strip("\n").split(" ") if len(feature) > 0][1:])
 
     def _read_pssm(self, pssm_file):
+        """
+        Reads the PSSM file line for line and collects all the mutations for the line.
+        :param pssm_file: A file containing a single position specific scoring matrix.
+        """
         with open(pssm_file, "r") as pssm:
             pssm.readline()  # skip blank line
             pssm.readline()  # skip text header
@@ -54,9 +68,15 @@ class PssmFilter():
                     if cleaned_line[0] in self._point_mutation_dict:
                         for mutated_amino_acid in self._point_mutation_dict[cleaned_line[0]]:
                             mutated = cleaned_line[stored_amino_acid_matrix_row_index[mutated_amino_acid][0]]
-                            print(int(native), int(mutated), (int(native)-int(mutated)), float(cleaned_line[42]))
+                            print(int(native), int(mutated), (int(native) - int(mutated)), float(cleaned_line[42]))
 
-    def _dict_matrix_map_generator(self, amino_acids):
+    @staticmethod
+    def _dict_matrix_map_generator(amino_acids):
+        """
+        Giving the headers a dict map will be made, every index gets +2 because when a row is read two the position and the original amino acid are added.
+        :param amino_acids: Header of amino aicds.
+        :return: Dictionary with amino acid as key and a list as value with the index within the header.
+        """
         matrix_map = {}
         for amino_acid_index, amino_acid in enumerate(amino_acids):
             if amino_acid in matrix_map:
@@ -86,5 +106,6 @@ class PssmFilter():
 
 
 if __name__ == "__main__":
-    PssmFilter("/Users/gcc/Desktop/GCC/VIPUR_CODE_OSF/github-archive/example_output/2C35_VIPUR/2C35.pssm",
-               "data_scratch/kaas_txt.mut")
+    OutputAnalysisFilters("/Users/gcc/Desktop/GCC/VIPUR_CODE_OSF/github-archive/example_output/2C35_VIPUR/2C35.pssm",
+                          "data_scratch/kaas_txt.mut",
+                          "/Users/gcc/Desktop/GCC/VIPUR_CODE_OSF/github-archive/example_output/2C35_VIPUR/ddg_predictions.out")

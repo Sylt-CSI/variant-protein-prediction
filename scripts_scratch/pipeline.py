@@ -74,21 +74,6 @@ class ProteinFeatureGeneratorPipeline:
                                                         required=False,
                                                         dest="seed")
 
-        # protein_feature_pipeline_arguments.add_argument("-PSIdb",
-        #                                                 type=str,
-        #                                                 help="Give the full path of the protein database (nr) to PSIblast. (it is a different one than used by Rosetta.)",
-        #                                                 nargs=1,
-        #                                                 required=False,
-        #                                                 default="/groups/umcg-gcc/tmp03/umcg-sschuurmans/db/nr",
-        #                                                 dest="PSIdb")
-        #
-        # protein_feature_pipeline_arguments.add_argument("-PSIscript",
-        #                                                 type=str,
-        #                                                 help="directory for execution script for psiblast",
-        #                                                 nargs=1,
-        #                                                 required=False,
-        #                                                 default="/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/psi_blast_run.sh")
-
         return protein_feature_pipeline_arguments.parse_args()
 
     @staticmethod
@@ -129,17 +114,6 @@ class ProteinFeatureGeneratorPipeline:
              "-C",  # count produced dots
              "-out {}".format("kaas")]  #
         )
-
-        pass
-
-    @staticmethod
-    def _execute_psi_blast():
-        """
-        Execute psi blast as slurm job.
-        """
-        subprocess.call(
-            ["sbatch",
-             "psi_blast_run.sh"])
 
 
 if __name__ == "__main__":
