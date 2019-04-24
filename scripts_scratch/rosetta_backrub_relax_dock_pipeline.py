@@ -11,49 +11,55 @@ class RosettaBackRubRelaxDockPipeline:
     def __init__(self):
         # Initiate command line options.
         protein_arguments = self._protein_feature_pipeline_argument_parser()
-        checked_output_folder_name = self._add_backslash_for_folder(protein_arguments.out[0])
+        checked_output_folder_name = self._add_backslash_to_folder_if_missing(protein_arguments.out[0])
+        # print(
+        #     "Submitted Rosetta Backrub job for {}.".format(
+        #         protein_arguments.pdb[0].split("/")[-1].split(".")[0]))
+        # self._submit_rosetta_slurm_job(
+        #     protein_arguments.backrub_script[0],
+        #     protein_arguments.rdb[0],
+        #     protein_arguments.pdb[0],
+        #     checked_output_folder_name
+        # )
+        # # Monitor the outcome of backrub.
+        # outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "backrub/", "regular_backrub")
+        # if outcome == "Failed" and protein_arguments.ignore is False:
+        #     return
+        # # Filter the lowest energy scoring backrub pdb.
+        lowest_scoring_backrub_protein_model = self._get_lowest_energy_structure_name(
+            checked_output_folder_name + "backrub/score_back_rub.sc")
         print(
-            "Submitted Rosetta Backrub job for {}.".format(
-                protein_arguments.pdb[0].split("/")[-1].split(".")[0]))
-        self._submit_rosetta_slurm_job(
-            protein_arguments.backrub_script[0],
+            protein_arguments.relax_script[0],
             protein_arguments.rdb[0],
-            protein_arguments.pdb[0],
+            checked_output_folder_name + "backrub/" + str(lowest_scoring_backrub_protein_model) + ".pdb",
             checked_output_folder_name
         )
-        # Monitor the outcome of backrub.
-        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "backrub/")
-        if outcome == "Failed" and protein_arguments.ignore is False:
-            return
-        # Filter the lowest energy scoring backrub pdb.
-        lowest_scoring_backrub_protein_model = self._get_lowest_energy_structure_name(
-            checked_output_folder_name + "score_back_rub.sc")  # "score_back_rub.sc"
-
         print("Submitted Rosetta Relax job for {}.".format(lowest_scoring_backrub_protein_model))
         self._submit_rosetta_slurm_job(
             protein_arguments.relax_script[0],
             protein_arguments.rdb[0],
-            protein_arguments.protein_pipeline_arguments.out[0] + str(
+            checked_output_folder_name + "backrub/" + str(
                 lowest_scoring_backrub_protein_model) + ".pdb",
             checked_output_folder_name
         )
         # Monitor the outcome of relax.
-        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "relax/")
+        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "relax/", "regular_relax")
         if outcome == "Failed" and protein_arguments.ignore is False:
             return
         # Filter the lowest energy scoring relax pdb.
         lowest_scoring_relax_protein_model = self._get_lowest_energy_structure_name(
-            checked_output_folder_name + "score_relax.sc")
+            checked_output_folder_name + "relax/score_relax.sc")
 
         self._submit_rosetta_slurm_job(
             protein_arguments.docking_script[0],
             protein_arguments.rdb[0],
-            protein_arguments.protein_pipeline_arguments.out[0] + str(
-                lowest_scoring_relax_protein_model) + ".pdb",
+            checked_output_folder_name + "relax/" + str(
+                lowest_scoring_backrub_protein_model) + ".pdb",
             checked_output_folder_name
         )
         # Monitor the outcome of docking.
-        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "local_docking/")
+        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "local_docking/",
+                                                    "regular_docking")
         if outcome == "Failed" and protein_arguments.ignore is False:
             return
         print("Finished")
@@ -130,16 +136,16 @@ class RosettaBackRubRelaxDockPipeline:
         return protein_feature_pipeline_arguments.parse_args()
 
     @staticmethod
-    def _rosetta_pipeline_monitoring(minimum_amount_of_structures_to_finish, stored_structures_directory):
+    def _rosetta_pipeline_monitoring(minimum_amount_of_structures_to_finish, stored_structures_directory, job_name):
         # Keep repeating the test until the job is finished.
         while len([queue_element for queue_element in
-                   subprocess.check_output(['squeue', '--Format=state,name', '-h', '-n', 'regular_backrub']).strip(
-                       "\n").split(" ") if len(queue_element) > 0]) != 1:
-            print("It is fine, waiting 10 seconds.")
+                   subprocess.check_output(['squeue', '--Format=state,name', '-h', '-n', '{}'.format(job_name)]).strip(
+                       "\n").split(" ") if len(queue_element) > 0]) != 0:
+            print("It is fine, waiting 10 seconds, still running \"{}\".".format(job_name))
             time.sleep(10)
         if minimum_amount_of_structures_to_finish >= len(glob.glob(stored_structures_directory + "*.pdb")):
             print("Panic! Not enough structures have been made, {} out of the {} requested.".format(
-                len(glob.glob(stored_structures_directory + "*.pdb")), minimum_amount_of_structures_to_finish))
+                len(glob.glob(stored_structures_directory + "*[0-9].pdb")), minimum_amount_of_structures_to_finish))
             status = "Failure"
         else:
             print("Succes! {} have been made.".format(minimum_amount_of_structures_to_finish))
@@ -165,9 +171,12 @@ class RosettaBackRubRelaxDockPipeline:
         return lowest_energy_pdb[1]
 
     @staticmethod
-    def _add_backslash_for_folder(ouput_folder):
+    def _add_backslash_to_folder_if_missing(ouput_folder):
         if not ouput_folder.endswith("/"):
-            return ouput_folder + "/"
+            folder_name = ouput_folder + "/"
+        else:
+            folder_name = ouput_folder
+        return folder_name
 
     @staticmethod
     def _submit_rosetta_slurm_job(script, database, pdb, out_folder):
