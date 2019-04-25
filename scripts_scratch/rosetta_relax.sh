@@ -3,7 +3,7 @@
 #SBATCH --qos=regular
 #SBATCH --ntasks=34
 #SBATCH --nodes=1
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_error/relax_error.txt
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/relax_ouput.txt
 

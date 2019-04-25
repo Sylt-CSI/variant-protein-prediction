@@ -141,7 +141,8 @@ class RosettaBackRubRelaxDockPipeline:
         while len([queue_element for queue_element in
                    subprocess.check_output(['squeue', '--Format=state,name', '-h', '-n', '{}'.format(job_name)]).strip(
                        "\n").split(" ") if len(queue_element) > 0]) != 0:
-            print("It is fine, waiting 10 seconds, still running \"{}\".".format(job_name))
+            print("Waiting 10 seconds, running \"{}\" finished {} out of {}.".format(job_name, len(
+                glob.glob(stored_structures_directory + "*[0-9].pdb")),minimum_amount_of_structures_to_finish))
             time.sleep(10)
         if minimum_amount_of_structures_to_finish >= len(glob.glob(stored_structures_directory + "*.pdb")):
             print("Panic! Not enough structures have been made, {} out of the {} requested.".format(
