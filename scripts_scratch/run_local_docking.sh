@@ -26,13 +26,16 @@ mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_201
 -in:file:s $2 \
 -out:path:all $docking_dir \
 -nstruct 136 \
--partners R_A \
+-partners BR_AT_CS \
 -dock_pert 3 8 \
 -ex1 \
 -ex2aro \
 -out:suffix _local_dock
 
 cd $return_point
+
+
+# /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run/relax/1tnr-3_back_rub_0128_relax_0053.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run
 
 #$1 /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database
 #$2 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1TNR_ORIGNAL_RESULTS/1tnr.pdb

@@ -52,9 +52,9 @@ class RosettaBackRubRelaxDockPipeline:
 
         self._submit_rosetta_slurm_job(
             protein_arguments.docking_script[0],
-            protein_arguments.rdb[0],
+            protein_arguments.rdb[0],  # This option is not used.
             checked_output_folder_name + "relax/" + str(
-                lowest_scoring_backrub_protein_model) + ".pdb",
+                lowest_scoring_relax_protein_model) + ".pdb",
             checked_output_folder_name
         )
         # Monitor the outcome of docking.
@@ -142,7 +142,7 @@ class RosettaBackRubRelaxDockPipeline:
                    subprocess.check_output(['squeue', '--Format=state,name', '-h', '-n', '{}'.format(job_name)]).strip(
                        "\n").split(" ") if len(queue_element) > 0]) != 0:
             print("Waiting 10 seconds, running \"{}\" finished {} out of {}.".format(job_name, len(
-                glob.glob(stored_structures_directory + "*[0-9].pdb")),minimum_amount_of_structures_to_finish))
+                glob.glob(stored_structures_directory + "*[0-9].pdb")), minimum_amount_of_structures_to_finish))
             time.sleep(10)
         if minimum_amount_of_structures_to_finish >= len(glob.glob(stored_structures_directory + "*.pdb")):
             print("Panic! Not enough structures have been made, {} out of the {} requested.".format(
