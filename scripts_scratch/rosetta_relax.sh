@@ -3,7 +3,7 @@
 #SBATCH --qos=regular
 #SBATCH --ntasks=34
 #SBATCH --nodes=1
-#SBATCH --time=48:00:00
+#SBATCH --time=100:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_error/relax_error.txt
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/relax_ouput.txt
 
@@ -28,7 +28,7 @@ cd $relax_dir
 mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/source/bin/relax.mpi.linuxgccrelease \
 -database $1 \
 -in:file:s $2 \
--nstruct 136 \
+-nstruct 250 \
 -out:path:all $relax_dir \
 -run:ignore_zero_occupancy false \
 -run:constant_seed \

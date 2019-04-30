@@ -1,11 +1,11 @@
 #!/bin/sh
 #SBATCH --job-name=regular_backrub
-#SBATCH --qos=regular
-#SBATCH --ntasks=34
+#SBATCH --qos=dev
+#SBATCH --ntasks=1
 #SBATCH --nodes=1
 #SBATCH --time=24:00:00
-#SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_error/backrub_error.txt
-#SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_output/backrub_ouput.txt
+#SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_error/kartoffel_%j_%x_%u_backrub_error.txt
+#SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_output/kartoffel_%j_%x_%u_backrub_ouput.txt
 
 module purge
 module load Python/2.7.11-foss-2015b
@@ -25,13 +25,16 @@ cd $backrub_dir
 mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.9/mpi/backrub.mpi.linuxgccrelease \
 -database $1 \
 -in:file:s $2 \
--nstruct 136 \
+-nstruct 1 \
 -out:path:all $backrub_dir \
 -out:suffix _back_rub \
 -ignore_unrecognized_res \
 -backrub:ntrials 10000 
 
 cd $return_point
+
+
+# /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/testerun
 
 #$1 /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database
 #$2 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1TNR_ORIGNAL_RESULTS/1tnr.pdb

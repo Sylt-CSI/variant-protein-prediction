@@ -38,14 +38,17 @@ class MutantFileGenerator:
 
         csv_file, mutant_file, pdb_file, self._chain = self._mutant_file_generator_argument_parser()
         self._pdb_residue_order = self._pdb_residue_order_mapper(pdb_file)
-        self._write_fasta_file(pdb_file)
+        # self._write_fasta_file(pdb_file)
         _ddg_file = mutant_file.replace(".", "_") + ".mut"
         self._pdb_file = pdb_file.split("/")[-1].split(".")[0]
         with open(mutant_file, "w") as self._resulting_mutant_file, open(_ddg_file, "w") as self._ddg_file:
-            with open(csv_file, "rb") as protein_mutant_csv:
-                self._read_csv_file(protein_mutant_csv)
+            with open(csv_file, "rb") as protein_mutantion_file:
+                self._read_tsv_file(protein_mutantion_file)
+                # TODO make use case better so that it can handle multiple formats of csv and tsv
+                # self._read_csv_file(protein_mutantion_file)
 
-    def _mutant_file_generator_argument_parser(self):
+    @staticmethod
+    def _mutant_file_generator_argument_parser():
         """
         Adds arguments that handle the in and output for the mutation file.
         :return: Mutation_CSV, Output mutation file, Protein pdb file, Chain
@@ -79,12 +82,53 @@ class MutantFileGenerator:
         parsed_args = argument_parser.parse_args()
         return parsed_args.M[0], parsed_args.O[0], parsed_args.P[0], parsed_args.C[0]
 
+    def _read_tsv_file(self, tsv_reader):
+        """
+        Input:
+        Ser4Phe NA
+        Val6Met NA
+        Pro7Thr NA
+        Pro12Leu NA
+        Glu14Lys PATHOGENIC
+        Leu15Val NA
+        Thr16Pro PATHOGENIC
+        Thr16Ala PATHOGENIC
+        Cys17Ser PATHOGENIC
+        Val20Ala Uncertain significance (VOUS)
+        Val21Ile PATHOGENIC
+        Gly21Ala NA
+        Val21Phe PATHOGENIC
+        Val21Leu PATHOGENIC
+        Arg24Trp BENIGN
+
+        Output:
+
+
+
+        :param csv_reader:
+        :return:
+        """
+
+        while True:
+            mutated_residues, classification = [line_element for line_element in tsv_reader.readline().split(" ") if
+                                                len(line_element) > 0]
+            replacing_amino_acid = mutated_residues[0][-4:-1]
+            residue_number = mutated_residues[0][6:-4]
+
+
     def _read_csv_file(self, csv_reader):
         """
-        Read the CSV file and combine it with the other information and write it to a file.
+         Read the CSV file and combine it with the other information and write it to a file.
         Does only work currently for a single pdb with a single mutation.
         e.g.
 
+        Input:
+        "protein name","Classification","Status","References"
+        "p.Val20Ala","Uncertain significance (VOUS)","PROVISIONAL","Yao  QP Yerian  L Shen  B   Publication (Medline Abstract): http://www.ncbi.nlm.nih.gov/pubmed?term=yao%20and%20v20a"
+        "p.Asp41Glu","Uncertain significance (VOUS)","VALIDATED","D'Osualdo et al.   Publication (Medline Abstract): http://www.ncbi.nlm.nih.gov/pubmed/16508982"
+        "p.Cys44Tyr","Likely pathogenic","VALIDATED","Witsch-Baumgartner M  Maurer E.   Personal communication"
+
+        Output:
         # Mutant generator
         0,2C35:A:20:Ala
         1,2C35:A:41:Glu
@@ -98,14 +142,20 @@ class MutantFileGenerator:
         9,2C35:A:54:Asp
 
         # DDG_monomer generator
-        total 3
+        total 109
+        1
+        L 20 A
+        1
+        E 41 E
+        1
+        L 44 Y
 
         :param csv_reader: reads the CSV pattern
         """
         final_number = 0
         # Skip the header
         csv_reader.readline()
-        # Just a fillup line so the total amount can replace it.
+        # Just a fill up line so the total amount can replace it for ddg.
         print("ikmaakkat", file=self._ddg_file)
         while True:
             line = csv_reader.readline().split(",", 3)
@@ -165,19 +215,21 @@ class MutantFileGenerator:
 
         return residue_dict
 
-    def _write_fasta_file(self, pdb_file):
-        """
-        Write a fasta file from the pdb file sequence.
-        :param pdb_file: PDB file of which a fasta must be generated
-        """
-        original_fasta_protein_order = []
-        with open(pdb_file.rsplit(".", 1)[0] + "_flattened.fa", "w") as aa_fasta_file:
-            for i in range(1, len(self._pdb_residue_order) + 1):
-                original_fasta_protein_order.append(self._pdb_residue_order[i])
-            print(">{}".format(pdb_file.rsplit(".", 1)[0].split("/")[-1]),
-                  "".join(original_fasta_protein_order),
-                  sep="\n",
-                  file=aa_fasta_file)
+    # No longer necessary but can be uncommented if ever needed.
+
+    # def _write_fasta_file(self, pdb_file):
+    #     """
+    #     Write a fasta file from the pdb file sequence.
+    #     :param pdb_file: PDB file of which a fasta must be generated
+    #     """
+    #     original_fasta_protein_order = []
+    #     with open(pdb_file.rsplit(".", 1)[0] + "_flattened.fa", "w") as aa_fasta_file:
+    #         for i in range(1, len(self._pdb_residue_order) + 1):
+    #             original_fasta_protein_order.append(self._pdb_residue_order[i])
+    #         print(">{}".format(pdb_file.rsplit(".", 1)[0].split("/")[-1]),
+    #               "".join(original_fasta_protein_order),
+    #               sep="\n",
+    #               file=aa_fasta_file)
 
 
 if __name__ == "__main__":

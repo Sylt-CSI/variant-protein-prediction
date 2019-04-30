@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH --job-name=regular_docking
 #SBATCH --qos=regular
-#SBATCH --ntasks=34
+#SBATCH --ntasks=1
 #SBATCH --nodes=1
 #SBATCH --time=24:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/docking_error/docking_error.txt
@@ -22,11 +22,11 @@ mkdir -p $docking_dir
 
 cd $docking_dir
 
-mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.9/mpi/docking_protocol.mpi.linuxgccrelease \
+/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.9/mpi/docking_protocol.mpi.linuxgccrelease \
 -in:file:s $2 \
 -out:path:all $docking_dir \
--nstruct 136 \
--partners BR_AT_CS \
+-nstruct 1 \
+-partners R_A \
 -dock_pert 3 8 \
 -ex1 \
 -ex2aro \
@@ -35,7 +35,7 @@ mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_201
 cd $return_point
 
 
-# /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run/relax/1tnr-3_back_rub_0128_relax_0053.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run
+# sbatch run_local_docking.sh /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run/relax/1tnr-3_back_rub_0128_relax_0053.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run
 
 #$1 /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database
 #$2 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1TNR_ORIGNAL_RESULTS/1tnr.pdb
