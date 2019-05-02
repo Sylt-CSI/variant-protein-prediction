@@ -3,9 +3,9 @@
 #SBATCH --qos=regular
 #SBATCH --ntasks=34
 #SBATCH --nodes=1
-#SBATCH --time=100:00:00
-#SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_error/relax_error.txt
-#SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/relax_ouput.txt
+#SBATCH --time=120:00:00
+#SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_error/%j_relax_error.txt
+#SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/%j_relax_ouput.txt
 
 module purge
 module load Python/2.7.11-foss-2015b

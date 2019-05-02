@@ -22,7 +22,7 @@ class RosettaBackRubRelaxDockPipeline:
             checked_output_folder_name
         )
         # Monitor the outcome of backrub.
-        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "backrub/", "regular_backrub")
+        outcome = self._rosetta_pipeline_monitoring(1000, checked_output_folder_name + "backrub/", "regular_backrub")
         if outcome == "Failed" and protein_arguments.ignore is False:
             return
         # # Filter the lowest energy scoring backrub pdb.
@@ -43,7 +43,7 @@ class RosettaBackRubRelaxDockPipeline:
             checked_output_folder_name
         )
         # Monitor the outcome of relax.
-        outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "relax/", "regular_relax")
+        outcome = self._rosetta_pipeline_monitoring(250, checked_output_folder_name + "relax/", "regular_relax")
         if outcome == "Failed" and protein_arguments.ignore is False:
             return
         # # Filter the lowest energy scoring relax pdb.
