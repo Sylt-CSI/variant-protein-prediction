@@ -1,0 +1,65 @@
+\documentclass[10pt]{article}
+\usepackage{titling}
+\usepackage[ 
+paperheight  = 297mm, paperwidth  = 210mm,  % or: "paper=a4paper"
+layoutheight = 197mm ,layoutwidth  = 130mm,
+layoutvoffset = 50mm, layouthoffset = 40mm,
+includeheadfoot,
+top=-1in, bottom=-1in, left=-1in, right=-1in,
+textwidth=20cm
+]{geometry}
+\usepackage{graphicx}
+\graphicspath{{./Figures/}}
+\begin{document}
+	\pagenumbering{gobble}
+	\title{Protein structure modeling for variant pathogenicity prediction}
+	\author{Author: Sylt Schuurmans\\
+		Studentnumber: 333332\\
+		Study: Bio-informatica\\
+		Hanze hogeschool: Institute for Life Science and Technology\\
+		Hospital: Universitary Medical Center Groningen: Department of Genetics\\
+		Supervisor : Joeri van der Velde}
+	\maketitle
+	\newpage
+	
+	\newgeometry{top=2in,
+	bottom=1in,
+	left=1in,
+	right=1in,
+	textwidth=14cm}
+	
+	
+	\tableofcontents
+	\newpage
+	
+	\listoffigures
+	\newpage
+	
+	\section*{Abbreviations}
+	\input{Chapters/Abbreviations}
+	\newpage
+	
+%	\section*{Introduction}
+%	\input{}
+%	\newpage
+%	
+%	\pagenumbering{arabic}
+%
+%	\section{Theory}
+%	\input{}
+%	\newpage
+%	
+%	\section{Materials and Methods}
+%	\input{}
+%	\newpage
+%	
+%	\section{Discussion}
+%	\input{}
+%	\newpage
+%	
+%	\section{Conclusion}
+%	\input{}
+%	\newpage
+	
+	
+\end{document}

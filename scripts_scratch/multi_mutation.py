@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 import glob
 import argparse
@@ -39,7 +40,6 @@ class MultiMutator:
                 pdb_output_folder_name = self._fix_missing_backslash_folder(arguments.OFO[0])
                 # Makes a key from the pdb name and the path is the value.
             self._found_proteins_structures[arguments.IFI[0].rsplit("/", 1)[1].split(".")[0]] = arguments.IFI[0]
-            print(self._found_proteins_structures)
 
         if pdb_output_folder_name is None:
             sys.exit("Skidoodle!? What sorcery is this?")
@@ -48,8 +48,8 @@ class MultiMutator:
 
         # This step requires
         self._read_mutation_file(arguments.M[0])
-        # self._available_files_mutation_filtering()
-        # self._execute_insertion(pdb_output_folder_name)
+        self._available_files_mutation_filtering()
+        self._execute_insertion(pdb_output_folder_name)
 
     @staticmethod
     def _multi_mutation_argument_parser():
@@ -170,7 +170,7 @@ class MultiMutator:
                 # Key = PROTEIN MUTATION, Values = [[CHAIN, POSITION, NEW RESIDUE],FILE_PATH]
                 self._pdb_file_mutants[applied_protein_mutation] = [self._mutant_dict[applied_protein_mutation],
                                                                     self._found_proteins_structures[protein_file_name]]
-                print("Found protein structure for mutation: {}".format(applied_protein_mutation))
+                # print("Found protein structure for mutation: {}".format(applied_protein_mutation))
             else:
                 print("No protein structure found for mutation: {}".format(applied_protein_mutation))
         # Garbage collect dictionaries that are not relevant anymore.
@@ -200,6 +200,7 @@ class MultiMutator:
         # Structure as it will be read:
         # {'1,133l': [['A', 'CYS', '40'], '/Users/gcc/Downloads/crap_tastic_pdbs/133l.pdb'],
         # '1,134l': [['A', 'VAL', '32'], '/Users/gcc/Downloads/crap_tastic_pdbs/134l.pdb']}
+        # TODO improve merge mutations originating from the same pdb file in method _available_files_mutation_filtering.
         for mutant_pdb_file_dict in self._pdb_file_mutants:
             # Get file name to which the mutation it matched.
             protein_data_bank_file = self._pdb_file_mutants[mutant_pdb_file_dict][-1]
@@ -214,12 +215,12 @@ class MultiMutator:
             mutant_number = mutant_pdb_file_dict.split(",")[0]
 
             # Put the name of the original protein together with the mutant iteration number together for the filename.
+
             mutant_protein_data_bank_path_and_file[-1] = mutant_protein_data_bank_path_and_file[-1].split(".")[
                                                              0] + "_" + mutant_number + self._generate_mutant_file_name(
                 protein_mutation_information)
 
             mutant_protein_data_bank_path_and_file[0] = output_folder
-
             # Execute a script which adds missing atoms to the PDB structure, returns a model.
             complemented_pdb = modeller.scripts.complete_pdb(protein_environment,
                                                              protein_data_bank_file)
@@ -229,15 +230,15 @@ class MultiMutator:
             pdb_alignment_array.append_model(complemented_pdb,
                                              atom_files=protein_data_bank_file,
                                              align_codes=protein_data_bank_file)
-
             # Apply each mutation to the current protein databank file.
             for protein_chain_index in range(0, len(protein_mutation_information), 3):
-                #   [CHAIN              , RESIDUE_TYPE          , RESIDUE_POSITION]
-                #   [protein_chain_index, protein_chain_index +1, protein_chain_index +2]
+                #     #   [CHAIN              , RESIDUE_POSITION      ,           RESIDUE_TYPE]
+                #     #   [protein_chain_index, protein_chain_index +1, protein_chain_index +2]
                 protein_selection = modeller.selection(
                     complemented_pdb.chains[protein_mutation_information[protein_chain_index]].residues[
-                        protein_mutation_information[protein_chain_index + 2]])
-                protein_selection.mutate(residue_type=protein_mutation_information[protein_chain_index + 1])
+                        int(protein_mutation_information[protein_chain_index + 1])])
+
+                protein_selection.mutate(residue_type=protein_mutation_information[protein_chain_index + 2])
 
             # Add the mutated model to the alignment.
             pdb_alignment_array.append_model(complemented_pdb, align_codes=protein_data_bank_file)
@@ -258,7 +259,7 @@ class MultiMutator:
             # Write the new pdb file.
             # Collect the mutated_structures in a dict.
             self._stored_mutant_structures.append("".join(mutant_protein_data_bank_path_and_file) + ".pdb")
-            print("".join(mutant_protein_data_bank_path_and_file) + ".pdb")
+            # print("".join(mutant_protein_data_bank_path_and_file) + ".pdb")
             complemented_pdb.write(file="/".join(mutant_protein_data_bank_path_and_file) + ".pdb")
 
     def _execute_deletion(self):
@@ -274,6 +275,7 @@ class MultiMutator:
         if len(protein_mutations) * (1 / 3) > 10:
             file_mutation_name = "{}___{}".format("_".join(protein_mutations[1:3]), "_".join(protein_mutations[-2:]))
         else:
+            # Write every implemented mutation in the file name.
             residues = protein_mutations[2::3]
             residue_positions = protein_mutations[1::3]
             file_mutation_name = [None] * int(len(protein_mutations) * (2.0 / 3.0))
