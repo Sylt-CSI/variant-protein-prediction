@@ -2,10 +2,14 @@
 #SBATCH --job-name=regular_relax
 #SBATCH --qos=regular
 #SBATCH --ntasks=34
+#SBATCH --mem=90gb
 #SBATCH --nodes=1
-#SBATCH --time=120:00:00
+#SBATCH --time=24:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_error/%j_relax_error.txt
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/%j_relax_ouput.txt
+#SBATCH --exclude=umcg-node002,umcg-node004
+#SBATCH --export=NONE
+#SBATCH --get-user-env=30
 
 module purge
 module load Python/2.7.11-foss-2015b
@@ -18,9 +22,6 @@ return_point=$(readlink -f ./)
 
 relax_dir=$3/relax/
 
-echo $return_point
-echo $relax_dir
-
 mkdir -p $relax_dir
 
 cd $relax_dir
@@ -28,7 +29,7 @@ cd $relax_dir
 mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/source/bin/relax.mpi.linuxgccrelease \
 -database $1 \
 -in:file:s $2 \
--nstruct 250 \
+-nstruct 64 \
 -out:path:all $relax_dir \
 -run:ignore_zero_occupancy false \
 -run:constant_seed \
@@ -44,13 +45,3 @@ mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_201
 
 cd $return_point
 
-# -evaluation:gdtmm true 
-# -native /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/133l.pdbGLU114.pdb
-
-# -run:jran $2 \
-
-#$1 /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database
-#$2 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run/backrub/1tnr-3_back_rub_0128.pdb
-#$3 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run \
-
-# /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run/backrub/1tnr-3_back_rub_0128.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/first_full_run

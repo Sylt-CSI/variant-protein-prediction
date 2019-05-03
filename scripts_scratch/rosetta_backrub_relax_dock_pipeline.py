@@ -4,6 +4,7 @@ import argparse
 import subprocess
 import time
 import glob
+import os.path
 
 
 class RosettaBackRubRelaxDockPipeline:
@@ -12,19 +13,22 @@ class RosettaBackRubRelaxDockPipeline:
         # Initiate command line options.
         protein_arguments = self._protein_feature_pipeline_argument_parser()
         checked_output_folder_name = self._add_backslash_to_folder_if_missing(protein_arguments.out[0])
-        print(
-            "Submitted Rosetta Backrub job for {}.".format(
-                protein_arguments.pdb[0].split("/")[-1].split(".")[0]))
-        self._submit_rosetta_slurm_job(
-            protein_arguments.backrub_script[0],
-            protein_arguments.rdb[0],
-            protein_arguments.pdb[0],
-            checked_output_folder_name
-        )
-        # Monitor the outcome of backrub.
-        outcome = self._rosetta_pipeline_monitoring(1000, checked_output_folder_name + "backrub/", "regular_backrub")
-        if outcome == "Failed" and protein_arguments.ignore is False:
-            return
+        if not os.path.isfile(checked_output_folder_name + "backrub/score_back_rub.sc"):
+            print(
+                "Submitted Rosetta Backrub job for {}.".format(
+                    protein_arguments.pdb[0].split("/")[-1].split(".")[0]))
+            self._submit_rosetta_slurm_job(
+                protein_arguments.backrub_script[0],
+                protein_arguments.rdb[0],
+                protein_arguments.pdb[0],
+                checked_output_folder_name
+            )
+            # Monitor the outcome of backrub.
+            outcome = self._rosetta_pipeline_monitoring(1000, checked_output_folder_name + "backrub/", "regular_backrub")
+            if outcome == "Failed" and protein_arguments.ignore is False:
+                return
+        else:
+            print("Backrub is already finished, continuing with relax.")
         # # Filter the lowest energy scoring backrub pdb.
         lowest_scoring_backrub_protein_model = self._get_lowest_energy_structure_name(
             checked_output_folder_name + "backrub/score_back_rub.sc")
@@ -34,18 +38,20 @@ class RosettaBackRubRelaxDockPipeline:
             checked_output_folder_name + "backrub/" + str(lowest_scoring_backrub_protein_model) + ".pdb",
             checked_output_folder_name
         )
-        print("Submitted Rosetta Relax job for {}.".format(lowest_scoring_backrub_protein_model))
-        self._submit_rosetta_slurm_job(
-            protein_arguments.relax_script[0],
-            protein_arguments.rdb[0],
-            checked_output_folder_name + "backrub/" + str(
-                lowest_scoring_backrub_protein_model) + ".pdb",
-            checked_output_folder_name
-        )
-        # Monitor the outcome of relax.
-        outcome = self._rosetta_pipeline_monitoring(250, checked_output_folder_name + "relax/", "regular_relax")
-        if outcome == "Failed" and protein_arguments.ignore is False:
-            return
+        if not os.path.isfile(checked_output_folder_name + "relax/score_relax.sc"):
+            print("Submitted Rosetta Relax job for {}.".format(lowest_scoring_backrub_protein_model))
+            self._submit_rosetta_slurm_job(
+                protein_arguments.relax_script[0],
+                protein_arguments.rdb[0],
+                checked_output_folder_name + "backrub/" + str(lowest_scoring_backrub_protein_model) + ".pdb",
+                checked_output_folder_name
+            )
+            # Monitor the outcome of relax.
+            outcome = self._rosetta_pipeline_monitoring(64, checked_output_folder_name + "relax/", "regular_relax")
+            if outcome == "Failed" and protein_arguments.ignore is False:
+                return
+        else:
+            print("Relax is already finished.")
         # # Filter the lowest energy scoring relax pdb.
         # lowest_scoring_relax_protein_model = self._get_lowest_energy_structure_name(
         #     checked_output_folder_name + "relax/score_relax.sc")
@@ -62,7 +68,7 @@ class RosettaBackRubRelaxDockPipeline:
         #                                             "regular_docking")
         # if outcome == "Failed" and protein_arguments.ignore is False:
         #     return
-        print("Finished")
+        print("Finished run.")
 
     @staticmethod
     def _protein_feature_pipeline_argument_parser():

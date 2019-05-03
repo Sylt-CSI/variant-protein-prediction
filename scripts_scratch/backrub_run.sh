@@ -2,10 +2,14 @@
 #SBATCH --job-name=regular_backrub
 #SBATCH --qos=regular
 #SBATCH --ntasks=34
+#SBATCH --mem=50gb
 #SBATCH --nodes=1
 #SBATCH --time=24:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_error/%j_backrub_error.txt
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_output/%j_backrub_ouput.txt
+#SBATCH --exclude=umcg-node002,umcg-node004
+#SBATCH --export=NONE
+#SBATCH --get-user-env=30
 
 module purge
 module load Python/2.7.11-foss-2015b
@@ -33,9 +37,3 @@ mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_201
 
 cd $return_point
 
-
-# /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/testerun
-
-#$1 /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database
-#$2 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1TNR_ORIGNAL_RESULTS/1tnr.pdb
-#$3 /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/snubbie \
