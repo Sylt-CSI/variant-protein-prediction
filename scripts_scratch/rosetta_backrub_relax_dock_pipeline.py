@@ -150,7 +150,7 @@ class RosettaBackRubRelaxDockPipeline:
             print("Waiting 10 seconds, running \"{}\" finished {} out of {}.".format(job_name, len(
                 glob.glob(stored_structures_directory + "*[0-9].pdb")), minimum_amount_of_structures_to_finish))
             time.sleep(10)
-        if minimum_amount_of_structures_to_finish >= len(glob.glob(stored_structures_directory + "*.pdb")):
+        if minimum_amount_of_structures_to_finish > len(glob.glob(stored_structures_directory + "*.pdb")):
             print("Panic! Not enough structures have been made, {} out of the {} requested.".format(
                 len(glob.glob(stored_structures_directory + "*[0-9].pdb")), minimum_amount_of_structures_to_finish))
             status = "Failure"
@@ -178,11 +178,11 @@ class RosettaBackRubRelaxDockPipeline:
         return lowest_energy_pdb[1]
 
     @staticmethod
-    def _add_backslash_to_folder_if_missing(ouput_folder):
-        if not ouput_folder.endswith("/"):
-            folder_name = ouput_folder + "/"
+    def _add_backslash_to_folder_if_missing(output_folder):
+        if not output_folder.endswith("/"):
+            folder_name = output_folder + "/"
         else:
-            folder_name = ouput_folder
+            folder_name = output_folder
         return folder_name
 
     @staticmethod
