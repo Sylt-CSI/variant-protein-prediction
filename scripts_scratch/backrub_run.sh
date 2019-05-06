@@ -37,3 +37,4 @@ mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_201
 
 cd $return_point
 
+# sbatch /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_run.sh /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3_67_47_GLY_47_GLY_47_GLY.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_GLY_47
