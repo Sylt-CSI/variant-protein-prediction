@@ -9,7 +9,6 @@
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_output/%j_backrub_ouput.txt
 #SBATCH --exclude=umcg-node002,umcg-node004
 #SBATCH --export=NONE
-#SBATCH --get-user-env=30
 
 module purge
 module load Python/2.7.11-foss-2015b
@@ -20,7 +19,7 @@ module load zlib/1.2.11-foss-2015b
 
 return_point=$(readlink -f ./)
 
-backrub_dir=$3/backrub/
+backrub_dir=$3backrub/
 
 mkdir -p $backrub_dir
 
@@ -38,3 +37,7 @@ mpirun /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_201
 cd $return_point
 
 # sbatch /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_run.sh /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3_67_47_GLY_47_GLY_47_GLY.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_GLY_47
+# sbatch /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_run.sh /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3_67_47_GLY_47_GLY_47_GLY.pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_GLY_47/
+
+# ('/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_run.sh', '/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database', '/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3_67_47_GLY_47_GLY_47_GLY.pdb', '/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_GLY_47/')
+# python2.7 rosetta_backrub_relax_dock_pipeline.py -pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr-3_67_47_GLY_47_GLY_47_GLY.pdb -out /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_GLY_47

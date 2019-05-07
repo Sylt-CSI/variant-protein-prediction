@@ -9,7 +9,7 @@
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/%j_relax_ouput.txt
 #SBATCH --exclude=umcg-node002,umcg-node004
 #SBATCH --export=NONE
-#SBATCH --get-user-env=30
+
 
 module purge
 module load Python/2.7.11-foss-2015b
@@ -20,7 +20,7 @@ module load zlib/1.2.11-foss-2015b
 
 return_point=$(readlink -f ./)
 
-relax_dir=$3/relax/
+relax_dir=$3relax/
 
 mkdir -p $relax_dir
 

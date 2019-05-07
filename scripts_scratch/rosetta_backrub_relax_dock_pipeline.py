@@ -12,7 +12,12 @@ class RosettaBackRubRelaxDockPipeline:
     def __init__(self):
         # Initiate command line options.
         protein_arguments = self._protein_feature_pipeline_argument_parser()
+        self._dry_run = protein_arguments.dry
         checked_output_folder_name = self._add_backslash_to_folder_if_missing(protein_arguments.out[0])
+        # print(protein_arguments.backrub_script[0],
+        #         protein_arguments.rdb[0],
+        #         protein_arguments.pdb[0],
+        #         checked_output_folder_name)
         if not os.path.isfile(checked_output_folder_name + "backrub/score_back_rub.sc"):
             print(
                 "Submitted Rosetta Backrub job for {}.".format(
@@ -130,6 +135,13 @@ class RosettaBackRubRelaxDockPipeline:
                                                         required=False,
                                                         dest="ignore")
 
+        protein_feature_pipeline_arguments.add_argument("-dry",
+                                                        action='store_const',
+                                                        default=not (True),
+                                                        const=True,
+                                                        required=False,
+                                                        dest="dry")
+
         # OPTION that can be activated in the future, if multiple runs are possible on the cluster, that are not ran as leftovers.
         # protein_feature_pipeline_arguments.add_argument("-seed",
         #                                                 type=int,
@@ -185,9 +197,11 @@ class RosettaBackRubRelaxDockPipeline:
             folder_name = output_folder
         return folder_name
 
-    @staticmethod
-    def _submit_rosetta_slurm_job(script, database, pdb, out_folder):
-        subprocess.call(["sbatch", script, database, pdb, out_folder])
+    def _submit_rosetta_slurm_job(self,script, database, pdb, out_folder):
+        if self._dry_run:
+            print(" ".join(["DRY RUN:","sbatch", script, database, pdb, out_folder]))
+        else:
+            subprocess.call(["sbatch", script, database, pdb, out_folder])
 
 
 if __name__ == "__main__":
