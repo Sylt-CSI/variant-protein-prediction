@@ -58,8 +58,7 @@ class RosettaBackRubRelaxDockPipeline:
         else:
             print("Relax is already finished.")
         # # Filter the lowest energy scoring relax pdb.
-        # lowest_scoring_relax_protein_model = self._get_lowest_energy_structure_name(
-        #     checked_output_folder_name + "relax/score_relax.sc")
+        self._get_lowest_energy_structure_name(checked_output_folder_name + "relax/score_relax.sc")
         #
         # self._submit_rosetta_slurm_job(
         #     protein_arguments.docking_script[0],

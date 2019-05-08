@@ -36,7 +36,7 @@ class MutantFileGenerator:
         # TODO make it public to access it by different scripts, see methode read_csv_file at try
         self.stored_mutation_index = {}
 
-        csv_file, mutant_file, pdb_file, self._chain = self._mutant_file_generator_argument_parser()
+        csv_file, mutant_file, pdb_file, self._chain, self._new_start = self._mutant_file_generator_argument_parser()
         self._pdb_residue_order = self._pdb_residue_order_mapper(pdb_file)
         # self._write_fasta_file(pdb_file)
         _ddg_file = mutant_file.replace(".", "_") + ".mut"
@@ -58,29 +58,38 @@ class MutantFileGenerator:
                                      required=True,
                                      type=str,
                                      nargs=1,
-                                     metavar="O",
+                                     dest="O",
                                      help="The name of the file where the mutants will be stored in.")
         argument_parser.add_argument("-P",
                                      required=True,
                                      type=str,
                                      nargs=1,
-                                     metavar="P",
+                                     dest="P",
                                      help="The name of the pdb file where mutants should be generated for.")
         argument_parser.add_argument("-M",
                                      required=True,
                                      type=str,
                                      nargs=1,
-                                     metavar="M",
+                                     dest="M",
                                      help="[TC]SV file that contains the mutants with a column protein name.")
         argument_parser.add_argument("-C",
                                      required=True,
                                      type=str,
                                      nargs=1,
-                                     metavar="C",
-                                     help="Select the chain from the PDB where the mutant should be generated (multiple chains goes like this: A,X,Z).")
-
+                                     dest="C",
+                                     help="Select the chain from the PDB where the mutant should be generated (multiple chains goes like this: A,X,Z), no spaces!.")
+        # TODO Make it for all chains separate.
+        argument_parser.add_argument("-S",
+                                     required=False,
+                                     type=int,
+                                     default=[False],
+                                     nargs=1,
+                                     dest="S",
+                                     help="Start position of pdb within a Fasta, if not specified it starts at the position of the PDB. (goes for all chains) "
+                                          "e.g 1TNR resides in positions 44-182, the pdb itself starts at 15."
+                                          "If specified you can make it start at 44 instead of 15.")
         parsed_args = argument_parser.parse_args()
-        return parsed_args.M[0], parsed_args.O[0], parsed_args.P[0], parsed_args.C[0]
+        return parsed_args.M[0], parsed_args.O[0], parsed_args.P[0], parsed_args.C[0], parsed_args.S[0]
 
     def _read_tsv_write_mutation_file(self, tsv_reader):
         """
@@ -227,9 +236,10 @@ class MutantFileGenerator:
         :return: Gives back a dictionary where the position of the residue is the key and the value the residue.
         """
         chain_dict = {}
-        # residue_dict = {}
         current_number = None
         current_chain = None
+        dict_residue_number = None
+
         start = 0
         with open(pdb_file, "rb") as pdb_file_reader:
             for line in pdb_file_reader:
@@ -243,17 +253,19 @@ class MutantFileGenerator:
                     # Get the number only once for a residue.
                     if current_chain == line[4] and current_number != line[5]:
                         current_number = line[5]
+                        if self._new_start:
+                            dict_residue_number = str(self._new_start + start)
+                        else:
+                            dict_residue_number = current_number
                     # Add the whole requested chain.
                     if current_chain not in chain_dict:
-                        if current_chain is None:
-                            pass
-                        else:
-                            chain_dict[current_chain] = {current_number: start}
+                        if current_chain is not None:
+                            chain_dict[current_chain] = {dict_residue_number: start}
                             start += 1
                     # Existing chain is updated with new information regarding positions.
                     else:
-                        if current_number not in chain_dict[current_chain]:
-                            chain_dict[current_chain].update({current_number: start})
+                        if dict_residue_number not in chain_dict[current_chain]:
+                            chain_dict[current_chain].update({dict_residue_number: start})
                             start += 1
         return chain_dict
 

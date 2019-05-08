@@ -205,7 +205,7 @@ class MultiMutator:
             # Get file name to which the mutation it matched.
             protein_data_bank_file = self._pdb_file_mutants[mutant_pdb_file_dict][-1]
 
-            # Information regarding the mutation itself : chain, new residue and position.
+            # Information regarding the mutation itself : chain, position and new residue.
             protein_mutation_information = self._pdb_file_mutants[mutant_pdb_file_dict][0]
 
             # Find the path to the file by splitting the last right slash of from the file.
