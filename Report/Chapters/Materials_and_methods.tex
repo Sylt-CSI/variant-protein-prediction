@@ -39,6 +39,8 @@ For the prediction of the initial structure of TNFR the application abinitio rel
 With this tool a sequence is inserted as input that is aligned to 
 
 
+Missense mutated proteins have an altered amino acid that can cause differences in interactions with other amino acids, which can influence the backbone or side chain positions of a protein and therefore affect the structure. Software that makes missense mutations in protein structures (Modeller, PyMOL, PyRosetta) tend to replace residues without optimizing, causing odd energy levels or steric hindrance to arise.
+
 \subsubsection{Relax}
 \label{subsubsec:MM_Relax}
 
@@ -54,8 +56,20 @@ With this tool Rosetta scores can be calculated based on silent or PDB files pro
 \label{subsubsec:MM_Abinitio}
 
 \subsubsection{Backrub}
+The backrub application alters a protein by moving the backbone residues which it does with a strategy called fix end move (FEM). With this strategy, groups of residues are made at random that can contain up to: four dihedral, two bond angles and two end points.
+Both ends are fixated at their position in which a new angle $\alpha$ is setup, within this angle residues are pivoted $\pm \ang{30}$ from the end points. When group are made and they only contain a single residue a different method is applied called pivot movement (PM). This method only rotates a single dihedral angle and could give a wider variety of results, most rotations lead to steric hindrance which makes it a process of trial and error.
 
-Missense mutated proteins have an altered amino acid that can cause differences in interactions with other amino acids, which can affect the backbone of a protein and therefore influence the structure. Software that makes missense mutations in protein structures (Modeller, PyMOL, PyRosetta) tend to replace residues without optimizing, causing odd energy levels or steric hindrance to arise. The backrub application alters a protein by moving the backbone residues which it does with a strategy called fix end move (FEM). With this strategy, groups of residues are made that can contain up to four dihedral and two bond angles and two end points. Each group had to end points which are fixated at their position, the residues in between are pivoted to determine 
+
+ A partially avoided strategy is pivot movement (PM) which rotates a single dihedral of a residue, a downside of PM is that it 
+
+ it could lead to better results but also has a high probability of causing steric hindrance in the structure. In some cases it is used if the group size used by FEM is 1.
+
+In some cases a single residue is selected which would make FEM unsuitable, In some situations it is hard  To acquire information on energy in the groups it has to be known which residues are in the groups.
+
+
+of which a new angle will be defined as $\alpha$ in which the residues will pivoted around to find the lowest energy. The 
+
+ Each group's ends are fixa had to end points which are fixated at their position, the residues in between are pivoted to determine 
 
 At the end of each group the residues are fixated and the residues in between
 
