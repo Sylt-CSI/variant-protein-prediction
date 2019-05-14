@@ -5,6 +5,8 @@
 \contentsline {subsection}{\numberline {1.4}Tumor Necrosis Factor Alpha and Beta}{1}{subsection.1.4}
 \contentsline {section}{\numberline {2}Protein Modeling Techniques}{2}{section.2}
 \contentsline {section}{\numberline {3}Monte Carlo}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Monte Carlo Method}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Monte Carlo Use and Potential errors}{3}{subsection.3.2}
 \contentsline {section}{\numberline {4}Materials and Methods}{4}{section.4}
 \contentsline {subsection}{\numberline {4.1}Two methods: scale and detail}{4}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Rosetta}{4}{subsection.4.2}

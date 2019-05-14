@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.4)  14 MAY 2019 11:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.4)  14 MAY 2019 15:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -771,8 +771,12 @@ ored
                    \relax 
 l.52 	\newpage
                [5] (./Chapters/Cell_death.tex) [1]
-(./Chapters/Protein_Modeling_Techniques.tex) [2] (./Chapters/Monte_Carlo.tex)
-[3] (./Chapters/Materials_and_Methods.tex
+(./Chapters/Protein_Modeling_Techniques.tex) [2] (./Chapters/Monte_Carlo.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--10
+
+ []
+
+) [3] (./Chapters/Materials_and_Methods.tex
 
 LaTeX Warning: Reference `subsec:MM_Rosetta:' on page 4 undefined on input line
  15.
@@ -787,7 +791,7 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 102.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 102.
 Package rerunfilecheck Info: File `Protein_variant_prediction.out' has not chan
 ged.
-(rerunfilecheck)             Checksum: 3492063A80CDB06169CF2C9C60755696;1845.
+(rerunfilecheck)             Checksum: 088E033C7F8B18E2AECABCA3D0451AF6;1999.
 
 
 LaTeX Warning: There were undefined references.
@@ -795,10 +799,10 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 102.
  ) 
 Here is how much of TeX's memory you used:
- 16387 strings out of 492649
- 325023 string characters out of 6129623
- 377897 words of memory out of 5000000
- 20104 multiletter control sequences out of 15000+600000
+ 16397 strings out of 492649
+ 325163 string characters out of 6129623
+ 378033 words of memory out of 5000000
+ 20108 multiletter control sequences out of 15000+600000
  537348 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,7n,38p,10422b,718s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -811,10 +815,10 @@ sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
 ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loca
 l/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
 /texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on Protein_variant_prediction.pdf (15 pages, 134454 bytes).
+Output written on Protein_variant_prediction.pdf (15 pages, 135242 bytes).
 PDF statistics:
- 295 PDF objects out of 1000 (max. 8388607)
- 266 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
- 241 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 310 PDF objects out of 1000 (max. 8388607)
+ 281 compressed objects within 3 object streams
+ 55 named destinations out of 1000 (max. 500000)
+ 257 words of extra memory for PDF output out of 10000 (max. 10000000)
 
