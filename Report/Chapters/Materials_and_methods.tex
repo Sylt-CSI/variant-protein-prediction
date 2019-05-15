@@ -39,13 +39,16 @@ With this tool a sequence is inserted as input that is aligned to
 
 
 Missense mutated proteins have an altered amino acid that can cause differences in interactions with other amino acids, which can influence the backbone or side chain positions of a protein and therefore affect the structure. Software that makes missense mutations in protein structures (Modeller, PyMOL, PyRosetta) tend to replace residues without optimizing, causing odd energy levels or steric hindrance to arise.
+\label{subsec:MM_Rosetta}
+\newline
+\textit{Rosetta software suite Version 3.10}
 
 \subsubsection{Relax}
 \label{subsubsec:MM_Relax}
 
 \subsubsection{DDG Monomer}
-The tool itself is meant to predict stability of a monomeric protein when a certain residue gets a point mutation.
-The application was used by VIPUR to collect features related to energies and hydrogen, disfulfide, bonds and constraints differences between the wild type and a mutated protein. To execute the tool a script had to be ran that renumbers the wild type pdb file and it requires a "mutation file" that describes the change of a residue based on name and position changes to a different residue. 
+The tool itself is meant to predict energetic stability of a point mutation in  monomeric protein.The application was used by VIPUR to collect features related to energies and hydrogen, disfulfide, bonds and constraints differences between the wild type and a mutated protein. To execute the tool a script had to be ran that renumbers the wild type pdb file and it requires a "mutation file" that describes the change of a residue based on name and position changes to a different residue \cite{}.
+%ddg_monomer application, Andrew Leaver-Fay
 \label{subsubsec:MM_DDG_Monomer}
 
 \subsubsection{Rescore}
@@ -57,9 +60,10 @@ With this tool Rosetta scores can be calculated based on silent or PDB files pro
 \label{subsubsec:MM_Abinitio}
 
 \subsubsection{Backrub}
-The backrub application alters a protein by moving the backbone residues which it does with a strategy called fix end move (FEM). With this strategy, groups of residues are made at random that can contain up to: four dihedral, two bond angles and two end points.
-Both ends are fixated at their position in which a new angle $\alpha$ is setup, within this angle residues are pivoted $\pm \ang{30}$ from the end points. When group are made and they only contain a single residue a different method is applied called pivot movement (PM). This method only rotates a single dihedral angle and could give a wider variety of results, most rotations lead to steric hindrance which makes it a process of trial and error.
+The backrub application is based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), and alters a protein by moving its backbone residues with a strategy called fix end move (FEM). With this strategy, groups of residues are made at random and can contain up to: four dihedral, two bond angles and two end points. Both ends of a group are fixated at their position in which a new angle $\alpha$ arises, within this angle residues are pivoted in their natural occurring maximum range of $\pm \ang{10}$ \cite{}.
+%Efficient Monte Carlo trial moves for polypeptide simulations, Betancourt
 
+ When groups are formed and contain a single residue a different method is applied called pivot movement (PM) which rotates a single dihedral angle and could give a wider variety of results across the backbone but also has a higher potential of generating steric hindrance. 
 
  A partially avoided strategy is pivot movement (PM) which rotates a single dihedral of a residue, a downside of PM is that it 
 
@@ -87,8 +91,6 @@ can alter the backbone by moving the backbone residues, the strategy that is emp
  are taken and every residue in between is pivoted, compared to other methods that take a single residue element and pivot it which commonly would produce steric hindrance.
 
 \label{subsubsec:MM_Backrub}
-
-\label{subsec:MM_Rosetta}
 
 \subsection{PyRosetta}
 \label{subsec:MM_PyRosetta}
