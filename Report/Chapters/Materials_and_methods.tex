@@ -15,10 +15,9 @@ In some experimental determined structures duplicate chains, ligands, metals and
 Another approach for determining pathogenicity of a mutation is by assessing energy differences between a wild type and mutant protein residues inside its complex. Analyzing mutations from this perspective gives the ability to view a complex in whole and determine how residues cause perturbations in a complex. Missense mutations in monomers of complexes were made with Modeller (Section \ref{subsec:MM_Modeller}) and the backbone was refined with Rosetta's backrub application (Section \ref{subsubsec:MM_Backrub}), to lower the energy levels within side chains Rosetta relax (Section \ref{subsubsec:MM_Relax}). This method shows similarities to that of VIPUR,  was tested with TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) and its ligands TNF $\alpha$ and $\beta$. This method keeps: duplicate chains ligands and metals within the structure, water is excluded since it can cause issues with Rosetta tools (Section \ref{subsec:MM_Rosetta:}).
 
 \subsection{Rosetta}
-% DDG MONOMER CAREFULL STILL NEEDS TO BE LOOKED AT IF IT IS USEFUL AL.
 Rosetta is a software suite that has a variety of tools that are developed to aid in macro molecular and antibody ,analysis, design and modeling \cite{}.
 % About | RosettaCommons, Rosetta Commons
-Both approaches rely on the Relax (Section \ref{subsubsec:MM_Relax}) for minimizing side chains and on DDG monomer (Section \ref{subsubsec:MM_DDG_Monomer}) to determine energy differences within the mutated protein. VIPUR uses rescore (Section \ref{subsubsec:MM_Rescore}) to acquire information about protein structures.
+Both approaches rely on the Relax (Section \ref{subsubsec:MM_Relax}) for minimizing side chains. VIPUR uses rescore (Section \ref{subsubsec:MM_Rescore}) to acquire information about protein structures.
 
 Both methods rely on Relax  to minimize energies in the side chains of the remodeled structures. With  DDG monomer  both rely on energy minimization's  in the side chains of the protein structures and need to information on energy changes in 
 
@@ -45,6 +44,8 @@ Missense mutated proteins have an altered amino acid that can cause differences 
 \label{subsubsec:MM_Relax}
 
 \subsubsection{DDG Monomer}
+The tool itself is meant to predict stability of a monomeric protein when a certain residue gets a point mutation.
+The application was used by VIPUR to collect features related to energies and hydrogen, disfulfide, bonds and constraints differences between the wild type and a mutated protein. To execute the tool a script had to be ran that renumbers the wild type pdb file and it requires a "mutation file" that describes the change of a residue based on name and position changes to a different residue. 
 \label{subsubsec:MM_DDG_Monomer}
 
 \subsubsection{Rescore}
@@ -100,6 +101,33 @@ can alter the backbone by moving the backbone residues, the strategy that is emp
 
 \subsection{Probe}
 \label{subsec:MM_Probe}
+
+\subsection{SLURM}
+For computational jobs where a laptop or desktop does not suffice because due to the lack computational resources a computer cluster could come to aid. These clusters consist out of several computers that execute resource intensive tasks, to manage these systems for many clients and to use these clusters optimal a workload manager mlike simple Linux utility resource management (SLURM), is installed. Jobs are submitted that request resources for execution and are scheduled on the systems queue which is ordered based on priorities, resource requirement and time.
+\label{subsec:MM_SLURM}
+
+\subsection{MPI}
+Some tools from the Rosetta software suite (Sections \ref{subsec:MM_Rosetta}) have the ability to use multiple central processing unit (CPU) cores from a single computer or from multiple computers. With a message parsing interface (MPI) it is possible for software to communicate between CPU cores on the same and on different computers to exchange information about processes and therefor solving solutions faster.
+\label{MM_MPI}
+\newline
+\textit{OpenMPI/1.8.8-GNU-4.9.3-2.25}
+\newline
+
+\subsection{Bash}
+Unix like operating systems (OS) have a shell which allows users to interact with programs on a computer or with the computer itself based on commands submitted.  The default shell for MacOS and also for several Linux distributions is the Bourne again shell (Bash) which was used to launch Python scripts (Section \ref{subsec:MM_Python}) and submit jobs to the SLURM workload manager (Section \ref{subsec:MM_SLURM}). 
+\label{subsec:MM_Bash}
+\newline
+\textit{Laptop Version GNU bash, version 3.2.57(1)-release (x86\_64-apple-darwin18)}
+\newline
+\textit{Server Version GNU bash, version 4.1.2(2)-release (x86\_64-redhat-linux-gnu)}
+
+\subsection{Python}
+Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_Backrub}) and side chain energies (Section \ref{subsubsec:MM_Relax}) were written in Python due to its capabilities, ease of use and because modeller (Section \ref{subsec:MM_Modeller}) for MacOS relies on the system version of Python and does currently not support newer versions besides the one found within the OS of Mac.
+\label{subsec:MM_Python}
+\newline
+\textit{Laptop version 2.7.15}
+\newline
+\textit{Server version 2.7.11}
 
 \subsection{Modeller}
 \label{subsec:MM_Modeller}

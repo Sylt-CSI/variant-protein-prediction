@@ -6,7 +6,7 @@
 \contentsline {section}{\numberline {2}Protein Modeling Techniques}{2}{section.2}
 \contentsline {section}{\numberline {3}Monte Carlo}{3}{section.3}
 \contentsline {subsection}{\numberline {3.1}Monte Carlo Method}{3}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Monte Carlo Use and Potential errors}{3}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}The use of the Monte Carlo method and its pitfalls}{3}{subsection.3.2}
 \contentsline {section}{\numberline {4}Materials and Methods}{4}{section.4}
 \contentsline {subsection}{\numberline {4.1}Two methods: scale and detail}{4}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Rosetta}{4}{subsection.4.2}
@@ -19,14 +19,18 @@
 \contentsline {subsection}{\numberline {4.4}BLAST}{6}{subsection.4.4}
 \contentsline {subsection}{\numberline {4.5}PSI-BLAST}{6}{subsection.4.5}
 \contentsline {subsection}{\numberline {4.6}Probe}{6}{subsection.4.6}
-\contentsline {subsection}{\numberline {4.7}Modeller}{6}{subsection.4.7}
-\contentsline {subsection}{\numberline {4.8}GenomAD}{6}{subsection.4.8}
-\contentsline {subsection}{\numberline {4.9}Infevers}{6}{subsection.4.9}
-\contentsline {subsection}{\numberline {4.10}RCSB}{6}{subsection.4.10}
-\contentsline {subsection}{\numberline {4.11}Uniprot}{6}{subsection.4.11}
-\contentsline {subsection}{\numberline {4.12}PDB}{6}{subsection.4.12}
-\contentsline {subsection}{\numberline {4.13}I-TASSER}{6}{subsection.4.13}
-\contentsline {subsection}{\numberline {4.14}PyMOL}{6}{subsection.4.14}
-\contentsline {section}{\numberline {5}Results}{7}{section.5}
-\contentsline {section}{\numberline {6}Discussion}{8}{section.6}
-\contentsline {section}{\numberline {7}Conclusion}{9}{section.7}
+\contentsline {subsection}{\numberline {4.7}SLURM}{6}{subsection.4.7}
+\contentsline {subsection}{\numberline {4.8}MPI}{6}{subsection.4.8}
+\contentsline {subsection}{\numberline {4.9}Bash}{6}{subsection.4.9}
+\contentsline {subsection}{\numberline {4.10}Python}{6}{subsection.4.10}
+\contentsline {subsection}{\numberline {4.11}Modeller}{7}{subsection.4.11}
+\contentsline {subsection}{\numberline {4.12}GenomAD}{7}{subsection.4.12}
+\contentsline {subsection}{\numberline {4.13}Infevers}{7}{subsection.4.13}
+\contentsline {subsection}{\numberline {4.14}RCSB}{7}{subsection.4.14}
+\contentsline {subsection}{\numberline {4.15}Uniprot}{7}{subsection.4.15}
+\contentsline {subsection}{\numberline {4.16}PDB}{7}{subsection.4.16}
+\contentsline {subsection}{\numberline {4.17}I-TASSER}{7}{subsection.4.17}
+\contentsline {subsection}{\numberline {4.18}PyMOL}{7}{subsection.4.18}
+\contentsline {section}{\numberline {5}Results}{8}{section.5}
+\contentsline {section}{\numberline {6}Discussion}{9}{section.6}
+\contentsline {section}{\numberline {7}Conclusion}{10}{section.7}
