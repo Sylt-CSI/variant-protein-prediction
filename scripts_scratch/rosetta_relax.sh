@@ -4,10 +4,10 @@
 #SBATCH --ntasks=34
 #SBATCH --mem=90gb
 #SBATCH --nodes=1
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_error/%j_relax_error.txt
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/relax_output/%j_relax_ouput.txt
-#SBATCH --exclude=umcg-node002,umcg-node003,umcg-node004
+#SBATCH --exclude=umcg-node002,umcg-node004
 #SBATCH --export=NONE
 
 

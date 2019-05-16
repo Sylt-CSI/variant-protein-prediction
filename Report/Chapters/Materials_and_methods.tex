@@ -49,6 +49,7 @@ Missense mutated proteins have an altered amino acid that can cause differences 
 \subsubsection{DDG Monomer}
 The tool itself is meant to predict energetic stability of a point mutation in  monomeric protein.The application was used by VIPUR to collect features related to energies and hydrogen, disfulfide, bonds and constraints differences between the wild type and a mutated protein. To execute the tool a script had to be ran that renumbers the wild type pdb file and it requires a "mutation file" that describes the change of a residue based on name and position changes to a different residue \cite{}.
 %ddg_monomer application, Andrew Leaver-Fay
+%Backrub application, Smith
 \label{subsubsec:MM_DDG_Monomer}
 
 \subsubsection{Rescore}
@@ -56,43 +57,13 @@ With this tool Rosetta scores can be calculated based on silent or PDB files pro
 %Score Commands, Jared
 \label{subsubsec:MM_Rescore}
 
-\subsubsection{Abinitio}
-\label{subsubsec:MM_Abinitio}
-
 \subsubsection{Backrub}
-The backrub application is based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), and alters a protein by moving its backbone residues with a strategy called fix end move (FEM). With this strategy, groups of residues are made at random and can contain up to: four dihedral, two bond angles and two end points. Both ends of a group are fixated at their position in which a new angle $\alpha$ arises, within this angle residues are pivoted in their natural occurring maximum range of $\pm \ang{10}$ \cite{}.
+The backrub application is based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), and alters a protein by moving its backbone residues with a strategy called fix end move (FEM). With this strategy, groups of residues are selected at random from the structure, it can contain up to: four dihedral, two bond angles and two end points. Both ends of a group are fixated at their position in which a new angle $\alpha$ arises, within this angle residues are pivoted in their natural occurring maximum range of $\pm \ang{10}$ \cite{}.
 %Efficient Monte Carlo trial moves for polypeptide simulations, Betancourt
-
- When groups are formed and contain a single residue a different method is applied called pivot movement (PM) which rotates a single dihedral angle and could give a wider variety of results across the backbone but also has a higher potential of generating steric hindrance. 
-
- A partially avoided strategy is pivot movement (PM) which rotates a single dihedral of a residue, a downside of PM is that it 
-
- it could lead to better results but also has a high probability of causing steric hindrance in the structure. In some cases it is used if the group size used by FEM is 1.
-
-In some cases a single residue is selected which would make FEM unsuitable, In some situations it is hard  To acquire information on energy in the groups it has to be known which residues are in the groups.
-
-
-of which a new angle will be defined as $\alpha$ in which the residues will pivoted around to find the lowest energy. The 
-
- Each group's ends are fixa had to end points which are fixated at their position, the residues in between are pivoted to determine 
-
-At the end of each group the residues are fixated and the residues in between
-
- Each group has two end points that are fixated and 
-
- of residues are made of which the end points in the structure are fixated at a single position, the residues that reside in between are pivoted.  
-
- fixates to residues at a single position and pivot 
-
-can alter the backbone by moving the backbone residues, the strategy that is employed is fixed end moves (FEM) which w
-
- it with help of the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}). The application takes groups of residues from the structure and fixes the end points into a single position, all residues in between are pivoted until they reach an optimal point where the energy levels are low. Each pivot
-
- are taken and every residue in between is pivoted, compared to other methods that take a single residue element and pivot it which commonly would produce steric hindrance.
-
 \label{subsubsec:MM_Backrub}
 
 \subsection{PyRosetta}
+Is an application programming (API) for the Rosetta software suite (Section \ref{subsec:MM_Rosetta}), it founds its use in VIPUR when no PyMOL (Section \ref{subsec:MM_PyMOL}) was available or .  
 \label{subsec:MM_PyRosetta}
 
 \subsection{BLAST}
@@ -103,6 +74,20 @@ can alter the backbone by moving the backbone residues, the strategy that is emp
 
 \subsection{Probe}
 \label{subsec:MM_Probe}
+
+\subsubsection{Robetta Protein prediction}
+The web tool Robetta integrates several tools to form whole protein structures based on sequence alignments of previously discovered structures. It requires a protein a fasta file or an amino acid sequence, optionally constrains and fragments can be added to disallow movement of certain structures or add known fragments to avoid calculating pieces that are already known. With this information Robetta search with the help of sequence aligners for known fragments and tries to incorporate them into a single protein structure \cite{}.
+%High-Resolution Comparative Modeling with RosettaCM, Song
+%Protein homology detection by HMM-HMM comparison, Soding
+%Template-based protein structure modeling using the RaptorX web server,Källberg
+%Improving protein fold recognition and template-based modeling by employing probabilistic-based matching between predicted one-dimensional structural properties of query and corresponding native properties of templates, Yang
+%Protein structure determination using metagenome sequence data,Ovchinnikov
+
+The used structures of TNFRSF1A were in complete and could therefore lack information regarding the structure when a mutation is introduced. To form a whole protein the, fragments of several known structures are joined by the Abinitio protocol within act on th with this webtool it was possible to predict the missing pieces of the protein
+\label{subsubsec:MM_Abinitio}
+
+\subsection{I-TASSER}
+\label{subsec:MM_I_TASSER}
 
 \subsection{SLURM}
 For computational jobs where a laptop or desktop does not suffice because due to the lack computational resources a computer cluster could come to aid. These clusters consist out of several computers that execute resource intensive tasks, to manage these systems for many clients and to use these clusters optimal a workload manager mlike simple Linux utility resource management (SLURM), is installed. Jobs are submitted that request resources for execution and are scheduled on the systems queue which is ordered based on priorities, resource requirement and time.
@@ -146,15 +131,8 @@ Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_B
 \subsection{Uniprot}
 \label{subsec:MM_Uniprot}
 
-\subsection{PDB}
-\label{subsec:MM_PDB}
 
 
- 
-
-
-\subsection{I-TASSER}
-\label{subsec:MM_I_TASSER}
 
 \subsection{PyMOL}
 Visualization of 3D structures, making images of proteins and putting the known orientations of monomeres in position  were done in PyMOL \cite{}.

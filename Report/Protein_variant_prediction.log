@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.4)  15 MAY 2019 15:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.4)  16 MAY 2019 09:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -778,7 +778,7 @@ LaTeX Warning: Reference `subsec:MM_Rosetta:' on page 4 undefined on input line
  15.
 
 [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 108--113
+Underfull \hbox (badness 10000) in paragraph at lines 112--117
 
  []
 
@@ -817,10 +817,10 @@ ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loca
 l/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
 /texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Protein_variant_prediction.pdf (16 pages, 156634 bytes).
+Output written on Protein_variant_prediction.pdf (16 pages, 156693 bytes).
 PDF statistics:
- 342 PDF objects out of 1000 (max. 8388607)
- 310 compressed objects within 4 object streams
+ 343 PDF objects out of 1000 (max. 8388607)
+ 311 compressed objects within 4 object streams
  58 named destinations out of 1000 (max. 500000)
  289 words of extra memory for PDF output out of 10000 (max. 10000000)
 

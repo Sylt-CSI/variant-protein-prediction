@@ -7,7 +7,7 @@
 #SBATCH --time=24:00:00
 #SBATCH --error=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_error/%j_backrub_error.txt
 #SBATCH --output=/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_output/%j_backrub_ouput.txt
-#SBATCH --exclude=umcg-node002,umcg-node003,umcg-node004
+#SBATCH --exclude=umcg-node002,umcg-node004
 #SBATCH --export=NONE
 
 module purge
