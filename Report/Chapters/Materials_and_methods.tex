@@ -63,13 +63,18 @@ The backrub application is based on the Monte Carlo method (Section \ref{section
 \label{subsubsec:MM_Backrub}
 
 \subsection{PyRosetta}
-Is an application programming (API) for the Rosetta software suite (Section \ref{subsec:MM_Rosetta}), it founds its use in VIPUR when no PyMOL (Section \ref{subsec:MM_PyMOL}) was available or .  
+Is an application programming (API) which has Python bindings (Section \ref{subsec:MM_Python}) for the Rosetta software suite (Section \ref{subsec:MM_Rosetta}), it founds its use in VIPUR when no PyMOL (Section \ref{subsec:MM_PyMOL}) was available to mutate residues within a structure \cite{}.
+%PyRosetta, Jeffry
 \label{subsec:MM_PyRosetta}
-
-\subsection{BLAST}
-\label{subsec:MM_BLAST}
+\newline
+\textit{Version 4}
 
 \subsection{PSI-BLAST}
+Position specific iterative basic local alignment search tool (PSI-BLAST) focuses on distant relatives of proteins by making a profile of the sequence and querying it at a protein sequence database. With the generated results a new profile is constructed and queried again, these steps are repeated several times to determine which residues are found in relatives of the protein. The result is a position specific scoring matrix (PSSM) which describes the frequency of which residues are substituted by a specific other residue, positive is more, negative is less common \cite{}.
+%PSIBLAST, NCBI
+%PSSM Viewer, NCBI
+%BLAST, Wikipedia 
+From the PSSMs sequences features were acquired for the VIPUR machine learning method.
 \label{subsec:MM_PSI_BLAST}
 
 \subsection{Probe}
@@ -84,10 +89,13 @@ The web tool Robetta integrates several tools to form whole protein structures b
 %Protein structure determination using metagenome sequence data,Ovchinnikov
 
 The used structures of TNFRSF1A were in complete and could therefore lack information regarding the structure when a mutation is introduced. To form a whole protein the, fragments of several known structures are joined by the Abinitio protocol within act on th with this webtool it was possible to predict the missing pieces of the protein
-\label{subsubsec:MM_Abinitio}
+\label{subsubsec:MM_Robetta}
 
 \subsection{I-TASSER}
+Predicts proteins with protein threading
 \label{subsec:MM_I_TASSER}
+\newline
+\textit{Server version}
 
 \subsection{SLURM}
 For computational jobs where a laptop or desktop does not suffice because due to the lack computational resources a computer cluster could come to aid. These clusters consist out of several computers that execute resource intensive tasks, to manage these systems for many clients and to use these clusters optimal a workload manager mlike simple Linux utility resource management (SLURM), is installed. Jobs are submitted that request resources for execution and are scheduled on the systems queue which is ordered based on priorities, resource requirement and time.
@@ -117,6 +125,8 @@ Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_B
 \textit{Server version 2.7.11}
 
 \subsection{Modeller}
+Modeller is software is developed for homology modeling by giving it wild type structures and superposing the used for homology modeling which is partly the identical  purpose as Rosetta (Section \ref{subsec:MM_Rosetta}) but has a wide variety of other tools which can complement proteins structures mutate models similar to Pymol and Pyrosetta 
+An alternative piece of software for homology modeling with Rosetta (Section \ref{subsec:MM_Rosetta} or Mutating residues)
 \label{subsec:MM_Modeller}
 
 \subsection{GenomAD}

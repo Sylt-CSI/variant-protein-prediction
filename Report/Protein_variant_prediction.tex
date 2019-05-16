@@ -1,4 +1,4 @@
-\documentclass[10pt]{article}
+\documentclass[12pt]{article}
 \usepackage{titling} % Import titles.
 % Make page wider so title fits better on first page.
 \usepackage[ 
@@ -27,12 +27,12 @@ textwidth=20cm
 	\newpage
 	
 	% Make text width normal.
-	\restoregeometry
-%	\newgeometry{top=2in,
-%	bottom=1in,
-%	left=1in,
-%	right=1in,
-%	textwidth=14cm}
+%	\restoregeometry
+	\newgeometry{top=2in,
+	bottom=1in,
+	left=1in,
+	right=1in,
+	textwidth=14cm}
 	
 	
 	\tableofcontents
@@ -52,12 +52,12 @@ textwidth=20cm
 	\newpage
 	
 	\pagenumbering{arabic}
-
-	\section{Cell Death}
-	\input{Chapters/Cell_death}
-	\label{section:Chap_Cell Death}
+	
+	\section{Variant Prediction In Genome Diagnostics}
+	\input{Chapters/Variant_Prediction_Genome_Diagnostics}
+	\label{section:Chap_Variant_Prediction_In_Genome_Diagnostics}
 	\newpage
-
+		
 	\section{Protein Modeling Techniques}
 	\input{Chapters/Protein_Modeling_Techniques}
 	\label{section:Chap_Protein_Modeling_Techniques}
@@ -66,6 +66,11 @@ textwidth=20cm
 	\section{Monte Carlo}
 	\input{Chapters/Monte_Carlo}
 	\label{section:Chap_Monte_Carlo}
+	\newpage
+	
+	\section{Cell Death}
+	\input{Chapters/Cell_death}
+	\label{section:Chap_Cell_Death}
 	\newpage
 	
 	\section{Materials and Methods}
