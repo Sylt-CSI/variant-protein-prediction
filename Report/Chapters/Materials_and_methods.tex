@@ -79,18 +79,24 @@ Position specific iterative basic local alignment search tool (PSI-BLAST) focuse
 %BLAST, Wikipedia 
 From the PSSMs sequences features were acquired for the VIPUR machine learning method.
 \label{subsec:MM_PSI_BLAST}
+\newline
+\textit{Position-Specific Iterated BLAST 2.7.1+}
 
 \subsection{Probe}
+Probe is able to evaluate atom packing for a single protein or interacting proteins by creating a probe, which is described as a sphere like object, that marks an area with dots when at least two non-covalent atoms are in contact with the probe at the same position \cite{}. VIPUR used this tool to calculate solvent accessible surface area (SASA or ACCP).
+%Visualizing and quantifying molecular goodness-of-fit: small-probe contact dots with explicit hydrogen atoms11Edited by J. Thornton,Word
+%Probe Software : Kinemage Website, Richardson LAB
 \label{subsec:MM_Probe}
+\newline
+\textit{version 2.16.130520}
 
-\subsubsection{Robetta Protein prediction server}
-The web tool Robetta integrates several tools to form whole protein structures based on sequence alignments of previously discovered structures. It requires an amino acid sequence, optionally constrains and fragments can be added to disallow movement of certain structures or add known fragments to avoid calculating pieces that are already known. With this information Robetta search with the help of sequence aligners for known fragments and tries to incorporate them into a single protein structure \cite{}.
+\subsection{Robetta Protein prediction server}
+The web tool Robetta integrates several tools to form protein structures based on sequence alignments of previously discovered structures also known as homology modeling (Section \ref{}). It requires an amino acid sequence, optionally constrains and fragments can be added to disallow movement of certain structures or add known fragments to avoid calculating pieces that are already known. With this information Robetta search with the help of sequence aligners for known fragments and tries to incorporate them into a single protein structure \cite{}.
 %High-Resolution Comparative Modeling with RosettaCM, Song
 %Protein homology detection by HMM-HMM comparison, Soding
 %Template-based protein structure modeling using the RaptorX web server,Källberg
 %Improving protein fold recognition and template-based modeling by employing probabilistic-based matching between predicted one-dimensional structural properties of query and corresponding native properties of templates, Yang
 %Protein structure determination using metagenome sequence data,Ovchinnikov
-
 The used structures of TNFRSF1A were in complete and could therefore lack information regarding the structure when a mutation is introduced. To form a whole protein the, fragments of several known structures are joined by the Abinitio protocol within act on th with this webtool it was possible to predict the missing pieces of the protein
 \label{subsubsec:MM_Robetta}
 
@@ -143,7 +149,7 @@ Is a collection of nucleotide mutations from rare diseases used by the GAVIN \ci
 \label{subsec:MM_GAVIN_data_table}
 
 \subsection{GenomAD}
-This database \cite{} consists of unified data from large scale genome sequencing data projects and is based on genome reference consortium human genome build 37 human genome 19 (GRCh37/hg19). From this database missense mutations were collected for TNFRSF1A (Section \ref{section:Chap_Cell_Death}), no classification was known for these mutations.
+The GenomAD database consists of unified data from large scale genome sequencing data projects and is based on genome reference consortium human genome build 37 human genome 19 (GRCh37/hg19). From this database missense mutations were collected for TNFRSF1A (Section \ref{section:Chap_Cell_Death}), no classification was known for these mutations \cite{}.
 %gnomAD,gnomAD
 \label{subsec:MM_GenomAD}
 
@@ -167,6 +173,7 @@ Knowledge from various omic domains about proteins has been linked together into
 \subsection{R scripting language}
 With R the tables from GenomeAD, GAVIN and Infevers (Sections \ref{subsec:MM_GenomAD} \ref{subsec:MM_GAVIN_data_table} \ref{subsec:MM_Infevers}) of TNFRSF1A missense mutations (Section \ref{section:Chap_Cell_Death}) were merged together in a new comma seperated values file with their known classifications. Ordering and filtering the double mutations and removing double classifcations where done with Python (Section \ref{subsec:MM_Python}).
 \label{subsec:MM_R}
+\newline
 \textit{R scripting front-end version 3.5.2 (2018-12-20)}
 
 \subsection{PyMOL}
