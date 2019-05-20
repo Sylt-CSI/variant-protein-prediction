@@ -46,10 +46,12 @@ Missense mutated proteins have an altered amino acid that can cause differences 
 \textit{Rosetta software suite Version 3.10}
 
 \subsubsection{Relax}
+Relax was the only application used by both methods which tried to minimize energies in local conformational search space \cite{} within the mutated structures. From each minimization attempt the structure was saved and scores for certain properties were calculated and written into a single file. From this score file VIPUR collected all samples and made 83 features out of it, the detailed approach used the scores from a single structure for its assessment.
+%Relax application, Rosetta Commons 
 \label{subsubsec:MM_Relax}
 
 \subsubsection{DDG Monomer}
-The tool itself is meant to predict energetic stability of a point mutation in  monomeric protein.The application was used by VIPUR to collect features related to energies and hydrogen, disfulfide, bonds and constraints differences between the wild type and a mutated protein. To execute the tool a script had to be ran that renumbers the wild type pdb file and it requires a "mutation file" that describes the change of a residue based on name and position changes to a different residue \cite{}.
+DDG monomer is meant to predict energetic stability of a point mutation in  monomeric protein.The application was used by VIPUR to collect features related to energies and hydrogen, disfulfide, bonds and constraints differences between the wild type and a mutated protein. To execute the tool a script had to be ran that renumbers the wild type pdb file and it requires a "mutation file" that describes the change of a residue based on name and position changes to a different residue \cite{}.
 %ddg_monomer application, Andrew Leaver-Fay
 %Backrub application, Smith
 \label{subsubsec:MM_DDG_Monomer}
@@ -62,6 +64,8 @@ With this tool Rosetta scores can be calculated based on silent or PDB files pro
 \subsubsection{Backrub}
 The backrub application is based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), and alters a protein by moving its backbone residues with a strategy called fix end move (FEM). With this strategy, groups of residues are selected at random from the structure, it can contain up to: four dihedral, two bond angles and two end points. Both ends of a group are fixated at their position in which a new angle $\alpha$ arises, within this angle residues are pivoted in their natural occurring maximum range of $\pm \ang{10}$ \cite{}.
 %Efficient Monte Carlo trial moves for polypeptide simulations, Betancourt
+With this method the backbones of newly introduced mutations were altered, for each attempt a new file was generated and a score was written to a score file, from which the lowest Rosetta scoring was selected to be further relaxed (Section \ref{subsubsec:MM_Relax}).
+
 It was used on the mutated protein to relax the modified backbone structure.
 \label{subsubsec:MM_Backrub}
 
@@ -90,18 +94,21 @@ Probe is able to evaluate atom packing for a single protein or interacting prote
 \newline
 \textit{version 2.16.130520}
 
-\subsection{Robetta Protein prediction server}
+\subsection{Robetta prediction server}
 The web tool Robetta integrates several tools to form protein structures based on sequence alignments of previously discovered structures also known as homology modeling (Section \ref{}). It requires an amino acid sequence, optionally constrains and fragments can be added to disallow movement of certain structures or add known fragments to avoid calculating pieces that are already known. With this information Robetta search with the help of sequence aligners for known fragments and tries to incorporate them into a single protein structure \cite{}.
 %High-Resolution Comparative Modeling with RosettaCM, Song
 %Protein homology detection by HMM-HMM comparison, Soding
 %Template-based protein structure modeling using the RaptorX web server,Källberg
 %Improving protein fold recognition and template-based modeling by employing probabilistic-based matching between predicted one-dimensional structural properties of query and corresponding native properties of templates, Yang
 %Protein structure determination using metagenome sequence data,Ovchinnikov
-The used structures of TNFRSF1A were in complete and could therefore lack information regarding the structure when a mutation is introduced. To form a whole protein the, fragments of several known structures are joined by the Abinitio protocol within act on th with this webtool it was possible to predict the missing pieces of the protein
+The used structures of TNFRSF1A (Section \ref{section:Chap_Cell_Death}) were in complete and could therefore lack information regarding the structure when a mutation is introduced. To form a whole protein the, fragments of several known structures are joined by the Abinitio protocol within act on th with this web tool it was possible to predict the missing pieces of the protein
 \label{subsubsec:MM_Robetta}
 
-\subsection{I-TASSER}
-Predicts proteins with protein threading
+\subsection{I-TASSER prediction server}
+The I-TASSER web server is a tool that is able to predict protein structures with a FASTA sequence. The first step it takes is finding structural templates which resemble the sequence by local meta-threading server (LOMETS). LOMETS starts with multiple sequence alignment of which several sequences will undergo protein threading by different programs to form structural templates. The templates are assessed based on the highest alignment Z-score, the program specific confidence score and sequence identity \cite{}.
+%LOMETS, Zhang LAB
+%LOMETS: A local meta-threading-server for protein structure prediction, Wu
+The known fragments of TNFRSF1A (Section \ref{section:Chap_Cell_Death}) were given as a template to I-TASSER and modeled into a whole protein to make it possible to introduce mutations and predict pathogenicity of a variants.
 \label{subsec:MM_I_TASSER}
 \newline
 \textit{Server version}
@@ -109,29 +116,6 @@ Predicts proteins with protein threading
 \subsection{SLURM}
 For computational jobs where a laptop or desktop does not suffice because due to the lack computational resources a computer cluster could come to aid. These clusters consist out of several computers that execute resource intensive tasks, to manage these systems for many clients and to use these clusters optimal a workload manager mlike simple Linux utility resource management (SLURM), is installed. Jobs are submitted that request resources for execution and are scheduled on the systems queue which is ordered based on priorities, resource requirement and time.
 \label{subsec:MM_SLURM}
-
-\subsection{MPI}
-Some tools from the Rosetta software suite (Sections \ref{subsec:MM_Rosetta}) have the ability to use multiple central processing unit (CPU) cores from a single computer or from multiple computers. With a message parsing interface (MPI) it is possible for software to communicate between CPU cores on the same and on different computers to exchange information about processes and therefor solving solutions faster.
-\label{MM_MPI}
-\newline
-\textit{OpenMPI/1.8.8-GNU-4.9.3-2.25}
-\newline
-
-\subsection{Bash}
-Unix like operating systems (OS) have a shell which allows users to interact with programs on a computer or with the computer itself based on commands submitted.  The default shell for MacOS and also for several Linux distributions is the Bourne again shell (Bash) which was used to launch Python scripts (Section \ref{subsec:MM_Python}) and submit jobs to the SLURM workload manager (Section \ref{subsec:MM_SLURM}). 
-\label{subsec:MM_Bash}
-\newline
-\textit{Laptop Version GNU bash, version 3.2.57(1)-release (x86\_64-apple-darwin18)}
-\newline
-\textit{Server Version GNU bash, version 4.1.2(2)-release (x86\_64-redhat-linux-gnu)}
-
-\subsection{Python}
-Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_Backrub}) and side chain energies (Section \ref{subsubsec:MM_Relax}) were written in Python due to its capabilities, ease of use and because modeller (Section \ref{subsec:MM_Modeller}) for MacOS relies on the system version of Python and does currently not support newer versions besides the one found within the OS of Mac. The mutations that were put together from the different tables (Sections \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}, \ref{subsec:MM_GAVIN_data_table}) with R {Section \ref{subsec:MM_R}) were filtered by a Python script.
-\label{subsec:MM_Python}
-\newline
-\textit{Laptop version 2.7.15}
-\newline
-\textit{Server version 2.7.11}
 
 \subsection{Modeller}
 Modeller is software that is developed for homology modeling but it was used for its utilities which allowed to; complete protein data bank (PDB) structures with missing atoms; predict disulfide bonds that were missing and mutate protein residues \cite{}. 
@@ -176,10 +160,33 @@ With R the tables from GenomeAD, GAVIN and Infevers (Sections \ref{subsec:MM_Gen
 \newline
 \textit{R scripting front-end version 3.5.2 (2018-12-20)}
 
+\subsection{Bash}
+Unix like operating systems (OS) have a shell which allows users to interact with programs on a computer or with the computer itself based on commands submitted.  The default shell for MacOS and also for several Linux distributions is the Bourne again shell (Bash) which was used to launch Python scripts (Section \ref{subsec:MM_Python}) and submit jobs to the SLURM workload manager (Section \ref{subsec:MM_SLURM}). 
+\label{subsec:MM_Bash}
+\newline
+\textit{Laptop Version GNU bash, version 3.2.57(1)-release (x86\_64-apple-darwin18)}
+\newline
+\textit{Server Version GNU bash, version 4.1.2(2)-release (x86\_64-redhat-linux-gnu)}
+
+\subsection{Python}
+Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_Backrub}) and side chain energies (Section \ref{subsubsec:MM_Relax}) were written in Python due to its capabilities, ease of use and because modeller (Section \ref{subsec:MM_Modeller}) for MacOS relies on the system version of Python and does currently not support newer versions besides the one found within the OS of Mac. The mutations that were put together from the different tables (Sections \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}, \ref{subsec:MM_GAVIN_data_table}) with R {Section \ref{subsec:MM_R}) were filtered by a Python script.
+	\label{subsec:MM_Python}
+	\newline
+	\textit{Laptop version 2.7.15}
+	\newline
+	\textit{Server version 2.7.11}
+
+\subsection{MPI}
+Some tools from the Rosetta software suite (Sections \ref{subsec:MM_Rosetta}) have the ability to use multiple central processing unit (CPU) cores from a single computer or from multiple computers. With a message parsing interface (MPI) it is possible for software to communicate between CPU cores on the same and on different computers to exchange information about processes and therefor solving solutions faster.
+\label{MM_MPI}
+\newline
+\textit{OpenMPI/1.8.8-GNU-4.9.3-2.25}
+\newline
+
 \subsection{PyMOL}
-Visualization of 3D structures, making images of proteins and putting the known orientations of monomeres in position  were done in PyMOL \cite{}.
+Visualization of 3D structures, making images of proteins and putting the known orientations of monomeres in position were done in PyMOL \cite{}.
 % PyMOL | pymol.org, Schrödinger
-Since some protein structures consist of multiple identical monomers they are left out of the structure and supplied with information about how the monomers are position to form the whole oligomer structure (Sections \ref{subsec:MM_RCSB}, \ref{subsec:MM_Uniprot}).
+Since some protein structures consist of multiple identical monomers they are left out of the structure and supplied with information about how the monomers are position to form the whole oligomer structure (Sections \ref{subsec:MM_RCSB}, \ref{subsec:MM_Uniprot}). PyMOL was also the default method for mutating proteins in the VIPUR approach.
 \label{subsec:MM_PyMOL}
 \newline
 \textit{Version 2.2.3}
