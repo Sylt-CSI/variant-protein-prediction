@@ -169,12 +169,34 @@ Unix like operating systems (OS) have a shell which allows users to interact wit
 \textit{Server Version GNU bash, version 4.1.2(2)-release (x86\_64-redhat-linux-gnu)}
 
 \subsection{Python}
-Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_Backrub}) and side chain energies (Section \ref{subsubsec:MM_Relax}) were written in Python due to its capabilities, ease of use and because modeller (Section \ref{subsec:MM_Modeller}) for MacOS relies on the system version of Python and does currently not support newer versions besides the one found within the OS of Mac. The mutations that were put together from the different tables (Sections \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}, \ref{subsec:MM_GAVIN_data_table}) with R {Section \ref{subsec:MM_R}) were filtered by a Python script.
-	\label{subsec:MM_Python}
-	\newline
-	\textit{Laptop version 2.7.15}
-	\newline
-	\textit{Server version 2.7.11}
+Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_Backrub}) and side chain energies (Section \ref{subsubsec:MM_Relax}) were written in Python due to its capabilities, ease of use and because modeller (Section \ref{subsec:MM_Modeller}) for MacOS relies on the system version of Python and does currently not support newer versions besides the one found within the OS of Mac. The mutations that were put together from the different tables (Sections \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}, \ref{subsec:MM_GAVIN_data_table}) with R {Section \ref{subsec:MM_R}) were filtered by a Python script. To apply each mutation correctly on the proteins in the detailed method a script was written in which files were generated that described in a compact format on which chains and position a mutation resided.
+
+
+\begin{tabular}{ l | l | l | l}
+	Original residue & Position in the protein sequence & New residue & Classification\\ \hline
+	Cys & 44 & Tyr & PATHOGENIC\\
+	Thr & 44 & Pro & PATHOGENIC\\
+	Thr & 44 & Ser & PATHOGENIC\\
+\end{tabular}
+
+
+\begin{tabular}{ l | l | l | l | l}
+	Iteration number & Filename & Chain & Residue index in chain & New residue\\ \hline
+	34 & 1tnr3\_TNFA & R & 0  & TYR\\
+	34 & 1tnr3\_TNFA & T & 0  & TYR\\
+	34 & 1tnr3\_TNFA & S & 0  & TYR\\
+	35 & 1tnr3\_TNFA &R & 0 & PRO\\
+	35 & 1tnr3\_TNFA &T & 0 & PRO\\
+	35 & 1tnr3\_TNFA &S & 0 & PRO\\
+	36 & 1tnr3\_TNFA &R & 0 & SER\\
+	36 & 1tnr3\_TNFA &T & 0 & SER\\
+	36 & 1tnr3\_TNFA &S & 0 & SER\\
+\end{tabular}
+\label{subsec:MM_Python}
+\newline
+\textit{Laptop version 2.7.15}
+\newline
+\textit{Server version 2.7.11}
 
 \subsection{MPI}
 Some tools from the Rosetta software suite (Sections \ref{subsec:MM_Rosetta}) have the ability to use multiple central processing unit (CPU) cores from a single computer or from multiple computers. With a message parsing interface (MPI) it is possible for software to communicate between CPU cores on the same and on different computers to exchange information about processes and therefor solving solutions faster.
@@ -184,9 +206,8 @@ Some tools from the Rosetta software suite (Sections \ref{subsec:MM_Rosetta}) ha
 \newline
 
 \subsection{PyMOL}
-Visualization of 3D structures, making images of proteins and putting the known orientations of monomeres in position were done in PyMOL \cite{}.
+Visualization of 3D structures, making images of proteins, putting the known orientations of monomeres in position and replacing TNF $\beta$ with TNF $\alpha$ were done in PyMOL \cite{}, also PyMOL had some Python bindings to mutate proteins, which were used by VIPUR.
 % PyMOL | pymol.org, Schrödinger
-Since some protein structures consist of multiple identical monomers they are left out of the structure and supplied with information about how the monomers are position to form the whole oligomer structure (Sections \ref{subsec:MM_RCSB}, \ref{subsec:MM_Uniprot}). PyMOL was also the default method for mutating proteins in the VIPUR approach.
 \label{subsec:MM_PyMOL}
 \newline
 \textit{Version 2.2.3}
