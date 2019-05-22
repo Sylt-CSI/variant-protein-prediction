@@ -1,1 +1,30 @@
-The structures 1EXT \cite{} and 1TNR \cite{} (Sections \ref{subsec:MM_RCSB} \ref{subsec:MM_Uniprot}) that represent TNFRSF1A (Section \ref{section:Chap_Cell Death}) were incomplete and to fill in the missing pieces of the structure
+%The structures 1EXT \cite{} and 1TNR \cite{} (Sections \ref{subsec:MM_RCSB} \ref{subsec:MM_Uniprot}) that represent TNFRSF1A (Section \ref{section:Chap_Cell Death}) were incomplete and to fill in the missing pieces of the structure
+
+\begin{table}[ht]
+	\begin{tabular}{ l | l | l | l}
+		Original residue & Position in the protein sequence & New residue & Classification\\ \hline
+		Cys & 44 & Tyr & PATHOGENIC\\
+		Thr & 44 & Pro & PATHOGENIC\\
+		Thr & 44 & Ser & PATHOGENIC\\
+	\end{tabular}
+	\caption{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers} ) with the available classifications: Benign Pathogenic, Likely Benign, Likely Pathogenic, Population, Uncertain significance (VOUS) and Na.}
+	\label{table:Res_Filtered_Mutations}
+\end{table}
+
+\begin{table}[ht]
+	\begin{tabular}{ l | l | l | l | l}
+		Iteration number & Filename & Chain & Residue index in chain & New residue\\ \hline
+		34 & 1tnr3\_TNFA & R & 0 & TYR\\
+		34 & 1tnr3\_TNFA & T & 0 & TYR\\
+		34 & 1tnr3\_TNFA & S & 0 & TYR\\
+		35 & 1tnr3\_TNFA & R & 0 & PRO\\
+		35 & 1tnr3\_TNFA & T & 0 & PRO\\
+		35 & 1tnr3\_TNFA & S & 0 & PRO\\
+		36 & 1tnr3\_TNFA & R & 0 & SER\\
+		36 & 1tnr3\_TNFA & T & 0 & SER\\
+		36 & 1tnr3\_TNFA & S & 0 & SER\\
+	\end{tabular}
+	\caption{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}). The iteration number states if a mutation must be made in a single variant or in a different protein. Filename describes the protein to which the mutations are applied. Since structures can consist of multiple chains it has to be specified together with the index starting at 0 instead of 1 and finally to which residue it will be transformed.}
+		\label{table:Res_Modeller_Mutation_Format}
+\end{table}
+

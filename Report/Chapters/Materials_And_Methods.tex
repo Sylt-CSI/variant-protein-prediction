@@ -170,28 +170,6 @@ Unix like operating systems (OS) have a shell which allows users to interact wit
 
 \subsection{Python}
 Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_Backrub}) and side chain energies (Section \ref{subsubsec:MM_Relax}) were written in Python due to its capabilities, ease of use and because modeller (Section \ref{subsec:MM_Modeller}) for MacOS relies on the system version of Python and does currently not support newer versions besides the one found within the OS of Mac. The mutations that were put together from the different tables (Sections \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}, \ref{subsec:MM_GAVIN_data_table}) with R {Section \ref{subsec:MM_R}) were filtered by a Python script. To apply each mutation correctly on the proteins in the detailed method a script was written in which files were generated that described in a compact format on which chains and position a mutation resided.
-
-
-\begin{tabular}{ l | l | l | l}
-	Original residue & Position in the protein sequence & New residue & Classification\\ \hline
-	Cys & 44 & Tyr & PATHOGENIC\\
-	Thr & 44 & Pro & PATHOGENIC\\
-	Thr & 44 & Ser & PATHOGENIC\\
-\end{tabular}
-
-
-\begin{tabular}{ l | l | l | l | l}
-	Iteration number & Filename & Chain & Residue index in chain & New residue\\ \hline
-	34 & 1tnr3\_TNFA & R & 0  & TYR\\
-	34 & 1tnr3\_TNFA & T & 0  & TYR\\
-	34 & 1tnr3\_TNFA & S & 0  & TYR\\
-	35 & 1tnr3\_TNFA &R & 0 & PRO\\
-	35 & 1tnr3\_TNFA &T & 0 & PRO\\
-	35 & 1tnr3\_TNFA &S & 0 & PRO\\
-	36 & 1tnr3\_TNFA &R & 0 & SER\\
-	36 & 1tnr3\_TNFA &T & 0 & SER\\
-	36 & 1tnr3\_TNFA &S & 0 & SER\\
-\end{tabular}
 \label{subsec:MM_Python}
 \newline
 \textit{Laptop version 2.7.15}
@@ -211,4 +189,3 @@ Visualization of 3D structures, making images of proteins, putting the known ori
 \label{subsec:MM_PyMOL}
 \newline
 \textit{Version 2.2.3}
-

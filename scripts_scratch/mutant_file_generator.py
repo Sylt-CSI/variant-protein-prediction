@@ -33,7 +33,7 @@ class MutantFileGenerator:
                 "TYR": "Y",
                 "VAL": "V"
             }
-        # TODO make it public to access it by different scripts, see methode read_csv_file at try
+        # TODO make it public to access it by different scripts, see method read_csv_file at try
         self.stored_mutation_index = {}
 
         csv_file, mutant_file, pdb_file, self._chain, self._new_start = self._mutant_file_generator_argument_parser()
