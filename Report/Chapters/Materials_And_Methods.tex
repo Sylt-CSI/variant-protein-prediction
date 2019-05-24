@@ -65,7 +65,6 @@ With this tool Rosetta scores can be calculated based on silent or PDB files pro
 The backrub application is based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), and alters a protein by moving its backbone residues with a strategy called fix end move (FEM). With this strategy, groups of residues are selected at random from the structure, it can contain up to: four dihedral, two bond angles and two end points. Both ends of a group are fixated at their position in which a new angle $\alpha$ arises, within this angle residues are pivoted in their natural occurring maximum range of $\pm \ang{10}$ \cite{}.
 %Efficient Monte Carlo trial moves for polypeptide simulations, Betancourt
 With this method the backbones of newly introduced mutations were altered, for each attempt a new file was generated and a score was written to a score file, from which the lowest Rosetta scoring was selected to be further relaxed (Section \ref{subsubsec:MM_Relax}).
-
 It was used on the mutated protein to relax the modified backbone structure.
 \label{subsubsec:MM_Backrub}
 
