@@ -29,34 +29,21 @@ With experimental methods such as X-ray crystallography and nuclear magnetic res
 % wwPDB: Deposition Statistics, wwPDB	
 %Chemiotics: How many proteins can we make? : The Sceptical Chymist, Cantrill
 Making 3D structures is currently not common for diagnosis because it is relative expensive and it is difficult to perform with some structures that contain flexible regions where in the positions of atoms is hard to determine the exact position \cite{}.
-% %PDB101: Learn: Guide to Understanding PDB Data: Missing Coordinates and Biological Assemblies, PDB101
+%PDB101: Learn: Guide to Understanding PDB Data: Missing Coordinates and Biological Assemblies, PDB101
+%From Protein Structure to Function With Bioinformatics page 4 (book) 18 (pdf), Ridgen
+\newpage
 
 \subsection{Protein modeling techniques}
 
-An alternative approach to determine structures is based on modeling the protein structure computationally from the amino acid sequence of the desired protein. Making amino acids in a protein behave realistic in a computer model can be partially emulated by applying force fields \cite{} to atoms that define their behavior and and by avoiding steric hindrance in the $\phi$ and $\psi$ angles between amino acids.
-%Force field (chemistry), Wikipedia
-% Ramachandran plot, Wikipedia
-However, applying these methods still leaves plenty potential structures over, and therefore other strategies are more commonly applied. With homology modeling 
+An alternative approach to determine structures is based on modeling the protein structure computationally from the amino acid sequence of the desired protein. A downside from computer generated models is that they do not follow the rules of physics and therefore not automatically fold into the correct confirmation. With the method homology modeling sequences of the requested protein are aligned to sequences of known experimental determined structures, based on these alignments a template is formed whereon structural fragments are built, it is not recommended to use this strategy if the sequence identity is less than 20\% since there might not be any structural relation at that point \cite{}.
+% The relation between the divergence of sequence and structure in proteins, Chotia and Lesk
+Another approach is protein threading which relies on the observation of folds in previous determined experimental structures. Based on the occurrence of specific folds a probability is predicted that a certain residue in a protein might fold in that manner. 
 
-another strategy is more commonly used called homology modeling.
-%
-%is a difficult task and currently relies on information of known structures. A technique that is used 
-%
-%With this method mainly two strategies are used that both rely on already known structures and the primary structure of the desired protein. 
-%
-%Homology modeling relies   
-%
-%An alternative method for generating protein structures than experimental methods is by solving the structures computationally through modeling of the primary structure. 
-%It is cheaper but also has the downside of being less accurate than a crystal structure.
-%which has the advantage of being cheaper b
-%
-%
-%
-%Protein modeling is a cheaper alternative for generating multiple structures
-%A cheaper alternative for generating multiple structures than experimental determination of structures is modeling of proteins based on an amino acid sequence and previous determine protein structures.
-%A cheaper method for generating protein structures than experimental determination is protein modeling. With this method proteins are made based on the primary structure of the desired protein and put together from folds or structure of previous known 
-%
-%
+Strategies are continuously being improved and developed for proteins to determine the unknown structures, but all have the similar guidelines in avoiding steric hindrance \cite{} and finding the lowest energies based on different scoring systems \cite{}. From the computer generated models many are less accurate than the experimental determined methods and are often compared to them for reference. However the computational models do not have follow the same laws of physics which bottleneck the current experimental methods in for example determining membrane proteins \cite{}.
+%X-ray crystallography at the heart of life science, Yonath
+% Ramachandran plot, Wikipedia
+%Scoring Tutorial , Shourya et al.
+
 
 %Importance of experimental determination instead of just modeling
 %
