@@ -116,10 +116,6 @@ The known fragments of TNFRSF1A (Section \ref{section:Chap_Cell_Death}) were giv
 \newline
 \textit{Server version}
 
-\subsection{SLURM}
-For computational jobs where a laptop or desktop does not suffice because due to the lack computational resources a computer cluster could come to aid. These clusters consist out of several computers that execute resource intensive tasks, to manage these systems for many clients and to use these clusters optimal a workload manager mlike simple Linux utility resource management (SLURM), is installed. Jobs are submitted that request resources for execution and are scheduled on the systems queue which is ordered based on priorities, resource requirement and time.
-\label{subsec:MM_SLURM}
-
 \subsection{Modeller}
 Modeller is software that is developed for homology modeling but it was used for its utilities which allowed to; complete protein data bank (PDB) structures with missing atoms; predict disulfide bonds that were missing and mutate protein residues \cite{}. 
 %About MODELLER, Modeller
@@ -157,11 +153,16 @@ Knowledge from various omic domains about proteins has been linked together into
 %UniProt: a hub for protein information,The UniProt Consortium
 \label{subsec:MM_Uniprot}
 
-\subsection{R scripting language}
-With R the tables from GenomeAD, GAVIN and Infevers (Sections \ref{subsec:MM_GenomAD} \ref{subsec:MM_GAVIN_data_table} \ref{subsec:MM_Infevers}) of TNFRSF1A missense mutations (Section \ref{section:Chap_Cell_Death}) were merged together in a new comma seperated values file with their known classifications. Ordering and filtering the double mutations and removing double classifcations where done with Python (Section \ref{subsec:MM_Python}).
-\label{subsec:MM_R}
+\subsection{PyMOL}
+Visualization of 3D structures, making images of proteins, putting the known orientations of monomeres in position and replacing TNF $\beta$ with TNF $\alpha$ were done in PyMOL \cite{}, also PyMOL had some Python bindings to mutate proteins, which were used by VIPUR.
+% PyMOL | pymol.org, Schrödinger
+\label{subsec:MM_PyMOL}
 \newline
-\textit{R scripting front-end version 3.5.2 (2018-12-20)}
+\textit{Version 2.2.3}
+
+\subsection{HOPE}
+\label{subsec:MM_HOPE}
+\textit{Version 1.1.1}
 
 \subsection{Bash}
 Unix like operating systems (OS) have a shell which allows users to interact with programs on a computer or with the computer itself based on commands submitted.  The default shell for MacOS and also for several Linux distributions is the Bourne again shell (Bash) which was used to launch Python scripts (Section \ref{subsec:MM_Python}) and submit jobs to the SLURM workload manager (Section \ref{subsec:MM_SLURM}). 
@@ -179,16 +180,19 @@ Both VIPUR and the pipeline that minimizes backbone (Section \ref{subsubsec:MM_B
 \newline
 \textit{Server version 2.7.11}
 
+\subsection{R scripting language}
+With R the tables from GenomeAD, GAVIN and Infevers (Sections \ref{subsec:MM_GenomAD} \ref{subsec:MM_GAVIN_data_table} \ref{subsec:MM_Infevers}) of TNFRSF1A missense mutations (Section \ref{section:Chap_Cell_Death}) were merged together in a new comma seperated values file with their known classifications. Ordering and filtering the double mutations and removing double classifcations where done with Python (Section \ref{subsec:MM_Python}).
+\label{subsec:MM_R}
+\newline
+\textit{R scripting front-end version 3.5.2 (2018-12-20)}
+
+\subsection{SLURM}
+For computational jobs where a laptop or desktop does not suffice because due to the lack computational resources a computer cluster could come to aid. These clusters consist out of several computers that execute resource intensive tasks, to manage these systems for many clients and to use these clusters optimal a workload manager mlike simple Linux utility resource management (SLURM), is installed. Jobs are submitted that request resources for execution and are scheduled on the systems queue which is ordered based on priorities, resource requirement and time.
+\label{subsec:MM_SLURM}
+
 \subsection{MPI}
 Some tools from the Rosetta software suite (Sections \ref{subsec:MM_Rosetta}) have the ability to use multiple central processing unit (CPU) cores from a single computer or from multiple computers. With a message parsing interface (MPI) it is possible for software to communicate between CPU cores on the same and on different computers to exchange information about processes and therefor solving solutions faster.
 \label{MM_MPI}
 \newline
 \textit{OpenMPI/1.8.8-GNU-4.9.3-2.25}
 \newline
-
-\subsection{PyMOL}
-Visualization of 3D structures, making images of proteins, putting the known orientations of monomeres in position and replacing TNF $\beta$ with TNF $\alpha$ were done in PyMOL \cite{}, also PyMOL had some Python bindings to mutate proteins, which were used by VIPUR.
-% PyMOL | pymol.org, Schrödinger
-\label{subsec:MM_PyMOL}
-\newline
-\textit{Version 2.2.3}
