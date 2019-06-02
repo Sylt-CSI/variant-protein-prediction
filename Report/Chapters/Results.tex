@@ -26,31 +26,34 @@
 	\newpage
 	
 	\subsubsection{Expanding the VIPUR training set with data from TNFRSF1A by homology modeling and protein threading}
-	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ active site were available and its death domain that interacts with TRADD which plays a role in apoptosis. To acquire the structure of TNFRSF1A, I-TASSER and Robetta webservices (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}}) have been employed to model the whole structure with and without templates of the existing fragments.
+	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ active site were available and its death domain that interacts with TRADD which plays a role in apoptosis. To acquire a monomeric structure of TNFRSF1A the I-TASSER and Robetta webservices (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both had to model hte proteins with and without template to test  
 	
-	\begin{figure}[!ht]
-		\centering
-		\begin{subfigure}{0.45\textwidth}
-			\includegraphics[width=\textwidth]{Flowcharts/VIPUR_approach.pdf}{a}
-			\phantomcaption
-			\label{fig:RES_}
-		\end{subfigure}
-		\begin{subfigure}{0.45\textwidth}
-			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{b}
-			\phantomcaption
-			\label{fig:RES_}
-		\end{subfigure}
-		\begin{subfigure}{0.45\textwidth}
-			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{c}
-			\phantomcaption
-			\label{fig:RES_}
-		\end{subfigure}
-		\begin{subfigure}{0.45\textwidth}
-			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{d}
-			\phantomcaption
-			\label{fig:RES_}
-		\end{subfigure}
-		\caption[I-TASSER and Robetta models with and without templates]{}
+	
+	To acquire a model that might represent TNFRSF1A th the performance of both services ,that rely on two different modeling techniques (Section \ref{subsec:GD_Protein_modeling_techniques}), they had to model the whole structure with and without a template of the binding site of TNFRSF1A in were tested to form a structure based on the whole amino acid sequence, both got the would perform to make an accurate structure it wastructures of the binding site of
+%	
+%	\begin{figure}[!ht]
+%		\centering
+%		\begin{subfigure}{0.45\textwidth}
+%			\includegraphics[width=\textwidth]{Flowcharts/VIPUR_approach.pdf}{a}
+%			\phantomcaption
+%			\label{fig:RES_}
+%		\end{subfigure}
+%		\begin{subfigure}{0.45\textwidth}
+%			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{b}
+%			\phantomcaption
+%			\label{fig:RES_}
+%		\end{subfigure}
+%		\begin{subfigure}{0.45\textwidth}
+%			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{c}
+%			\phantomcaption
+%			\label{fig:RES_}
+%		\end{subfigure}
+%		\begin{subfigure}{0.45\textwidth}
+%			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{d}
+%			\phantomcaption
+%			\label{fig:RES_}
+%		\end{subfigure}
+%		\caption[I-TASSER and Robetta models with and without templates]{}
 
 
 

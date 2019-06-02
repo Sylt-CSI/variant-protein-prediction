@@ -1,0 +1,66 @@
+set_view (\
+    -0.359807611,   -0.545409501,    0.757011533,\
+    -0.877491832,    0.473552048,   -0.075888261,\
+    -0.317093372,   -0.691576004,   -0.648977935,\
+     0.000049844,    0.000009306, -317.515197754,\
+    48.218128204,   73.473815918,   84.847854614,\
+  -25487.035156250, 26122.062500000,  -20.000000000 )
+
+bg_color gray
+
+load /Users/gcc/Desktop/GCC/pipeline/report_models/I_TASSER_WITHOUT_TEMPLATE_model1.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/I_TASSER_WITH_TEMPLATE_model1.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/Robetta_model_01_with_template.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/Robetta_model_01_without_template.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/pdb1ext.ent
+
+remove resn SO4
+remove metals
+remove solvent
+
+remove pdb1ext and chain B
+
+color black, (I_TASSER_WITHOUT_TEMPLATE_model1 or I_TASSER_WITH_TEMPLATE_model1 or Robetta_model_01_with_template or Robetta_model_01_without_template) and ! resi 41-201
+
+align pdb1ext and chain A and name C+O+N+CA, I_TASSER_WITH_TEMPLATE_model1 and name C+O+N+CA and resi 41-200
+
+align I_TASSER_WITHOUT_TEMPLATE_model1 and name C+O+N+CA and resi 41-201 , pdb1ext and chain A and name C+O+N+CA, cycles = 0
+align I_TASSER_WITH_TEMPLATE_model1 and name C+O+N+CA and resi 41-201 , pdb1ext and chain A and name C+O+N+CA, cycles = 0
+align Robetta_model_01_with_template and name C+O+N+CA and resi 41-201, pdb1ext and chain A and name C+O+N+CA, cycles = 0
+align Robetta_model_01_without_template and name C+O+N+CA and resi 41-201, pdb1ext and chain A and name C+O+N+CA, cycles = 0
+
+hide cartoon
+set_view (\
+     0.009813400,   -0.302077264,    0.953232467,\
+    -0.898946881,    0.414841980,    0.140716910,\
+    -0.437946618,   -0.858286619,   -0.267479241,\
+    -0.000059873,    0.000092618, -345.497955322,\
+    63.605686188,   49.808803558,   67.567497253,\
+  -667.552368164, 1358.557495117,  -20.000000000 )
+show cartoon, pdb1ext or I_TASSER_WITHOUT_TEMPLATE_model1
+ray 1920, 1080
+png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITH_TEMPLATE.png 
+
+set_view (\
+     0.009813400,   -0.302077264,    0.953232467,\
+    -0.898946881,    0.414841980,    0.140716910,\
+    -0.437946618,   -0.858286619,   -0.267479241,\
+     0.000149876,    0.000106007, -345.494903564,\
+    63.686595917,   77.697860718,   82.516250610,\
+  -667.552368164, 1358.557495117,  -20.000000000 )
+hide cartoon, I_TASSER_WITHOUT_TEMPLATE_model1
+show cartoon, I_TASSER_WITH_TEMPLATE_model1
+ray 1920, 1080
+png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITHOUT_TEMPLATE.png 
+
+hide cartoon, I_TASSER_WITH_TEMPLATE_model1
+show cartoon, Robetta_model_01_with_template
+ray 1920, 1080
+png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_ROB_WITH_TEMPLATE.png 
+
+hide cartoon, Robetta_model_01_with_template
+show cartoon, Robetta_model_01_without_template
+ray 1920, 1080
+png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_ROB_WITHOUT_TEMPLATE.png 
+
+
