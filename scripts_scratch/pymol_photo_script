@@ -21,6 +21,8 @@ remove solvent
 remove pdb1ext and chain B
 
 color black, (I_TASSER_WITHOUT_TEMPLATE_model1 or I_TASSER_WITH_TEMPLATE_model1 or Robetta_model_01_with_template or Robetta_model_01_without_template) and ! resi 41-201
+color orange, (I_TASSER_WITHOUT_TEMPLATE_model1 or I_TASSER_WITH_TEMPLATE_model1 or Robetta_model_01_with_template or Robetta_model_01_without_template) and resi 41-201
+color skyblue, pdb1ext 
 
 align pdb1ext and chain A and name C+O+N+CA, I_TASSER_WITH_TEMPLATE_model1 and name C+O+N+CA and resi 41-200
 
@@ -39,7 +41,7 @@ set_view (\
   -667.552368164, 1358.557495117,  -20.000000000 )
 show cartoon, pdb1ext or I_TASSER_WITHOUT_TEMPLATE_model1
 ray 1920, 1080
-png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITH_TEMPLATE.png 
+png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITHOUT_TEMPLATE.png 
 
 set_view (\
      0.009813400,   -0.302077264,    0.953232467,\
@@ -51,7 +53,7 @@ set_view (\
 hide cartoon, I_TASSER_WITHOUT_TEMPLATE_model1
 show cartoon, I_TASSER_WITH_TEMPLATE_model1
 ray 1920, 1080
-png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITHOUT_TEMPLATE.png 
+png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITH_TEMPLATE.png 
 
 hide cartoon, I_TASSER_WITH_TEMPLATE_model1
 show cartoon, Robetta_model_01_with_template
