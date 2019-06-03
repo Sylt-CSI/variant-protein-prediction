@@ -134,7 +134,7 @@ Is a collection of nucleotide mutations from rare diseases used by the GAVIN \ci
 \subsection{GenomAD}
 The GenomAD database consists of unified data from large scale genome sequencing data projects and is based on genome reference consortium human genome build 37 human genome 19 (GRCh37/hg19). From this database missense mutations were collected for TNFRSF1A (Section \ref{section:Chap_Cell_Death}), no classification was known for these mutations \cite{}.
 %gnomAD,gnomAD
-\label{subsec:MM_GenomAD}
+\label{subsec:MM_GnomAD}
 
 \subsection{Infevers}
 Is a website about hereditary auto immune diseases with for each disease a downloadable table about the known mutations and their classification. The table for TRAPS disease (Section \ref{section:Chap_Cell_Death}) was used to collect missense mutations of TNFRSF1A gene \cite{}.
@@ -154,13 +154,17 @@ Knowledge from various omic domains about proteins has been linked together into
 \label{subsec:MM_Uniprot}
 
 \subsection{PyMOL}
-Visualization of 3D structures, making images of proteins, putting the known orientations of monomeres in position and replacing TNF $\beta$ with TNF $\alpha$ were done in PyMOL \cite{}, also PyMOL had some Python bindings to mutate proteins, which were used by VIPUR.
+Visualization of 3D structures, making images of proteins, putting the known orientations of monomeres in position, replacing TNF $\beta$ with TNF $\alpha$ and aligning the structures to measure the distance between X-ray crystal structures and the produced models of were done in PyMOL \cite{}. PyMOL had a different use in VIPUR where it was used in combination with Python (Section \ref{subsec:MM_Python}) to perform mutagenesis on the protein structures to introduce a missense mutations.
 % PyMOL | pymol.org, Schrödinger
 \label{subsec:MM_PyMOL}
 \newline
 \textit{Version 2.2.3}
 
 \subsection{HOPE}
+Have yOur Protein Explained (HOPE) is a web service that collects information of about a user specified missense mutation in a protein and comes from various sources. Uniprot (Section \ref{subsec:MM_Uniprot}) is queried with BLAST to find homologous sequences and structures, other features that are found on Uniprot are active sites, domains and various other sequence features that help to identify the function of a region. From the BLAST results homology models are made with Yasara that are sent of to WHAT IF web services that calculate structural information about the protein. Before the formation of a report all information is put into a decision tree to asses mutational effects in contexts of: contacts, structural locations, non-structural features, previous variant information and amino acid properties to form an automated report \cite{}.
+%Protein structure analysis of mutations causing inheritable diseases. An e-Science approach with life scientist friendly interfaces, Venselaar
+%HOPE, CMBI
+%HOPE about, CMBI
 \label{subsec:MM_HOPE}
 \textit{Version 1.1.1}
 

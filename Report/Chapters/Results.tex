@@ -58,6 +58,8 @@
 \newpage
 \subsection{Analyses of proteins variants TNFRSF1A}
 	\subsubsection{Requirements for determining structural and binding effects of protein variants}
+	Currently there is no protocol available to asses protein variants with structural information, 
+	
 	Assessing protein variants and its effects can be the most informative when assessed from multiple fields of view, however this is out of scope for this project and to simplify the problem it brought down to the perspective of function an form.
 	
 	Function determines how certain parts of the protein behave within an environment and determine its effects on a pathway. In context with TNFRSF1A one part resides on the cell surface where it binds ligands and on the cytoplasmic side it can interact with protein that triggers an inflammatory response or apoptosis. When a mutation is introduced at the cell surface side it might not be able to form dimer formations that interact with TNF ligands or during transformation with the binding of TNF it is unable to bind trimers. 
@@ -79,9 +81,18 @@
 %%	 Effect
 %	Can a cell or pathway still function without this protein? or is there an alternative mechanism within the cell that is less efficient in performing similar role? 
 	
-	
-	
-	
+	\subsubsection{Tools for assessing protein variant mutation}
+	Before introducing mutations it is helpful to know if they are observed since not every mutation has the same occurrence, therefore three tables with observed TNFRSF1A mutations(Sections \ref{subsec:MM_GAVIN_data_table}, \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}) have been combined into a single table consisting of two columns. The first column contains strings that describe the: original residue, position and where the residue is mutated to, the second column describes the observed effect of the mutation.	
+	\begin{table}[ht]
+		\begin{tabular}{ l | l | l | l}
+			Original residue & Position in the protein sequence & New residue & Classification\\ \hline
+			Cys & 44 & Tyr & PATHOGENIC\\
+			Thr & 44 & Pro & PATHOGENIC\\
+			Thr & 44 & Ser & PATHOGENIC\\
+		\end{tabular}
+		\caption[Sample of combined tables with observed mutations]{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}), the first column is split into original residue within a structure the position where it resides in amino acid sequence and the residue where it is altered to.  In the last part with the available classifications: Benign Pathogenic, Likely Benign, Likely Pathogenic, Population, Uncertain significance (VOUS) and Na. To see the whole table visit the supplementary.}
+		\label{table:Res_Filtered_Mutations}
+	\end{table}
 	
 %	the function of the mutated protein is within a pathway 
 %	A broad perspective should be taken with a 
@@ -92,16 +103,7 @@
 
 
 %Something about that we tried to use the VTS and add our protein for information.
-%\begin{table}[ht]
-%	\begin{tabular}{ l | l | l | l}
-%		Original residue & Position in the protein sequence & New residue & Classification\\ \hline
-%		Cys & 44 & Tyr & PATHOGENIC\\
-%		Thr & 44 & Pro & PATHOGENIC\\
-%		Thr & 44 & Ser & PATHOGENIC\\
-%	\end{tabular}
-%	\caption{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers} ) with the available classifications: Benign Pathogenic, Likely Benign, Likely Pathogenic, Population, Uncertain significance (VOUS) and Na.}
-%	\label{table:Res_Filtered_Mutations}
-%\end{table}
+
 %
 %\begin{table}[ht]
 %	\begin{tabular}{ l | l | l | l | l}

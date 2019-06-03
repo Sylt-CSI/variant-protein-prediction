@@ -64,5 +64,3 @@ hide cartoon, Robetta_model_01_with_template
 show cartoon, Robetta_model_01_without_template
 ray 1920, 1080
 png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/I_TASSER_Robetta_Images/1_EXT_ALIGN_ROB_WITHOUT_TEMPLATE.png 
-
-
