@@ -58,15 +58,59 @@
 \newpage
 \subsection{Analyses of proteins variants TNFRSF1A}
 	\subsubsection{Requirements for determining structural and binding effects of protein variants}
-	Currently there is no protocol available to asses protein variants with structural information, 
+	Protein variants can be assessed from multiple perspectives and together they can form a holistic view on how a protein works and how mutations affect its workings. However adding perspectives to the protein assessment makes it complex and requires expertise to determine its validity and contribution, therefore the analysis has been limited to basic structural information and also make the assessment inline with the VIPUR methods.
 	
-	Assessing protein variants and its effects can be the most informative when assessed from multiple fields of view, however this is out of scope for this project and to simplify the problem it brought down to the perspective of function an form.
+	Various proteins consist of multiple chains that can be identical or different depending on their function \cite{} and should be taken into account when assessing protein variants since one residue might alter the binding between chains and might alter the proteins formation. 
+%	Lipin proteins form homo- and hetero-oligomers, Liu et al.
+	Different molecules and atoms that do not make up a protein but play a role in a pathway and function (ligands and co-receptors) are able to affect a proteins shape and can behave differently when a residue is mutated. 
 	
-	Function determines how certain parts of the protein behave within an environment and determine its effects on a pathway. In context with TNFRSF1A one part resides on the cell surface where it binds ligands and on the cytoplasmic side it can interact with protein that triggers an inflammatory response or apoptosis. When a mutation is introduced at the cell surface side it might not be able to form dimer formations that interact with TNF ligands or during transformation with the binding of TNF it is unable to bind trimers. 
+	A different aspect that can change with mutations is the alteration in motions between structures which can allow or disallow certain movements to occur and with inhibit processes.
 	
-	Wherein the perspective of form the deciding factors are the amino acid sequence and where it resides within the cell.
+%	In context of TNFRSF1A dimers that are formed when unbound can be altered by mutations and 
 	
-	A different perspective is form wherein the amino acid sequence determines how a protein structure will be formed.
+%	Other parts that alter to protein and play a role in function are ligands and co-receptors that 
+%	To get the appropriate structural information of a protein 
+%	
+%	the informational search scope has been limited to structural information and 
+%	
+%	 therefore the search scope has been limited to structural information.
+%	For structurally assessing protein variants a there are several requirements, 
+
+
+%	SOMETHING ABOUT 1TNR and 1EXT!
+%	Structural information of proteins describes how a protein functions and how it behaves within a cell, however it is difficult to analyze since
+%	
+%	Proteins variants can be assessed from different perspectives and all are necessary to 
+%	Assessing protein variants and its effects 
+%	
+%	Assessing protein variants and the effects that a variant might cause can be assessed from different fields of view and could give a holistic view on problem that arise during mutations. However adding every perspective in an analyses is difficult because collecting all available information often has to be done manually and to determine which information is relevant requires expertise. However it can be complex to put all the information and since  
+%	
+%	
+%	Because the VTS mainly consists of structural features and 
+%	
+%	To make assessment less complex and because the VTS has mainly structural features 
+%	
+%	 a structural point of view was taken for the protein TNFRSF1A 
+%	
+%	To simplify the complexity of the problem only a structural point of view with limited alterations was taken
+%	
+%	To simplify the problem it has been recapitulated into 
+%	
+%	the perspectives of form and function.
+%	
+%	The perspective of form describes how a protein takes shape based on the environment and amino acid sequence, within the context of TNFRSF1A it describes how dimer structures are formed on the cell surface when unbound and that it forms a trimeric structure when it is bound by TNF 
+%	
+%	Function determines how certain parts of a protein behave within an environment and determine its effects on a pathway. 
+%	
+%	In context with TNFRSF1A one part resides on the cell surface where it binds ligands and on the cytoplasmic side it can interact with protein that triggers an inflammatory response or apoptosis. When a mutation is introduced at the cell surface side it might not be able to form dimer formations that interact with TNF ligands or during transformation with the binding of TNF it is unable to bind trimers. 
+%	
+%	Wherein the perspective of form the deciding factors are the amino acid sequence and where it resides within the cell.
+%	
+%	A different perspective is form wherein the amino acid sequence determines how a protein structure will be formed.
+%	
+%	Before the moment of writing no protocol was available which dealt with structural variation 
+%	
+%	Currently there is no protocol available to asses protein variants with structural information, 
 	
 %	Assessing protein variants and its effects should be studied with a multidisciplinary view wherein form and function are assessed. Within the aspect of form should be seen how a protein is formed
 %	
@@ -82,7 +126,7 @@
 %	Can a cell or pathway still function without this protein? or is there an alternative mechanism within the cell that is less efficient in performing similar role? 
 	
 	\subsubsection{Tools for assessing protein variant mutation}
-	Before introducing mutations it is helpful to know if they are observed since not every mutation has the same occurrence, therefore three tables with observed TNFRSF1A mutations(Sections \ref{subsec:MM_GAVIN_data_table}, \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}) have been combined into a single table consisting of two columns. The first column contains strings that describe the: original residue, position and where the residue is mutated to, the second column describes the observed effect of the mutation.	
+	Before introducing mutations into a protein structure it is helpful to know if a mutation has been observed to avoid allocating resources to something that does not occur. Therefore three tables with observed TNFRSF1A mutations (Sections \ref{subsec:MM_GAVIN_data_table}, \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}) have been combined with an R script (Section \ref{subsec:MM_R}) into a single table consisting of two columns. The first column (split into three columns \ref{table:Res_Filtered_Mutations}) contains strings that describes the: original residue, position and where it mutates to, the second column describes whether a formed mutation is harmful, with most mutations the effects have not been identified yet. 
 	\begin{table}[ht]
 		\begin{tabular}{ l | l | l | l}
 			Original residue & Position in the protein sequence & New residue & Classification\\ \hline
@@ -90,35 +134,61 @@
 			Thr & 44 & Pro & PATHOGENIC\\
 			Thr & 44 & Ser & PATHOGENIC\\
 		\end{tabular}
-		\caption[Sample of combined tables with observed mutations]{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GenomAD}, \ref{subsec:MM_Infevers}), the first column is split into original residue within a structure the position where it resides in amino acid sequence and the residue where it is altered to.  In the last part with the available classifications: Benign Pathogenic, Likely Benign, Likely Pathogenic, Population, Uncertain significance (VOUS) and Na. To see the whole table visit the supplementary.}
+		\caption[Sample of combined tables with observed mutations]{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}),  describe whether a structural mutation is harmful or not. For many mutations it is unknown and other classifications are available, to view the whole table visit the supplementary.}
 		\label{table:Res_Filtered_Mutations}
 	\end{table}
 	
+	For assessing variants in TNFRSF1A a structural fragment was used that contained TNF $\beta$ (1TNR) \cite{} and was made homotrimeric with PyMOL (Section \ref{subsec:MM_PyMOL}) which results in six chains that emulate a bound TNFRSF1A with TNF $\beta$. The first column of the mutation table did not contain sufficient information to apply mutations correctly and within the PDB different numbering is used than in the amino acid sequence. To bundle the information and make it usable for introducing mutations a Python script (Section \ref{subsec:MM_Python}) has been written that combines the mutation table, PDB chains and the correct position within the sequence into a type of table which has sufficient information to mutate structures.  
+	%	Crystal structure of the soluble human 55 kd TNF receptor-human TNFβ complex: Implications for TNF receptor activation, Banner et al. 
+	\begin{table}[ht]
+		\begin{tabular}{ l | l | l | l | l}
+			Iteration number & Filename & Chain & Residue index in chain & New residue\\ \hline
+			34 & 1tnr3\_TNFA & R & 0 & TYR\\
+			34 & 1tnr3\_TNFA & T & 0 & TYR\\
+			34 & 1tnr3\_TNFA & S & 0 & TYR\\
+			35 & 1tnr3\_TNFA & R & 0 & PRO\\
+			35 & 1tnr3\_TNFA & T & 0 & PRO\\
+			35 & 1tnr3\_TNFA & S & 0 & PRO\\
+			36 & 1tnr3\_TNFA & R & 0 & SER\\
+			36 & 1tnr3\_TNFA & T & 0 & SER\\
+			36 & 1tnr3\_TNFA & S & 0 & SER\\
+		\end{tabular}
+		\caption{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}). The iteration number states if a mutation must be made in a single variant or in a different protein. Filename describes the protein to which the mutations are applied. Since structures can consist of multiple chains it has to be specified together with the index starting at 0 instead of 1 and finally to which residue it will be transformed.}
+			\label{table:Res_Modeller_Mutation_Format}
+	\end{table}
+
+	
+%	 script was made PDB did not relate to that of the sequences.
+%	
+%	
+%	 to arrange this information properly a Python script (Section \ref{subsec:MM_Python}) used the files and
+%	
+%	 and the exact position within the PDB file (1TNR) had to be added with a Python script (Section \ref{})
+%	
+%	 were introduced with a Python script (Section \ref{subsec:MM_Python}) wherein  and had to be introduced with  Introducing mutations in the trimeric mol
+%	
+%	Each of wherein mutated 
+%	
+%	
+%	
+%	three mutations in separate structures were introduced.
+%	
+%	The mutation tables first column is insufficient and requires additional information regarding TNFRSF1A chains to make mutations in TNFRSF1A, information regarding the chains 
+%	
+%	From the mutation table only information of the first column is used to make alterations in structural models, that part of the table will play a role in modifying protein structures with Modeller (Section \ref{subsec:MM_Modeller}). Because the model is homotrimeric it has multiple poly peptides chains that all need to be modified without modifying the ligand. 
+%	
+%		
+%	
+%	 But more information is required to make a new format, since TNFRSF1A is a homotimer a
 %	the function of the mutated protein is within a pathway 
 %	A broad perspective should be taken with a 
 %	To determine the effects of mutated residue awithin a protein variant a b than structural information should
 %	Up until VIPUR and the development of similar approaches that benefit from structural information
 %VIPUR: Variant Interpretation and Prediction Using Rosetta, Baugh
-
-
-
+%
+%
+%
 %Something about that we tried to use the VTS and add our protein for information.
 
-%
-%\begin{table}[ht]
-%	\begin{tabular}{ l | l | l | l | l}
-%		Iteration number & Filename & Chain & Residue index in chain & New residue\\ \hline
-%		34 & 1tnr3\_TNFA & R & 0 & TYR\\
-%		34 & 1tnr3\_TNFA & T & 0 & TYR\\
-%		34 & 1tnr3\_TNFA & S & 0 & TYR\\
-%		35 & 1tnr3\_TNFA & R & 0 & PRO\\
-%		35 & 1tnr3\_TNFA & T & 0 & PRO\\
-%		35 & 1tnr3\_TNFA & S & 0 & PRO\\
-%		36 & 1tnr3\_TNFA & R & 0 & SER\\
-%		36 & 1tnr3\_TNFA & T & 0 & SER\\
-%		36 & 1tnr3\_TNFA & S & 0 & SER\\
-%	\end{tabular}
-%	\caption{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}). The iteration number states if a mutation must be made in a single variant or in a different protein. Filename describes the protein to which the mutations are applied. Since structures can consist of multiple chains it has to be specified together with the index starting at 0 instead of 1 and finally to which residue it will be transformed.}
-%		\label{table:Res_Modeller_Mutation_Format}
-%\end{table}
+
 
