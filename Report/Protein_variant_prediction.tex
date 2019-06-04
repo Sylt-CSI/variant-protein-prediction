@@ -1,6 +1,6 @@
 \documentclass[10pt]{article}
 \usepackage{titling} % Import titles.
-% Make page wider so title fits better on first page.
+% Make page wider so title fits better on the front page.
 \usepackage[ 
 paperheight  = 297mm, paperwidth  = 210mm,  % or: "paper=a4paper"
 layoutheight = 197mm ,layoutwidth  = 130mm,
@@ -16,7 +16,8 @@ textwidth=20cm
 \usepackage{enumerate} % Make lists of steps.
 \usepackage{caption} % Allows captions in tables and figures.
 \usepackage{subcaption} % Allows subfigures.
-\usepackage{longtable} % Allows long tables.
+\usepackage{longtable} % Allows long tables / multipage tables.
+\usepackage{pdfpages} % GIves the possibility import pdf pages.
 \begin{document}
 	\pagenumbering{gobble}
 	\title{Protein structure modeling for variant pathogenicity prediction}

@@ -14,10 +14,6 @@ class RosettaBackRubRelaxDockPipeline:
         protein_arguments = self._protein_feature_pipeline_argument_parser()
         self._dry_run = protein_arguments.dry
         checked_output_folder_name = self._add_backslash_to_folder_if_missing(protein_arguments.out[0])
-        # print(protein_arguments.backrub_script[0],
-        #         protein_arguments.rdb[0],
-        #         protein_arguments.pdb[0],
-        #         checked_output_folder_name)
         if not os.path.isfile(checked_output_folder_name + "backrub/score_back_rub.sc"):
             print(
                 "Submitted Rosetta Backrub job for {}.".format(
@@ -59,19 +55,6 @@ class RosettaBackRubRelaxDockPipeline:
             print("Relax is already finished.")
         # # Filter the lowest energy scoring relax pdb.
         self._get_lowest_energy_structure_name(checked_output_folder_name + "relax/score_relax.sc")
-        #
-        # self._submit_rosetta_slurm_job(
-        #     protein_arguments.docking_script[0],
-        #     protein_arguments.rdb[0],  # This option is not used.
-        #     checked_output_folder_name + "relax/" + str(
-        #         lowest_scoring_relax_protein_model) + ".pdb",
-        #     checked_output_folder_name
-        # )
-        # # Monitor the outcome of docking.
-        # outcome = self._rosetta_pipeline_monitoring(136, checked_output_folder_name + "local_docking/",
-        #                                             "regular_docking")
-        # if outcome == "Failed" and protein_arguments.ignore is False:
-        #     return
         print("Finished run.")
 
     @staticmethod
@@ -111,15 +94,6 @@ class RosettaBackRubRelaxDockPipeline:
                                                         nargs=1,
                                                         dest="relax_script")
 
-        protein_feature_pipeline_arguments.add_argument("-dscri",
-                                                        type=str,
-                                                        default=[
-                                                            "/groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/run_local_docking.sh"],
-                                                        help="The rosetta docking script in full path of where it is stored.",
-                                                        required=False,
-                                                        nargs=1,
-                                                        dest="docking_script")
-
         protein_feature_pipeline_arguments.add_argument("-out",
                                                         type=str,
                                                         help="The name of the folder where the subfolders for the results of backrub, relax and docking are made and stored.",
@@ -140,15 +114,6 @@ class RosettaBackRubRelaxDockPipeline:
                                                         const=True,
                                                         required=False,
                                                         dest="dry")
-
-        # OPTION that can be activated in the future, if multiple runs are possible on the cluster, that are not ran as leftovers.
-        # protein_feature_pipeline_arguments.add_argument("-seed",
-        #                                                 type=int,
-        #                                                 help="Seed number",
-        #                                                 nargs=1,
-        #                                                 default=[17],
-        #                                                 required=False,
-        #                                                 dest="seed")
 
         return protein_feature_pipeline_arguments.parse_args()
 
