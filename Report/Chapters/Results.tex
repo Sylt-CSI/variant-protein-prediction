@@ -1,6 +1,7 @@
 \subsection{Revving the VIPUR approach to expand rare disease diagnostics}
 	\subsubsection{Preparatory steps for using the VIPUR approach}
 		After the publication of VIPUR the tools, data and applications became available at the open science framework (OSF) \cite{} which were downloaded and reviewed. All applications from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) were pre-compiled without support for MPI (Section \ref{subsec:MM_MPI}) and with that not the ability to benefit from multiple CPUs. The Rosetta software suite was rebuilt with MPI support in a slurm job where the compilation could benefit from multiple CPU cores.
+		%VIPUR: Variant Interpretation and Prediction Using Rosetta, Baugh
 	\label{subsubsec:RES_Prepare}
 	
 	\subsubsection{VIPUR resolving system incompatibilities}
@@ -26,29 +27,29 @@
 	\newpage
 	
 	\subsubsection{Expanding the VIPUR training set with data from TNFRSF1A by homology modeling and protein threading}
-	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ binding site \cite{} were available and its death domain that interacts with TRADD \cite{} which plays a role in apoptosis (Section \ref{subsec:CD_TNFRSF1A}). To acquire a monomeric structure of TNFRSF1A two ab initio modeling web services I-TASSER and Robetta (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both were given the task to model the whole protein with and without a template to determine how well they could model a known structure and what it would form. Determination of which the best model was is based on the shortest distance ,defined root mean square deviation (RMSD), between a produced model compared to the X-ray crystallographic model of the TNFRSF1A binding site .
+	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ binding site \cite{} were available and its death domain that interacts with TRADD \cite{} which plays a role in apoptosis (Section \ref{subsec:CD_TNFRSF1A}). To acquire a monomeric structure of TNFRSF1A two ab initio modeling web services I-TASSER and Robetta (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both were given the task to model the whole protein with and without a template to determine how well they could model a known structure and what it would form. Determination of the best model was based on the smallest root mean square deviation distance (RMSD )in {\AA} , between a produced model compared to the X-ray crystallographic model of the TNFRSF1A binding site .
 	
 %	Solution structure of the tumor necrosis factor receptor-1 death domain, Sukits
 	\begin{figure}[!ht]
 		\centering
 		\begin{subfigure}{0.45\textwidth}
 			\includegraphics[width=\textwidth]{I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITHOUT_TEMPLATE.png}{a}
-			\caption{RMSD = 28.786}
+			\caption{RMSD = {\AA} 28.786}
 			\label{fig:RES_I_TASSER_Without}
 		\end{subfigure}
 		\begin{subfigure}{0.45\textwidth}
 			\includegraphics[width=\textwidth]{I_TASSER_Robetta_Images/1_EXT_ALIGN_I_TAS_WITH_TEMPLATE.png}{b}
-			\caption{RMSD =  3.830}
+			\caption{RMSD = {\AA} 3.830}
 			\label{fig:RES_I_TASSER_With}
 		\end{subfigure}
 		\begin{subfigure}{0.45\textwidth}
 			\includegraphics[width=\textwidth]{I_TASSER_Robetta_Images/1_EXT_ALIGN_ROB_WITHOUT_TEMPLATE.png}{c}
-			\caption{RMSD =  3.067}
+			\caption{RMSD =  {\AA} 3.067}
 			\label{fig:RES_Robetta_Without}
 		\end{subfigure}
 		\begin{subfigure}{0.45\textwidth}
 			\includegraphics[width=\textwidth]{I_TASSER_Robetta_Images/1_EXT_ALIGN_ROB_WITH_TEMPLATE.png}{d}
-			\caption{RMSD =  2.877}
+			\caption{RMSD =  {\AA} 2.877}
 			\label{fig:RES_Robetta_With}
 		\end{subfigure}
 		\caption[I-TASSER and Robetta models with and without templates]{3D structures of TNFRSF1A ( \ref{fig:RES_I_TASSER_Without}, \ref{fig:RES_I_TASSER_With}: I-TASSER, \ref{fig:RES_Robetta_Without}, \ref{fig:RES_Robetta_With}: Robetta) without (left: \ref{fig:RES_I_TASSER_Without}, \ref{fig:RES_Robetta_Without}) and with templates (right: \ref{fig:RES_I_TASSER_With}, \ref{fig:RES_Robetta_With}). The sky blue colored structure in each figure is an X-ray crystallographic model (1EXT) of the binding site of TNFRSF1A and the orange structure is the representation of that identical fragment in the model made by the web services.}
@@ -160,7 +161,7 @@
 	\newpage
 	To introduce mutations within PDB structures a Python script (Section \ref{subsec:MM_Python}) was written which used the generated mutation table (Table: \ref{table:Res_Modeller_Mutation_Format}) and a matching PDB structure, from the table; it acquires an iteration number which specifies if a mutation has to be stored in a single file or across multiple files; the filename serves as key which determine the PDB that should be used; letters specify chains, numbers are indices within the chains and the last column states the three letter residue where it should mutate to. When a structure is read in through the Python bindings of Modeller (Section \ref{subsec:MM_Modeller}) all non standard atoms and molecules are removed because Rosetta (Section \ref{subsec:MM_Rosetta}) is not able to deal with those atoms. Just before mutagenesis takes place missing atoms are added to the structure that were difficult to determine with experimental methods(Section \ref{subsec:GD_Addition_of_structural_data}). After the insertion of all mutations a last guess is made where disulfide bonds are added between cysteines. With this process variants can be easily made, however the mutations do not present a correct protein because the mutated residues can put the protein in a high energy state.
 	
-	In the attempt to make mutated structures behave more natural two tools from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) have been used to minimize energies within protein structures. With the backrub application (Section \ref{subsubsec:MM_Backrub}) 1000 altered backbone models have been produced each with 10000 Monte Carlo moves (Sections \ref{section:Chap_Monte_Carlo}), although it is known that the backbone changes are limited \ref{subsec:GD_Structural_Levels_and_Mutation_Effects} replacing amino acids can make alterations in the backbone.
+	In the attempt to make mutated structures behave more natural two tools from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) have been used to minimize energies within protein structures. With the backrub application (Section \ref{subsubsec:MM_Backrub}) 1000 altered backbone models have been produced each with 10000 Monte Carlo moves (Sections \ref{section:Chap_Monte_Carlo}). Each model generated has a set of properties that describe the formed molecule 
 	
 	Relax **
 	
@@ -196,7 +197,7 @@
 %	A broad perspective should be taken with a 
 %	To determine the effects of mutated residue awithin a protein variant a b than structural information should
 %	Up until VIPUR and the development of similar approaches that benefit from structural information
-%VIPUR: Variant Interpretation and Prediction Using Rosetta, Baugh
+
 %
 %
 %
