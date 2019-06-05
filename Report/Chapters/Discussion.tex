@@ -13,11 +13,15 @@ Another step that was taken with VIPUR is that each structure is viewed as a mon
 
 To make predictions for new benign and pathogenic variants from TNFRSF1A, more information should be collected on how certain residues contribute to TNFRSF1A. More differences between interaction energies in mutated proteins could have been found be by adding molecular dynamics (MD) simulations of TNF $\alpha$/$\beta$ separately TNFRSF1A and combined with TNF docked into TNFRSF1A.
 
-We did not asses the whole in a complex because there was insufficient information. (Membrane, water, other atoms)
+We did not asses the whole in a complex because there was insufficient information. (Membrane, water, other atoms and we could have left some atoms that were not water.)
 
  prediction of potential benign and pathogenic variants of TNFRSF1A isoforms should be included in the analysis to gain insight in which part of the proteins are highly important for the interactions and could result in a better prediction.
 
  A significant contribution to gain more insight in how TNFRSF1A interacts with TNF $\alpha$/$\beta$ would have been the addition of molecular dynamic simulations; it shows how the proteins move on their own but also how the residues of the protein and the ligand interact with each other.
+ 
+ Not certain of how VIPUR used Modeller but basing it on the removal of metals and water during SPVAA it likely also removed non-standard amino acids and therefore making the method unfit to predict every type of protein made as claimed.
+
+Only using the Rosetta energy to determine the effect of the protein.
 
 The VIPUR pipeline could not be executed because it was not possible to compile PyRosetta or PyMOL on the cluster.
 
@@ -37,6 +41,9 @@ VIPUR uses PSI-blast to justify its results.
 Describe the error made with apply mutations from different isoforms, see the table within results.
 
 Only assessed a small piece of TNFRSF1A and did not even look at the class of proteins itself.
+
+More iterations on Rosetta relax than 64\cite{}.
+%Analyzing Results, Rosetta commons
 
 
 Good other suggestions for finding if the approach really means something is by using shap \cite{}.
