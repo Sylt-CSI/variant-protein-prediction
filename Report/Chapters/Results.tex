@@ -170,8 +170,12 @@
 	
 \newpage	
 \subsection{Finding structural information and its mutations through HOPE}
-	A final method to gain insight in protein structures and its mutations is with the webservice hope
-%	 script was made PDB did not relate to that of the sequences.
+	With uncertainty in the numbers provided by SPVAA a more textual informative approach was used with the web service HOPE (Section \ref{subsec:MM_HOPE}). The mutations that were known from Infevers (Section \ref{subsec:MM_Infevers}) and were also used with SPVAA were tested by HOPE (CYS62GLY, GLU138ALA and PHE141IlE), all reports are visible within the supplementary.
+	
+	HOPEs first test was Cysteine residue 62, which is known within the Infevers table as pathogenic. HOPE discovered that the residue was involved in a disulfide bridge and was 100\% conserved in related protein sequences, based on the observation that cysteine formed a disulfide bridge it expected that with te replacement of it glycine would make the whole structures less rigid. HOPE predicts that mutation is pathogenic because of the high conservation of the residue, which is further confirmed by its search results in which if found the original publication where the observation has been described and associated to TRAPS \cite{}.
+%	The tumor-necrosis-factor receptor-associated periodic syndrome: new mutations in TNFRSF1A, ancestral origins, genotype-phenotype studies, and evidence for further genetic heterogeneity of periodic fevers, Aksentijevich
+	
+	Glutamic acid 138 has been classified as likely benign by Infevers, 
 %	
 %	
 %	 to arrange this information properly a Python script (Section \ref{subsec:MM_Python}) used the files and
