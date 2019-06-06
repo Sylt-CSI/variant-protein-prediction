@@ -1,15 +1,21 @@
 
-People with rare diseases are hard to diagnose
-
-Prediction of pathogenicity in variants momentarily done based on sequence information and has been successful for certain groups of genes \cite{}.
+People with rare diseases are currently hard to diagnose and are often not put in the desired treatment groups, with machine learning methods such as GAVIN 95\% of the benign variants can be harmfully removed, however these methods rely on conservation and have been heavily optimized over the years \cite{}.
 %GAVIN: Gene-Aware Variant INterpretation for medical sequencing, van der Velde
-However pathogenticy of some genes with their variants cannot be classified by the currently used features for classification. Recently a method, called VIPUR, surfaced that incorporated sequence and protein data for classification of the pathogenicity from gene variants\cite{}. 
+A new refreshing approach called VIPUR uses sequential and structural data to predict deleteriousness of a protein variants.
+
+Within the attempt to make VIPUR usable for the diagnosis of rare diseases it was discovered that some questionable steps were taken to make it especially applicable for diagnosis but also to determine deleteriousness of proteins itself: (i) "All protein models were standardized to remove unwanted components (duplicate chains, ligands, metals and non-standard amino acids)" \cite{}.
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
+For the aspect of machine learning this is mandatory to avoid overfitting, however any form of context that determines how a protein functions is removed and the lacks context on how it would function within the environment it resides and even which other residues it functions (*****talk about metals and water). (ii) 
+
 
 In the attempt to reproduce the methods taken by the VIPUR approach on protein structures that are related to rare diseases it was realized that some questionable steps were being taken. With this approach all ligands were removed \cite{} which changes the energies within and can therefor alter the structure \cite{} and causes it to be analyzed from a single perspective instead of two when a bound ligand is also taken into account. 
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
 %Application of a Theory of Enzyme Specificity to Protein Synthesis*, Koshland
 Another step that was taken with VIPUR is that each structure is viewed as a monomer which is for some proteins not a problem, but for a complex that consists of multiple similar or a variety of different monomers makes it difficult to assess the effects.
+However pathogenticy of some genes with their variants cannot be classified by the currently used features for classification. Recently a method, called VIPUR, surfaced that incorporated sequence and protein data for classification of the pathogenicity from gene variants\cite{}. 
+%Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
+
+
 
 To make predictions for new benign and pathogenic variants from TNFRSF1A, more information should be collected on how certain residues contribute to TNFRSF1A. More differences between interaction energies in mutated proteins could have been found be by adding molecular dynamics (MD) simulations of TNF $\alpha$/$\beta$ separately TNFRSF1A and combined with TNF docked into TNFRSF1A.
 
