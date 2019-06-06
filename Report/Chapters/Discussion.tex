@@ -1,41 +1,15 @@
-
+%INTRO
 People with rare diseases are currently hard to diagnose and are often not put in the desired treatment groups, with machine learning methods such as GAVIN 95\% of the benign variants can be harmfully removed, however these methods rely on conservation and have been heavily optimized over the years \cite{}.
 %GAVIN: Gene-Aware Variant INterpretation for medical sequencing, van der Velde
 A new refreshing approach called VIPUR uses sequential and structural data to predict deleteriousness of a protein variants.
 
+%VIPUR
 Within the attempt to make VIPUR usable for the diagnosis of rare diseases it was discovered that some questionable steps were taken to make it especially applicable for diagnosis but also to determine deleteriousness of proteins itself: (i) "All protein models were standardized to remove unwanted components (duplicate chains, ligands, metals and non-standard amino acids)" \cite{}.
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
-For the aspect of machine learning this is mandatory to avoid overfitting, however any form of context that determines how a protein functions is removed and the lacks context on how it would function within the environment it resides and even which other residues it functions (*****talk about metals and water). (ii) 
-
-
-In the attempt to reproduce the methods taken by the VIPUR approach on protein structures that are related to rare diseases it was realized that some questionable steps were being taken. With this approach all ligands were removed \cite{} which changes the energies within and can therefor alter the structure \cite{} and causes it to be analyzed from a single perspective instead of two when a bound ligand is also taken into account. 
-%Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
+Standardizing data can be beneficial to avoid learning features that do not matter and can reduce overfitting. However any form of context to the protein is removed and might therefore make incorrect assumptions about how: a monomer interacts with other monomers, ligands, metals, non-standard amino acids and water which can all have an effect on how proteins shape and interact \cite{}.
 %Application of a Theory of Enzyme Specificity to Protein Synthesis*, Koshland
-Another step that was taken with VIPUR is that each structure is viewed as a monomer which is for some proteins not a problem, but for a complex that consists of multiple similar or a variety of different monomers makes it difficult to assess the effects.
-However pathogenticy of some genes with their variants cannot be classified by the currently used features for classification. Recently a method, called VIPUR, surfaced that incorporated sequence and protein data for classification of the pathogenicity from gene variants\cite{}. 
-%Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
-
-
-
-To make predictions for new benign and pathogenic variants from TNFRSF1A, more information should be collected on how certain residues contribute to TNFRSF1A. More differences between interaction energies in mutated proteins could have been found be by adding molecular dynamics (MD) simulations of TNF $\alpha$/$\beta$ separately TNFRSF1A and combined with TNF docked into TNFRSF1A.
-
-We did not asses the whole in a complex because there was insufficient information. (Membrane, water, other atoms and we could have left some atoms that were not water.)
-All methods are reliant on existing structures making it difficult to asses it as a complex.
-
-
- prediction of potential benign and pathogenic variants of TNFRSF1A isoforms should be included in the analysis to gain insight in which part of the proteins are highly important for the interactions and could result in a better prediction.
-
- A significant contribution to gain more insight in how TNFRSF1A interacts with TNF $\alpha$/$\beta$ would have been the addition of molecular dynamic simulations; it shows how the proteins move on their own but also how the residues of the protein and the ligand interact with each other.
- 
- Not certain of how VIPUR used Modeller but basing it on the removal of metals and water during SPVAA it likely also removed non-standard amino acids and therefore making the method unfit to predict every type of protein made as claimed.
-
-Only using the Rosetta energy to determine the effect of the protein.
-
-The VIPUR pipeline could not be executed because it was not possible to compile PyRosetta or PyMOL on the cluster.
-
-however VIPUR has not been tested due to not having the correct software available and TNFRSF1A was not within the training data set of VIPUR. 
-
-Isoforms were not taken into account.
+(ii) With the utilization of Rosetta's Relax application different models are formed based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), VIPUR produces 50 structures with Relax per protein which is a tiny amount of the potential search space of possible folds that could have made changes in a mutated protein which is also visible in FIGURE****. Also Rosetta itself suggests to make sufficient models, starting with 5000\cite{}.
+%Analyzing Results, Rosetta commons
 
 Within the publication of Probe is mentioned: "It requires both highly accurate structures and also the explicit inclusion of all hydrogen atoms and their van der Waals interactions." \cite{}.
 %Visualizing and quantifying molecular goodness-of-fit: small-probe contact dots with explicit hydrogen atoms11Edited by J. Thornton, Word
@@ -43,18 +17,11 @@ Within the publication of Probe is mentioned: "It requires both highly accurate 
 The site of Probe mentions: "Meaningful analysis of molecular contact surfaces requires that ALL atoms are considered. Before using Probe, use the companion program Reduce to add hydrogens to the coordinate file." \cite{}, no mention of the Reduce software is mentioned in the VIPUR approach and therefor it is difficult to asses the meaning of previously acquired results in the VTS.
 %Probe Software : Kinemage Website, Richardson LAB
 
-VIPUR is questionable because it has a limited amount of simulations.
-VIPUR uses PSI-blast to justify its results.
 
-Describe the error made with apply mutations from different isoforms, see the table within results.
-
-Only assessed a small piece of TNFRSF1A and did not even look at the class of proteins itself.
-
-More iterations on Rosetta relax than 64\cite{}.
-%Analyzing Results, Rosetta commons
-
-
-
+**** easy pick ****
+Within Figure 4 of Robust classification of protein variation using structural modelling and large-scale data integration \cite{} is stated that the mutation on position 204 from serine to proline is predicted deleteriousness, which is even without assessment highly likely because as can been in the structure it resides within an $\alpha$ helix and proline is known as the helix-stopper \cite{}.
+%Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
+%Alpha-helical, but not beta-sheet, propensity of proline is determined by peptide environment, Li et al.
 
 Good other suggestions for finding if the approach really means something is by using shap \cite{}.
 %slundberg/shap: A unified approach to explain the output of any machine learning model, Slundberg
@@ -65,6 +32,43 @@ Good other suggestions for finding if the approach really means something is by 
 %On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation, Bach
 %Interpreting random forests | Diving into data, Datadive
 
+% ASSUMED
+VIPUR uses PSI-blast to justify its results. 
+
+% Compilation issues
+With the resource at our disposal we were unable to reproduce any of the results that were produced by VIPUR for testing purposes.
+The VIPUR pipeline could not be executed because it was not possible to compile PyRosetta or PyMOL on the cluster.
+
+%adquate thing about VIPUR quartiles
+A good thing from VIPUR is that they took the information of all samples, it might introduce errors but also excludes lowers the extremes and might make it more realistic.
+
+
+
+% last part of VIPUR
+With Monte Carlo methods under te hood of the relax application it  such as relax it is beneficial to produce many models since it is
+Although it is not part of developing a technique that can help diagnosing rare disease variant but the publication contains a claim ("VIPUR can be applied to mutations in any organism’s proteome...." \cite{}) that likely contradicts with its methods ("remove unwanted components (duplicate chains, ligands, metals and non-standard amino acids)" \cite{}). There are 20 amino acids classified as standard, 22 are known to be incorporated into structures of some organisms \cite{} and more variants are possible, which makes it unclear what is classified as a non-standard amino acid.
+%Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
+%Natural expansion of the genetic code, Ambrogelly et al.
+
+
+
+
+% SPVAA
+SPVAA method show similar weaknesses as VIPUR, it removes metal and water but keeps the ligands and are even added when necessary.
+
+We did not asses the whole in a complex because there was insufficient information. (Membrane, water, other atoms and we could have left some atoms that were not water.)
+
+With SPVAA only looked at the trimeric form an not the dimeric form of TNFRSF1A.
+Only using the Rosetta energy to determine the effect of the protein.
+
+Isoforms were not taken into account.
+
+Only assessed a small piece of TNFRSF1A and did not even look at the class of proteins itself.
+
+With the resource at our disposal  limited.
+More iterations on Rosetta relax than 64\cite{}.
+%Analyzing Results, Rosetta commons
+
 The software written has a limited use currently and could be expanded to rapidly introduce mutations in multiple structures and chains at once.
 
 It might have been useful to disable disulfide bridges if no cysteine residue is mutated because it is less likely that alterations are formed to disulfide bridges and otherwise they might be added without a reason.
@@ -72,13 +76,14 @@ It might have been useful to disable disulfide bridges if no cysteine residue is
 Fragments were only available of 1EXT and 1TNR because it is a transmembrane protein which is difficult to make a structure from with X-ray crystallography.
 Maybe the first 30 residues were unnecessary because the might be signal peptides. 
 
-A good thing from VIPUR is that they took the information of all samples, it might introduce errors but also excludes lowers the extremes and might make it more realistic.
-
- some steps have become questionable in structure of TNFRSF1A some questionable  rare diseases  some questionable  training set some q to reproduce some of the results that were acquired with the VIPUR some questionable assu
-
-With SPVAA only looked at the trimeric form an not the dimeric form of TNFRSF1A.
+%HOPE
+HOPE is informative with the results it produces, easy to use, fast and makes structural problems within proteins diagnoseable and understandable when a missense mutation is discovered. However it does not draws a solid conclusion and the information it collects depends on: previous publications, conservation and experimental structures, which will give it a disadvantage when limited knowledge is available. Also it does not asses a complex but it can describe binding sites from the monomer when previously discovered.
 
 
-Looking at the investigation t
+% MOLECULAR DYNAMICS
+SPVAA's assement and VIPURs prediction could potentially be improved with the addition of molecular dynamic simulations to determine the effects of structural changes. With SPVAA it would have most likely become clear if the loss of the disulfide bridge from cysteine 62 in TNFRSF1A would have caused structural issues. VIPUR could benefit from it as new machine learning feature in situations where limited movement is observed and it changes tremendously when a missense mutation occurred in a protein increases with a mutation or vice versa.
 
-With the resource at our disposal we were unable to reproduce any of the results that were produced by VIPUR for testing purposes, by 
+
+
+% General problem with all methods
+All methods are reliant on existing structures making it difficult to asses it as a complex.

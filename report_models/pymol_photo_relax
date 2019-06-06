@@ -1,0 +1,34 @@
+bg_color gray
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr-3_254_94_ALA_94_ALA_94_ALA_back_rub_0571_relax_0064.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr-3_259_97_ILE_97_ILE_97_ILE_back_rub_0041_relax_0016.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr-3_67_18_GLY_18_GLY_18_GLY_back_rub_0103_relax_0007.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr-3_back_rub_0970_relax_0056.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr3_TNFA_254_94_ALA_94_ALA_94_ALA_back_rub_0702_relax_0051.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr3_TNFA_259_97_ILE_97_ILE_97_ILE_back_rub_0268_relax_0025.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0759_relax_0056.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/backrub_relax/1tnr3_TNFA_back_rub_0696_relax_0025.pdb
+
+
+align 1tnr3_TNFA_back_rub_0696_relax_0025 and name C+O+N+CA, 1tnr-3_back_rub_0970_relax_0056 and name C+O+N+CA, cycles = 10
+align 1tnr-3_254_94_ALA_94_ALA_94_ALA_back_rub_0571_relax_0064 and name C+O+N+CA, 1tnr-3_back_rub_0970_relax_0056 and name C+O+N+CA, cycles=10
+align 1tnr-3_259_97_ILE_97_ILE_97_ILE_back_rub_0041_relax_0016 and name C+O+N+CA, 1tnr-3_back_rub_0970_relax_0056 and name C+O+N+CA, cycles=10
+align 1tnr-3_67_18_GLY_18_GLY_18_GLY_back_rub_0103_relax_0007 and name C+O+N+CA, 1tnr-3_back_rub_0970_relax_0056 and name C+O+N+CA, cycles=10
+align 1tnr3_TNFA_254_94_ALA_94_ALA_94_ALA_back_rub_0702_relax_0051 and name C+O+N+CA, 1tnr3_TNFA_back_rub_0696_relax_0025 and name C+O+N+CA, cycles=10
+align 1tnr3_TNFA_259_97_ILE_97_ILE_97_ILE_back_rub_0268_relax_0025 and name C+O+N+CA, 1tnr3_TNFA_back_rub_0696_relax_0025 and name C+O+N+CA, cycles=10
+align 1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0759_relax_0056 and name C+O+N+CA, 1tnr3_TNFA_back_rub_0696_relax_0025 and name C+O+N+CA, cycles=10
+
+# colour black, name C+O+N+CA
+
+# shows disulfide bonds
+show sticks, (cys/ca+cb+sg)
+
+select negative, (resn ASP+Glu and name OD*+OE*)
+select positive, (resn Lys and name NZ) or (resn arg and name NE+NH*)
+
+distance saltbridge1, (negative and chain A and 1tnr3_TNFA_back_rub_0696_relax_0025), (positive and not chain A and 1tnr3_TNFA_back_rub_0696_relax_0025), 4.0, 0
+distance saltbridge2, (positive and chain A and 1tnr3_TNFA_back_rub_0696_relax_0025), (negative and not chain A and 1tnr3_TNFA_back_rub_0696_relax_0025), 4.0, 0
+hide cartoon, ! 1tnr3_TNFA_back_rub_0696_relax_0025 
+show sticks, 1tnr3_TNFA_back_rub_0696_relax_0025
+
+#select negative, negative or (name OXT or last (chain A and name O))
+#select positive, positive or first (chain A and name N)

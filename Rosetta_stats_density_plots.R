@@ -40,7 +40,7 @@ TNFB.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(10,12,14,16)],name.
 
 
 ggplot(data=TNFA.relax,
-       aes(value, colour = L1)) +
+       aes(x=value, colour = L1)) +
          geom_density() +
       theme_classic() +
       theme(
