@@ -21,26 +21,11 @@ Within Figure 4 of Robust classification of protein variation using structural m
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
 %Alpha-helical, but not beta-sheet, propensity of proline is determined by peptide environment, Li et al.
 
+% Your VIPUR usage
 VIPUR was not tested because of; several compilation issues related to libraries making not possible to compile PyMOL or PyRosetta (Sections \ref{subsec:MM_PyMOL}, \ref{subsec:MM_PyRosetta}), not able to run since it was made specifically for a single system and by modifying it unable to execute the basic implemented demo and due to the lack of time to reverse engineer Modeller (Section \ref{subsec:MM_Modeller}) into VIPUR. 
 
-
-Based on the figures (4, 5) \cite{} and supplementary figures (10,11) \cite{} there is a suspicion that there is little added value to the structural information within VIPUR and the predictions made by VIPUR depend on the results of PSI-BLAST.
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh et al.
 %SUPPLEMENTARY: Robust classification of protein variation using structural modelling and large-scale data integration, Baugh et al.
-To determine if this is the case it should be tested with methods that determine the contribution of features that are used by VIPUR.
-
-
-Good other suggestions for finding if the approach really means something is by using shap \cite{}.
-%slundberg/shap: A unified approach to explain the output of any machine learning model, Slundberg
-%Explaining Prediction Models and Individual Predictions with Feature Contributions, Štrumbelj
-%Why Should I Trust You?": Explaining the Predictions of Any Classifier, Ribeiro
-%Learning Important Features Through Propagating Activation Differences, Shrikumar
-%Algorithmic Transparency via Quantitative Input Influence: Theory and Experiments with Learning Systems, Datta
-%On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation, Bach
-%Interpreting random forests | Diving into data, Datadive
-
-% ASSUMED
-VIPUR uses PSI-blast to justify its results. 
 
 % Compilation issues
 With the resource at our disposal we were unable to reproduce any of the results that were produced by VIPUR for testing purposes.
@@ -50,13 +35,12 @@ The VIPUR pipeline could not be executed because it was not possible to compile 
 A good thing from VIPUR is that they took the information of all samples, it might introduce errors but also excludes lowers the extremes and might make it more realistic.
 
 
+Based on the figures (4, 5) \cite{}, supplementary figures  (10, 11) \cite{} and methods on which structures and properties have been collected, there is a suspicion that there is little contribution from the structural properties in the machine learning method VIPUR and that most predictions are based on the results of PSI-BLAST.
 
 % last part of VIPUR
-With Monte Carlo methods under te hood of the relax application it  such as relax it is beneficial to produce many models since it is
-Although it is not part of developing a technique that can help diagnosing rare disease variant but the publication contains a claim ("VIPUR can be applied to mutations in any organism’s proteome...." \cite{}) that likely contradicts with its methods ("remove unwanted components (duplicate chains, ligands, metals and non-standard amino acids)" \cite{}). There are 20 amino acids classified as standard, 22 are known to be incorporated into structures of some organisms \cite{} and more variants are possible, which makes it unclear what is classified as a non-standard amino acid.
+Although it is not part of developing a technique that can help diagnosing rare disease variants but the publication contains a claim ("VIPUR can be applied to mutations in any organism’s proteome...." \cite{}) which contradicts with its methods: "remove unwanted components (duplicate chains, ligands, metals and non-standard amino acids)" \cite{}. Currently there are more than 140 amino acids found in natural proteins of which 22 are part of the amino acid alphabet and 20 of those are classified as standard \cite{}. By removing the non-standard amino acids from proteins it becomes impossible to analyze mutations in every organisms proteome.
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
 %Natural expansion of the genetic code, Ambrogelly et al.
-
 
 
 
