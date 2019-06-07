@@ -15,31 +15,35 @@ backrub.Relax.Score.Data.Frame.List <- lapply(backrub.Relax.Score.Files,function
 })
 
 name.Repetition <- function(mutation.Name,repetitions.Time){
-  rep(strsplit(mutation.Name,"/")[[1]][1],times=repetitions.Time)
+  rep(paste(strsplit(mutation.Name,"_|/")[[1]][2:3],collapse = " "),times=repetitions.Time)
 }
 
 # Error during production makes them separate                          
 TNFA.backrub <- melt(backrub.Relax.Score.Data.Frame.List[c(1,3,5)])
 TNFA.backrub$L1 <- as.factor(sapply(backrub.Relax.Score.Files[c(1,3,5)],name.Repetition,21000))
-TNFA.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[c(7)])
-TNFA.WILD.TYPE$L1 <- rep(strsplit(backrub.Relax.Score.Files[7],"/")[[1]][1],each=39354)
-
-TNFA.backrub <-  rbind(TNFA.backrub,TNFA.WILD.TYPE)
+TNFA.Backrub.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[c(7)])
+TNFA.Backrub.WILD.TYPE$L1 <- rep(strsplit(backrub.Relax.Score.Files[7],"/")[[1]][1],each=39354)
+TNFA.backrub <-  rbind(TNFA.backrub,TNFA.Backrub.WILD.TYPE)
 TNFA.backrub$L2 <- as.character("backrub_Alpha")
 
-TNFA.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(2,4,6,8)])
-TNFA.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(2,4,6,8)],name.Repetition,1344))
+TNFA.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(2,4,6)])
+TNFA.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(2,4,6)],name.Repetition,1344))
+TNFA.Relax.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[8])
+TNFA.Relax.WILD.TYPE$L1 <- rep(paste(strsplit(backrub.Relax.Score.Files[8],"_|/")[[1]][2:4],collapse = " "),each=1344)
+TNFA.relax <- rbind(TNFA.relax,TNFA.Relax.WILD.TYPE)
 TNFA.relax$L2 <- as.character("relax_Alpha")
-
-
 
 TNFB.backrub <- melt(backrub.Relax.Score.Data.Frame.List[c(9,11,13,15)])
 TNFB.backrub$L1 <- as.factor(sapply(backrub.Relax.Score.Files[c(9,11,13,15)],name.Repetition,21000))
 TNFB.backrub$L2 <- as.character("backrub_Beta")
 
-TNFB.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(10,12,14,16)])
-TNFB.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(10,12,14,16)],name.Repetition,1344))
+TNFB.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(10,12,14)])
+TNFB.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(10,12,14)],name.Repetition,1344))
+TNFB.Relax.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[16])
+TNFB.Relax.WILD.TYPE$L1 <- rep(paste(strsplit(backrub.Relax.Score.Files[16],"_|/")[[1]][2:4],collapse = " "),each=1344)
+TNFB.relax <- rbind(TNFB.relax,TNFB.Relax.WILD.TYPE)
 TNFB.relax$L2 <-as.character("relax_Beta")
+
 combined.TNF.Backrub.Relax.Data <- list(TNFA.backrub,
                                        TNFB.backrub,
                                        TNFA.relax,

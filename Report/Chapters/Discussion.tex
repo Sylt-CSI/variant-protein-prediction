@@ -8,20 +8,27 @@ Within the attempt to make VIPUR usable for the diagnosis of rare diseases it wa
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
 Standardizing data can be beneficial to avoid learning features that do not matter and can reduce overfitting. However any form of context to the protein is removed and might therefore make incorrect assumptions about how: a monomer interacts with other monomers, ligands, metals, non-standard amino acids and water which can all have an effect on how proteins shape and interact \cite{}.
 %Application of a Theory of Enzyme Specificity to Protein Synthesis*, Koshland
-(ii) With the utilization of Rosetta's Relax application different models are formed based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), VIPUR produces 50 structures with Relax per protein which is a tiny amount of the potential search space of possible folds that could have made changes in a mutated protein which is also visible in FIGURE****. Also Rosetta itself suggests to make sufficient models, starting with 5000\cite{}.
+(ii) With the utilization of Rosetta's Relax application different models are formed based on the Monte Carlo method (Section \ref{section:Chap_Monte_Carlo}), VIPUR produces 50 structures with Relax per protein which is a tiny amount of the potential search space of possible folds that could have made changes in a mutated protein, which also can be seen in the scores of the model made from of TNFRSF1A with TNF $\alpha$ \& $\beta$ (Figures \ref{fig:relax_TNFA_scores}, \ref{fig:relax_TNFB_scores}), Rosetta itself suggests to make sufficient models, starting with 5000\cite{}.
 %Analyzing Results, Rosetta commons
-
-Within the publication of Probe is mentioned: "It requires both highly accurate structures and also the explicit inclusion of all hydrogen atoms and their van der Waals interactions." \cite{}.
-%Visualizing and quantifying molecular goodness-of-fit: small-probe contact dots with explicit hydrogen atoms11Edited by J. Thornton, Word
-
-The site of Probe mentions: "Meaningful analysis of molecular contact surfaces requires that ALL atoms are considered. Before using Probe, use the companion program Reduce to add hydrogens to the coordinate file." \cite{}, no mention of the Reduce software is mentioned in the VIPUR approach and therefor it is difficult to asses the meaning of previously acquired results in the VTS.
+(iii) The features acquired with probe in combination with the models that were produced, within the publication of Probe is mentioned: "It requires both highly accurate structures and also the explicit inclusion of all hydrogen atoms and their van der Waals interactions." \cite{}.
+%Visualizing and quantifying molecular goodness-of-fit: small-probe contact dots with explicit hydrogen atoms11Edited by J. Thornton, Word et al.
+It is currently not possible to determine if the structures were accurate, however is it likely that no loose hydrogen atoms were included within the structure based on the knowledge that all structures were standardized and likely some of the structures did not have any loose hydrogens within them. To make the outcome of Probe useful to VIPUR the program Reduce should have ran first, which add hydrogen atoms to the structure, which is recommend on the site were Probe can be downloaded from \cite{}.
 %Probe Software : Kinemage Website, Richardson LAB
+%The site of Probe mentions: "Meaningful analysis of molecular contact surfaces requires that ALL atoms are considered. Before using Probe, use the companion program Reduce to add hydrogens to the coordinate file." \cite{}, no mention of the Reduce software is mentioned in the VIPUR approach and therefor it is difficult to asses the meaning of previously acquired results in the VTS.
 
-
-**** easy pick ****
+? easy pick ?
 Within Figure 4 of Robust classification of protein variation using structural modelling and large-scale data integration \cite{} is stated that the mutation on position 204 from serine to proline is predicted deleteriousness, which is even without assessment highly likely because as can been in the structure it resides within an $\alpha$ helix and proline is known as the helix-stopper \cite{}.
 %Robust classification of protein variation using structural modelling and large-scale data integration, Baugh
 %Alpha-helical, but not beta-sheet, propensity of proline is determined by peptide environment, Li et al.
+
+VIPUR was not tested because of; several compilation issues related to libraries making not possible to compile PyMOL or PyRosetta (Sections \ref{subsec:MM_PyMOL}, \ref{subsec:MM_PyRosetta}), not able to run since it was made specifically for a single system and by modifying it unable to execute the basic implemented demo and due to the lack of time to reverse engineer Modeller (Section \ref{subsec:MM_Modeller}) into VIPUR. 
+
+
+Based on the figures (4, 5) \cite{} and supplementary figures (10,11) \cite{} there is a suspicion that there is little added value to the structural information within VIPUR and the predictions made by VIPUR depend on the results of PSI-BLAST.
+%Robust classification of protein variation using structural modelling and large-scale data integration, Baugh et al.
+%SUPPLEMENTARY: Robust classification of protein variation using structural modelling and large-scale data integration, Baugh et al.
+To determine if this is the case it should be tested with methods that determine the contribution of features that are used by VIPUR.
+
 
 Good other suggestions for finding if the approach really means something is by using shap \cite{}.
 %slundberg/shap: A unified approach to explain the output of any machine learning model, Slundberg

@@ -1,4 +1,4 @@
-\subsection{Revving the VIPUR approach to expand rare disease diagnostics}
+\subsection{Reviving the VIPUR approach to expand rare disease diagnostics}
 	\subsubsection{Preparatory steps for using the VIPUR approach}
 		After the publication of VIPUR the tools, data and applications became available at the open science framework (OSF) \cite{} which were downloaded and reviewed. All applications from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) were pre-compiled without support for MPI (Section \ref{subsec:MM_MPI}) and with that not the ability to benefit from multiple CPUs. The Rosetta software suite was rebuilt with MPI support in a slurm job where the compilation could benefit from multiple CPU cores.
 		%VIPUR: Variant Interpretation and Prediction Using Rosetta, Baugh
@@ -27,7 +27,7 @@
 	\newpage
 	
 	\subsubsection{Expanding the VIPUR training set with data from TNFRSF1A by homology modeling and protein threading}
-	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ binding site \cite{} were available and its death domain that interacts with TRADD \cite{} which plays a role in apoptosis (Section \ref{subsec:CD_TNFRSF1A}). To acquire a monomeric structure of TNFRSF1A two ab initio modeling web services I-TASSER and Robetta (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both were given the task to model the whole protein with and without a template to determine how well they could model a known structure and what it would form. Determination of the best model was based on the smallest root mean square deviation distance (RMSD )in {\AA} , between a produced model compared to the X-ray crystallographic model of the TNFRSF1A binding site .
+	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ binding site \cite{} were available and its death domain that interacts with TRADD \cite{} which plays a role in apoptosis (Section \ref{subsec:CD_TNFRSF1A}). To acquire a monomeric structure of TNFRSF1A two ab initio modeling web services I-TASSER and Robetta (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both were given the task to model the whole protein with and without a template to determine how well they could model a known structure and what it would form. Determination of the best model was based on the smallest root mean square deviation distance (RMSD )in {\AA} , between a produced model compared to the X-ray crystallographic model of the TNFRSF1A binding site.
 	
 %	Solution structure of the tumor necrosis factor receptor-1 death domain, Sukits
 	\begin{figure}[!ht]
@@ -154,7 +154,7 @@
 			36 & 1tnr3\_TNFA & T & 0 & SER\\
 			36 & 1tnr3\_TNFA & S & 0 & SER\\
 		\end{tabular}
-		\caption[Sample of table with missense mutations applicable to TNFRSF1A PDB]{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}), with specifications of the: model, file. chain, residue index and the new residue. The whole table for TNFA and TNFB are visible within the supplementary.}
+		\caption[Sample of table with applicable missense mutations to TNFRSF1A]{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}), with specifications of the: model, file. chain, residue index and the new residue. The whole table for TNFA and TNFB are visible within the supplementary.}
 			\label{table:Res_Modeller_Mutation_Format}
 	\end{table}
 	
@@ -163,19 +163,43 @@
 	
 	In the attempt to make mutated structures behave more natural two tools from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) have been used to minimize energies within protein structures. With the backrub application (Section \ref{subsubsec:MM_Backrub}) 1000 altered backbone models have been produced each with 10000 Monte Carlo moves (Sections \ref{section:Chap_Monte_Carlo}). Each model generated has a set of properties that describe the formed molecule 
 	
-	Relax **
+	Relax? 
 	
-	We specifically chose to asses known mutations from infevers. **
-	Density goes beyond 1 ***
+	We specifically chose to asses known mutations from infevers.?
+	Density goes beyond 1?
+	
+	
+	\newpage
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=\linewidth]{Rosetta_Backrub_Relax_Density_Plots/relax_Alpha_plot.pdf}
+		\caption[TNF-$\alpha$ relax score plots]{}
+		\label{fig:relax_TNFA_scores}
+	\end{figure}
+
+	\newpage
+		
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=\linewidth]{Rosetta_Backrub_Relax_Density_Plots/relax_Beta_plot.pdf}
+		\caption[TNF-$\beta$ relax score plots]{}
+		\label{fig:relax_TNFB_scores}
+	\end{figure}
+
+	\newpage
+	
+	
 	
 \newpage	
 \subsection{Finding structural information and its mutations through HOPE}
 	With uncertainty in the numbers provided by SPVAA a more textual informative approach was used with the web service HOPE (Section \ref{subsec:MM_HOPE}). The mutations that were known from Infevers (Section \ref{subsec:MM_Infevers}) and were also used with SPVAA were tested by HOPE (CYS62GLY, GLU138ALA and PHE141IlE), all reports are visible within the supplementary.
 	
-	HOPEs first test was the mutation of Cysteine 62 to glycine, which is known within the Infevers table as pathogenic. It discovered that the residue was involved in a disulfide bridge and was 100\% conserved in related protein sequences, based on the observation that cysteine formed a disulfide bridge it expected that with te replacement of it glycine would make the whole structures less rigid. HOPE predicts that mutation is pathogenic because of the high conservation of the residue, which is further confirmed by its search results in which if found the original publication where the observation has been described and associated to TRAPS \cite{}.
+	HOPEs first test was the mutation of Cysteine 62 to glycine, which is known within the Infevers table as pathogenic and was validated. It discovered that the residue was involved in a disulfide bridge and was 100\% conserved in related protein sequences, based on the observation that cysteine formed a disulfide bridge it expected that with te replacement of it glycine would make the whole structures less rigid. HOPE predicts that mutation is pathogenic because of the high conservation of the residue, which is further confirmed by its search results in which if found the original publication where the observation has been described and associated to TRAPS \cite{}.
 %	The tumor-necrosis-factor receptor-associated periodic syndrome: new mutations in TNFRSF1A, ancestral origins, genotype-phenotype studies, and evidence for further genetic heterogeneity of periodic fevers, Aksentijevich
 	
-	According to Infevers is the mutation of glutamic acid at position 138 mutated to alanine classified as likely benign, HOPE discovered with its BLAST query that glutamic acid occurs the most often at position but other residues such as alanine have been observed at the position. Structurally glutamic acid forms salt bridges with proline  368 and leucine 390, it lies within a part which is repeated and used for binding, it might already perturb the binding capabilities according to HOPE.
+	According to Infevers is the mutation of glutamic acid at position 138 mutated to alanine classified as likely benign and was not validated yet. HOPE discovered with a BLAST query that glutamic acid occurs often at position but other residues such as alanine have been observed at the position. Structurally glutamic acid forms salt bridges with proline  368 and leucine 390 and is found in a sequence of amino acids that is repeated through out TNFRSF1A. The amino acid lies within a domain where it interacts with other domains and is important for the proteins activity, with this mutation it might already perturb the binding capabilities according to HOPE.
+	
+	The last mutation that was tested with HOPE was phenylalanine 141 to Isoleucine and was according to Infevers pathogenic and has been validated. Phenylalanine has been conserved at this positions and few other residues have been seen at the position, it is member of the identical domain as glutamic acid 138 and HOPE predicts that it would not damage the protein based on this information. However within the structure it could inhibit interaction with other domains and protein activity.
 	
 	
 %	

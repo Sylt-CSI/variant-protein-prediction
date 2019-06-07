@@ -9,6 +9,12 @@ includeheadfoot,
 top=-1in, bottom=-1in, left=-1in, right=-1in,
 textwidth=20cm
 ]{geometry}
+%\usepackage{xr} % Allows to make references across different files, if not by default.
+%\externaldocument{Chapters/Variant_Prediction_Genome_Diagnostics}
+%\externaldocument{Chapters/Cell_death}
+%\externaldocument{Chapters/Monte_Carlo}
+%\externaldocument{Chapters/Materials_And_Methods}
+%\externaldocument{Chapters/Results}
 \usepackage{graphicx} % Import images.
 \graphicspath{{./Figures/}} % Set image directory.
 \usepackage[hidelinks]{hyperref} % Make table of contents clickable and remove colours in viewer.
@@ -18,6 +24,7 @@ textwidth=20cm
 \usepackage{subcaption} % Allows subfigures.
 \usepackage{longtable} % Allows long tables / multipage tables.
 \usepackage{pdfpages} % GIves the possibility import pdf pages.
+
 \begin{document}
 	\pagenumbering{gobble}
 	\title{Protein structure modeling for variant pathogenicity prediction}
