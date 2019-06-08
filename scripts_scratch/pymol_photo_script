@@ -8,11 +8,11 @@ set_view (\
 
 bg_color gray
 
-load /Users/gcc/Desktop/GCC/pipeline/report_models/I_TASSER_WITHOUT_TEMPLATE_model1.pdb
-load /Users/gcc/Desktop/GCC/pipeline/report_models/I_TASSER_WITH_TEMPLATE_model1.pdb
-load /Users/gcc/Desktop/GCC/pipeline/report_models/Robetta_model_01_with_template.pdb
-load /Users/gcc/Desktop/GCC/pipeline/report_models/Robetta_model_01_without_template.pdb
-load /Users/gcc/Desktop/GCC/pipeline/report_models/pdb1ext.ent
+load /Users/gcc/Desktop/GCC/pipeline/report_models/de_novo/I_TASSER_WITHOUT_TEMPLATE_model1.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/de_novo/I_TASSER_WITH_TEMPLATE_model1.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/de_novo/Robetta_model_01_with_template.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/de_novo/Robetta_model_01_without_template.pdb
+load /Users/gcc/Desktop/GCC/pipeline/report_models/de_novo/pdb1ext.ent
 
 remove resn SO4
 remove metals
