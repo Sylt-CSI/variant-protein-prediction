@@ -160,21 +160,17 @@
 	\end{table}
 	
 	\newpage
-	To introduce mutations within PDB structures a Python script (Section \ref{subsec:MM_Python}) was written which used the generated mutation table (Table: \ref{table:Res_Modeller_Mutation_Format}) and a matching PDB structure, from the table; it acquires an iteration number which specifies if a mutation has to be stored in a single file or across multiple files; the filename serves as key which determine the PDB that should be used; letters specify chains, numbers are indices within the chains and the last column states the three letter residue where it should mutate to. When a structure is read in through the Python bindings of Modeller (Section \ref{subsec:MM_Modeller}) all non standard atoms and molecules are removed because Rosetta (Section \ref{subsec:MM_Rosetta}) is not able to deal with those atoms. Just before mutagenesis takes place missing atoms are added to the structure that were difficult to determine with experimental methods(Section \ref{subsec:GD_Addition_of_structural_data}). After the insertion of all mutations a last guess is made where disulfide bonds are added between cysteines. With this process variants can be easily made, however the mutations do not present a correct protein because the mutated residues can put the protein in a high energy state.
+	To introduce mutations within PDB structures a Python script (Section \ref{subsec:MM_Python}) was written which used the generated mutation table (Table: \ref{table:Res_Modeller_Mutation_Format}) and a matching PDB structure, from the table; it acquires an iteration number which specifies if a mutation has to be stored in a single file or across multiple files; the filename serves as key which determine the PDB that should be used; letters specify chains, numbers are indices within the chains and the last column states the three letter residue where it should mutate to. When a structure is read in through the Python bindings of Modeller (Section \ref{subsec:MM_Modeller}) all non standard atoms and molecules are removed because Rosetta (Section \ref{subsec:MM_Rosetta}) is not able to deal with those atoms. Just before mutagenesis takes place missing atoms are added to the structure that were difficult to determine with experimental methods(Section \ref{subsec:GD_Addition_of_structural_data}). After the insertion of all mutations a last attempt was made by modeller to add dislufide bridges, based on the distance between cysteine residues, into the structure.
 	
-	In the attempt to make mutated structures behave more natural two tools from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) have been used to minimize energies within protein structures. With the backrub application (Section \ref{subsubsec:MM_Backrub}) 1000 altered backbone models have been produced each with 10000 Monte Carlo moves (Sections \ref{section:Chap_Monte_Carlo}). Each model generated has a set of properties that describe the formed molecule 
-	
-	Relax? 
-	
-	We specifically chose to asses known mutations from infevers.?
-	Density goes beyond 1?
-	
+	With the many protein variants generated and limited resources to use SPVAA mutations had to be chosen. All mutations were picked from the Infevers table because that were variants of a single isoform and had a protein structure (1TNR \cite{}) available that interacted with TNF $\beta$. 
+	%Crystal structure of the soluble human 55 kd TNF receptor-human TNFβ complex: Implications for TNF receptor activation, Banner
+	Mutations cysteine 62 to glycine and phenylalaine acid 141 to isoleucine were validated as pathogenic mutations within Infevers table and were used to determine the effectiveness of SPVAA. Within the infevers table no benign validated missense mutations were available, but to still have the opportunity to asses a likely benign mutation, the mutation glutamic acid 138 to alanine has been added to SPVAA.	
 	
 	\newpage
 	\begin{figure}[!ht]
 		\centering
 		\includegraphics[width=\linewidth]{Rosetta_Backrub_Relax_Density_Plots/relax_Alpha_plot.pdf}
-		\caption[TNF-$\alpha$ relax score plots]{}
+		\caption[TNF-$\alpha$ relax score plots]{The density plots display a distribution of scores formed by each model that was produced by relax of all models which had TNF$\alpha$ within them. The total scores of each mutated model is lower than the wild type that is bound to TNF$\alpha$}
 		\label{fig:relax_TNFA_scores}
 	\end{figure}
 
@@ -189,7 +185,60 @@
 
 	\newpage
 	
+	In the attempt to make mutated structures behave more natural two tools from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) had been used to minimize energies within protein structures. With the Backrub application (Section \ref{subsubsec:MM_Backrub}) 1000 altered backbone models have been produced each with 10000 Monte Carlo moves (Sections \ref{section:Chap_Monte_Carlo}). For each model that Backrub generated a set of scores were assigned to the properties, which together formed a collective score that described energy and bond occurrence in nature (Section \ref{subsec:MM_Rosetta}). Models of the wildtypes and mutants with the lowest collective score ,the best score, were chosen to undergo further side chain optimization within the Relax (Section \ref{subsubsec:MM_Relax}). 64 different relaxed models were produced and with various scores related to the properties of which the one with lowest total score would be chosen to visualize. 
 	
+	\begin{figure}[!ht]
+		\centering
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth,height=0.2\textheight]{Relax_Pymol_Images/TNFA_wild.png}{a}
+			\phantomcaption
+			\label{fig:RES_TNFA_wild}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth,height=0.2\textheight]{Relax_Pymol_Images/TNFA_18.png}{b}
+			\phantomcaption
+			\label{fig:RES_TNFA_18}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth,height=0.2\textheight]{Relax_Pymol_Images/TNFA_94.png}{c}
+			\phantomcaption
+			\label{fig:RES_TNFA_94}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth,height=0.2\textheight]{Relax_Pymol_Images/TNFA_97.png}{d}
+			\phantomcaption
+			\label{fig:RES_TNFA_97}
+			\end{subfigure}
+		\caption[TNF-$\alpha$ relaxed and mutated models]{}
+		\end{figure}
+		\newpage
+		
+		\begin{figure}[!ht]
+		\centering
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth]{Relax_Pymol_Images/TNFB_wild.png}{a}
+			\phantomcaption
+			\label{fig:RES_TNFB_wild}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth]{Relax_Pymol_Images/TNFB_18.png}{b}
+			\phantomcaption
+			\label{fig:RES_TNFB_18}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth]{Relax_Pymol_Images/TNFB_94.png}{c}
+			\phantomcaption
+			\label{fig:RES_TNFB_94}
+		\end{subfigure}
+		\begin{subfigure}{0.45\textwidth}
+			\includegraphics[width=\textwidth]{Relax_Pymol_Images/TNFB_97.png}{d}
+			\phantomcaption
+			\label{fig:RES_TNFB_97}
+		\end{subfigure}
+	\caption[TNF-$\beta$ relaxed and mutated models]{}
+	\end{figure}
+	
+\newpage
 	
 \newpage	
 \subsection{Finding structural information and its mutations through HOPE}
