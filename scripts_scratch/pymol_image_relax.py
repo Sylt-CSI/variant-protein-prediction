@@ -23,7 +23,7 @@ bridge_names = [
 muts = [109,112,33,"109+112+33",109,112,33,"109+112+33"]
 
 for bridge, prot, mutje in zip(bridge_names,prot_names, muts):
-    with open(sys.argv[1]+"{}.pml".format(bridge), "w") as crap:
+    with open(sys.argv[1]+"{}.pml".format(bridge), "w") as pymol_script_file_name:
         print("""
 bg_color white
 set label_size, 0
@@ -85,4 +85,4 @@ color red, resi {mutje} and chain R+T+S and {prot}
 # distance {bridge}_saltbridgeS2, ({bridge}_positive and chain S and {prot}), ({bridge}_negative and not chain S and {prot}), 4.0, 0      
 ray 1920, 1080 
 png /Users/gcc/Desktop/GCC/pipeline/Report/Figures/Relax_PyMOL_Images/{bridge}.png
-""".format(prot=prot, bridge=bridge, mutje=mutje), file=crap)
+""".format(prot=prot, bridge=bridge, mutje=mutje), file=pymol_script_file_name)

@@ -5,6 +5,22 @@ library(data.table)
 backrub.Relax.Score.Files <- list.files("~/Desktop/scores/testing_ground/", pattern = "*.sc", recursive = T)
 backrub.Relax.Score.Files
 
+new.Names <- c("TNFA GLU 138 ALA",
+               "TNFA GLU 138 ALA",
+               "TNFA CYS 62 GLY",
+               "TNFA CYS 62 GLY",
+               "TNFA PHE 141 ILE",
+               "TNFA PHE 141 ILE",
+               "TNFA wild type",
+               "TNFA wild type",
+               "TNFB GLU 138 ALA",
+               "TNFB GLU 138 ALA",
+               "TNFB CYS 62 GLY",
+               "TNFB CYS 62 GLY",
+               "TNFB PHE 141 ILE",
+               "TNFB PHE 141 ILE",
+               "TNFB wild type",
+               "TNFB wild type")
 
 backrub.Relax.Score.Data.Frame.List <- lapply(backrub.Relax.Score.Files,function(score.File){
   fread(paste0("~/Desktop/scores/testing_ground/",score.File),
@@ -14,34 +30,35 @@ backrub.Relax.Score.Data.Frame.List <- lapply(backrub.Relax.Score.Files,function
         
 })
 
-name.Repetition <- function(mutation.Name,repetitions.Time){
-  rep(paste(strsplit(mutation.Name,"_|/")[[1]][2:3],collapse = " "),times=repetitions.Time)
-}
+# name.Repetition <- function(mutation.Name,repetitions.Time){
+#   rep(paste(strsplit(mutation.Name,"_|/")[[1]][2:3],collapse = " "),times=repetitions.Time)
+# }
 
 # Error during production makes them separate                          
 TNFA.backrub <- melt(backrub.Relax.Score.Data.Frame.List[c(1,3,5)])
-TNFA.backrub$L1 <- as.factor(sapply(backrub.Relax.Score.Files[c(1,3,5)],name.Repetition,21000))
+TNFA.backrub$L1 <- as.factor(sapply(new.Names[c(1,3,5)],rep, 21000))
 TNFA.Backrub.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[c(7)])
-TNFA.Backrub.WILD.TYPE$L1 <- rep(strsplit(backrub.Relax.Score.Files[7],"/")[[1]][1],each=39354)
+TNFA.Backrub.WILD.TYPE$L1 <- rep(new.Names[7],each=39354)
 TNFA.backrub <-  rbind(TNFA.backrub,TNFA.Backrub.WILD.TYPE)
 TNFA.backrub$L2 <- as.character("backrub_Alpha")
 
-TNFA.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(2,4,6)])
-TNFA.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(2,4,6)],name.Repetition,1344))
-TNFA.Relax.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[8])
-TNFA.Relax.WILD.TYPE$L1 <- rep(paste(strsplit(backrub.Relax.Score.Files[8],"_|/")[[1]][2:4],collapse = " "),each=1344)
-TNFA.relax <- rbind(TNFA.relax,TNFA.Relax.WILD.TYPE)
+TNFA.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(2,4,6,8)])
+TNFA.relax$L1 <- as.factor(sapply(new.Names[c(2,4,6,8)], rep, times=1344))
+# TNFA.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(2,4,6)],name.Repetition,1344))
+# TNFA.Relax.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[8])
+# TNFA.Relax.WILD.TYPE$L1 <- rep(paste(strsplit(backrub.Relax.Score.Files[8],"_|/")[[1]][2:4],collapse = " "),each=1344)
+# TNFA.relax <- rbind(TNFA.relax,TNFA.Relax.WILD.TYPE)
 TNFA.relax$L2 <- as.character("relax_Alpha")
 
 TNFB.backrub <- melt(backrub.Relax.Score.Data.Frame.List[c(9,11,13,15)])
-TNFB.backrub$L1 <- as.factor(sapply(backrub.Relax.Score.Files[c(9,11,13,15)],name.Repetition,21000))
+TNFB.backrub$L1 <- as.factor(sapply(new.Names[c(9,11,13,15)],rep ,21000))
 TNFB.backrub$L2 <- as.character("backrub_Beta")
 
-TNFB.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(10,12,14)])
-TNFB.relax$L1 <-as.factor(sapply(backrub.Relax.Score.Files[c(10,12,14)],name.Repetition,1344))
-TNFB.Relax.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[16])
-TNFB.Relax.WILD.TYPE$L1 <- rep(paste(strsplit(backrub.Relax.Score.Files[16],"_|/")[[1]][2:4],collapse = " "),each=1344)
-TNFB.relax <- rbind(TNFB.relax,TNFB.Relax.WILD.TYPE)
+TNFB.relax <- melt(backrub.Relax.Score.Data.Frame.List[c(10,12,14,16)])
+TNFB.relax$L1 <-as.factor(sapply(new.Names[c(10,12,14,16)],rep,1344))
+# TNFB.Relax.WILD.TYPE <- melt(backrub.Relax.Score.Data.Frame.List[16])
+# TNFB.Relax.WILD.TYPE$L1 <- rep(paste(strsplit(backrub.Relax.Score.Files[16],"_|/")[[1]][2:4],collapse = " "),each=1344)
+# TNFB.relax <- rbind(TNFB.relax,TNFB.Relax.WILD.TYPE)
 TNFB.relax$L2 <-as.character("relax_Beta")
 
 combined.TNF.Backrub.Relax.Data <- list(TNFA.backrub,
