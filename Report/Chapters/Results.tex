@@ -1,6 +1,6 @@
 \subsection{Reviving the VIPUR approach to expand rare disease diagnostics}
 	\subsubsection{Preparatory steps for using the VIPUR approach}
-		After the publication of VIPUR the tools, data and applications became available at the open science framework (OSF) \cite{} which were downloaded and reviewed. All applications from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) were pre-compiled without support for MPI (Section \ref{subsec:MM_MPI}) and with that not the ability to benefit from multiple CPUs. The Rosetta software suite was rebuilt with MPI support in a slurm job where the compilation could benefit from multiple CPU cores.
+		After the publication of VIPUR the tools, data and applications became available at the open science framework (OSF) \cite{baugh_vipur:_2015} which were downloaded and reviewed. All applications from the Rosetta software suite (Section \ref{subsec:MM_Rosetta}) were pre-compiled without support for MPI (Section \ref{subsec:MM_MPI}) and with that not the ability to benefit from multiple CPUs. The Rosetta software suite was rebuilt with MPI support in a slurm job where the compilation could benefit from multiple CPU cores.
 		%VIPUR: Variant Interpretation and Prediction Using Rosetta, Baugh
 	\label{subsubsec:RES_Prepare}
 	
@@ -10,13 +10,13 @@
 	\begin{figure}[!ht]
 		\centering
 		\begin{subfigure}{0.45\textwidth}
-			\includegraphics[width=\textwidth]{Flowcharts/VIPUR_approach.pdf}{a}
-			\phantomcaption
+			\includegraphics[width=\textwidth,height=0.3\textheight]{Flowcharts/VIPUR_approach.pdf}
+			\caption{Original VIPUR approach}
 			\label{fig:RES_VIPUR_approach}
 		\end{subfigure}
 		\begin{subfigure}{0.45\textwidth}
-			\includegraphics[width=\textwidth]{Flowcharts/Altered_VIPUR_approach.pdf}{b}
-			\phantomcaption
+			\includegraphics[width=\textwidth,height=0.3\textheight]{Flowcharts/Altered_VIPUR_approach.pdf}
+			\caption{Altered VIPUR approach}
 			\label{fig:RES_Altered_VIPUR_approach}
 		\end{subfigure}
 		\caption[Flowcharts VIPUR pipeline and altered VIPUR pipeline]{Both flowcharts illustrate the VIPUR pipeline wherein each block is a procedure the central circle is the purpose of the mutated applications and each arrow represents the path to it. Figure \ref{fig:RES_VIPUR_approach} has red arrows that indicate that both methods were incapable to produce the mutated PDB files. Within figure \ref{fig:RES_Altered_VIPUR_approach} the alternative method is proposed wherein PyMOL and PyRosetta (Sections \ref{subsec:MM_PyMOL}, \ref{subsec:MM_PyRosetta}) is substituted by Modeller (Section \ref{subsec:MM_Modeller}) to acquire the mutated protein structures.}
@@ -27,7 +27,7 @@
 	\newpage
 	
 	\subsubsection{Expanding the VIPUR training set with data from TNFRSF1A by homology modeling and protein threading}
-	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ binding site \cite{} were available and its death domain that interacts with TRADD \cite{} which plays a role in apoptosis (Section \ref{subsec:CD_TNFRSF1A}). To acquire a monomeric structure of TNFRSF1A two ab initio modeling web services I-TASSER and Robetta (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both were given the task to model the whole protein with and without a template to determine how well they could model a known structure and what it would form. Determination of the best model was based on the smallest root mean square deviation distance (RMSD )in {\AA} , between a produced model compared to the X-ray crystallographic model of the TNFRSF1A binding site.
+	Since the VTS did not have any features of TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) the amino acid sequence was collected from Uniprot (Section \ref{subsec:MM_Uniprot}) and the protein from RCSB (Section \ref{subsec:MM_RCSB}). The structures available of TNFRSF1A were incomplete, fragments for the TNF $\alpha$ and $\beta$ binding site \cite{banner_crystal_1993} were available and its death domain that interacts with TRADD \cite{sukits_solution_2001} which plays a role in apoptosis (Section \ref{subsec:CD_TNFRSF1A}). To acquire a monomeric structure of TNFRSF1A two ab initio modeling web services I-TASSER and Robetta (Sections \ref{subsec:MM_I_TASSER}, \ref{subsec:MM_Robetta}) had been employed. Both were given the task to model the whole protein with and without a template to determine how well they could model a known structure and what it would form. Determination of the best model was based on the smallest root mean square deviation distance (RMSD )in {\AA} , between a produced model compared to the X-ray crystallographic model of the TNFRSF1A binding site.
 	
 %	Solution structure of the tumor necrosis factor receptor-1 death domain, Sukits
 	\begin{figure}[!ht]
@@ -63,7 +63,7 @@
 	\subsubsection{Requirements for determining structural and binding effects of protein variants}
 	Protein variants can be assessed from multiple perspectives and together they can form a holistic view on how a protein works and how mutations affect its workings. However adding perspectives to the protein assessment makes it complex and requires expertise to determine its validity and contribution, therefore the analysis has been limited to basic structural information and also make the assessment inline with the VIPUR methods.
 	
-	Various proteins consist of multiple chains that can be identical or different depending on their function \cite{} and should be taken into account when assessing protein variants since one residue might alter the binding between chains and might alter the proteins formation. 
+	Various proteins consist of multiple chains that can be identical or different depending on their function \cite{liu_lipin_2010} and should be taken into account when assessing protein variants since one residue might alter the binding between chains and might alter the proteins formation. 
 %	Lipin proteins form homo- and hetero-oligomers, Liu et al.
 	Different molecules and atoms that do not make up a protein but play a role in a pathway and function (ligands and co-receptors) are able to affect a proteins shape and can behave differently when a residue is mutated. 
 	
@@ -141,7 +141,7 @@
 		\label{table:Res_Filtered_Mutations}
 	\end{table}
 	
-	For assessing variants in TNFRSF1A a structural fragment was used that contained TNF $\beta$ (1TNR) \cite{} and was made homotrimeric with PyMOL (Section \ref{subsec:MM_PyMOL}) which results in six chains that emulate a bound TNFRSF1A with TNF $\beta$. The first column of the mutation table did not contain sufficient information to apply mutations correctly and within the PDB different numbering is used than in the amino acid sequence. To bundle the information and make it usable for introducing mutations a Python script (Section \ref{subsec:MM_Python}) has been written that combines the mutation table, PDB chains and the correct position within the sequence into a type of table which has sufficient information to mutate structures.  
+	For assessing variants in TNFRSF1A a structural fragment was used that contained TNF $\beta$ (1TNR) \cite{banner_crystal_1993} and was made homotrimeric with PyMOL (Section \ref{subsec:MM_PyMOL}) which results in six chains that emulate a bound TNFRSF1A with TNF $\beta$. The first column of the mutation table did not contain sufficient information to apply mutations correctly and within the PDB different numbering is used than in the amino acid sequence. To bundle the information and make it usable for introducing mutations a Python script (Section \ref{subsec:MM_Python}) has been written that combines the mutation table, PDB chains and the correct position within the sequence into a type of table which has sufficient information to mutate structures.  
 	%	Crystal structure of the soluble human 55 kd TNF receptor-human TNFβ complex: Implications for TNF receptor activation, Banner et al. 
 	\begin{table}[ht]
 		\begin{tabular}{ l | l | l | l | l}
@@ -163,7 +163,7 @@
 	\newpage
 	To introduce mutations within PDB structures a Python script (Section \ref{subsec:MM_Python}) was written which used the generated mutation table (Table: \ref{table:Res_Modeller_Mutation_Format}) and a matching PDB structure, from the table; it acquires an iteration number which specifies if a mutation has to be stored in a single file or across multiple files; the filename serves as key which determine the PDB that should be used; letters specify chains, numbers are indices within the chains and the last column states the three letter residue where it should mutate to. When a structure is read in through the Python bindings of Modeller (Section \ref{subsec:MM_Modeller}) all non standard atoms and molecules are removed because Rosetta (Section \ref{subsec:MM_Rosetta}) is not able to deal with those atoms. Just before mutagenesis takes place missing atoms are added to the structure that were difficult to determine with experimental methods(Section \ref{subsec:GD_Addition_of_structural_data}). After the insertion of all mutations a last attempt was made by modeller to add dislufide bridges, based on the distance between cysteine residues, into the structure.
 	
-	With the many protein variants generated and limited resources to use SPVAA mutations had to be chosen. All mutations were picked from the Infevers table because that were variants of a single isoform and had a protein structure (1TNR \cite{}) available that interacted with TNF $\beta$. 
+	With the many protein variants generated and limited resources to use SPVAA mutations had to be chosen. All mutations were picked from the Infevers table because that were variants of a single isoform and had a protein structure (1TNR \cite{banner_crystal_1993}) available that interacted with TNF $\beta$. 
 	%Crystal structure of the soluble human 55 kd TNF receptor-human TNFβ complex: Implications for TNF receptor activation, Banner
 	Mutations cysteine 62 to glycine and phenylalaine acid 141 to isoleucine were validated as pathogenic mutations within Infevers table and were used to determine the effectiveness of SPVAA. Within the infevers table no benign validated missense mutations were available, but to still have the opportunity to asses a likely benign mutation, the mutation glutamic acid 138 to alanine has been added to SPVAA.	
 	
@@ -248,7 +248,7 @@
 \subsection{Finding structural information and its mutations through HOPE}
 	With uncertainty in the numbers provided by SPVAA a more textual informative approach was used with the web service HOPE (Section \ref{subsec:MM_HOPE}). The mutations that were known from Infevers (Section \ref{subsec:MM_Infevers}) and were also used with SPVAA were tested by HOPE (CYS62GLY, GLU138ALA and PHE141IlE), all reports are visible within the supplementary.
 	
-	HOPEs first test was the mutation of Cysteine 62 to glycine, which is known within the Infevers table as pathogenic and was validated. It discovered that the residue was involved in a disulfide bridge and was 100\% conserved in related protein sequences, based on the observation that cysteine formed a disulfide bridge it expected that with te replacement of it glycine would make the whole structures less rigid. HOPE predicts that mutation is pathogenic because of the high conservation of the residue, which is further confirmed by its search results in which if found the original publication where the observation has been described and associated to TRAPS \cite{}.
+	HOPEs first test was the mutation of Cysteine 62 to glycine, which is known within the Infevers table as pathogenic and was validated. It discovered that the residue was involved in a disulfide bridge and was 100\% conserved in related protein sequences, based on the observation that cysteine formed a disulfide bridge it expected that with te replacement of it glycine would make the whole structures less rigid. HOPE predicts that mutation is pathogenic because of the high conservation of the residue, which is further confirmed by its search results in which if found the original publication where the observation has been described and associated to TRAPS \cite{aksentijevich_tumor-necrosis-factor_2001}.
 %	The tumor-necrosis-factor receptor-associated periodic syndrome: new mutations in TNFRSF1A, ancestral origins, genotype-phenotype studies, and evidence for further genetic heterogeneity of periodic fevers, Aksentijevich
 	
 	According to Infevers is the mutation of glutamic acid at position 138 mutated to alanine classified as likely benign and was not validated yet. HOPE discovered with a BLAST query that glutamic acid occurs often at position but other residues such as alanine have been observed at the position. Structurally glutamic acid forms salt bridges with proline  368 and leucine 390 and is found in a sequence of amino acids that is repeated through out TNFRSF1A. The amino acid lies within a domain where it interacts with other domains and is important for the proteins activity, with this mutation it might already perturb the binding capabilities according to HOPE.

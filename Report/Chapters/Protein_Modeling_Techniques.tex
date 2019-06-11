@@ -1,0 +1,21 @@
+\subsection{Protein modeling techniques}
+An alternative approach to determine structures is based on modeling the protein structure computationally from the amino acid sequence of the desired protein. A downside from computer generated models is that they do not follow the rules of physics and therefore not automatically fold into the correct confirmation. With the method homology modeling sequences of the requested protein are aligned to sequences of known experimental determined structures, based on these alignments a template is formed whereon structural fragments are built, it is not recommended to use this strategy if the sequence identity is less than 20\% since there might not be any structural relation at that point \cite{chothia_relation_1986}.
+% The relation between the divergence of sequence and structure in proteins, Chotia and Lesk
+Another approach is protein threading which relies on the observation of folds in previous determined experimental structures. Based on the occurrence of specific folds a probability is predicted that a certain residue in a protein might fold in that manner. 
+
+Strategies are continuously being improved and developed for proteins to determine the unknown structures, but all have the similar guidelines in avoiding steric hindrance \cite{yonath_x-ray_2011} and finding the lowest energies based on different scoring systems \cite{wikipedia_ramachandran_2019}. From the computer generated models many are less accurate than the experimental determined methods and are often compared to them for reference. However the computational models do not have follow the same laws of physics which bottleneck the current experimental methods in for example determining membrane proteins \cite{shourya_scoring_nodate}.
+%X-ray crystallography at the heart of life science, Yonath
+% Ramachandran plot, Wikipedia
+%Scoring Tutorial , Shourya et al.
+\label{subsec:GD_Protein_modeling_techniques}
+
+\subsection{A theoretical large scale implementation of structural protein variant assessment}
+With the wide spectrum of potential different proteins it can be difficult and maybe momentarily impossible to produce any form of universal protein assessment standardization that is able to determine if a mutation is harmful or not based on structural information. However a first step to solve such a complex problem would be by determining the correct approach, in this case it is assumed that a machine learning approach would be the best method for detecting patterns in structures and classifying the effect of structural changes. Because it has the ability to learn from structural mutations currently available, assuming that the current knowledge about structures and mutations is correct, and is able to develop new insights in how structural changes could affect proteins. 
+
+Since the problem is so complex it should be divided into smaller more feasible problems, beginning by separating the different protein classes, which  for example can be done according to The Structural Classification of Proteins database (SCOP) \cite{andreeva_scop2_2014}. A first discrimination between the proteins could be made based on protein type/fold class (membrane, globular, fibrous and disordered -proteins) because these differences already predetermine some functions and locations for certain proteins in a cell \cite{wikipedia_membrane_2019, wikipedia_globular_2019,wikipedia_scleroprotein_2018,wikipedia_intrinsically_2019}. After formation of these classes each should have its own machine learning method applied so their features can be analyzed within context of where and how they function. The next set of discriminators is highly dependent on the variations in classes, but all have features in the end describing bonds, interactions and movement of complexes in protein structures. When for each of the main classes a method has been developed a meta classifier will determine based on certain aspects which method should be applied to determine the effect of mutation in a protein.
+%SCOP2 prototype: a new approach to protein structure mining, Andreeva et. al.
+%Membrane protein, Wikipedia
+%Globular protein, Wikipedia
+%Scleroprotein, Wikipedia
+%Intrinsically disordered proteins, Wikipedia
+\label{subsec:GD_theoratical_large_scale_implementation}
