@@ -1,18 +1,1 @@
-%All methods are reliant on existing information collected from proteins structures 
-%
-%VIPUR is missing information to give a solid prediction about the deleteriousness of a protein variant and therefore likely suffers from errors in the predictions, SPVAA which uses changes in energy levels could be a more reliable source but also shows its weaknesses within the pace it can asses protein variants, it makes the determination manual and requires background knowledge for the assessment of protein variants. 
-%
-% of info that accurate we propsed another method for assessing protein structures within complex which may play a role in machine learning
- 
-Although VIPUR has not predicted any proteins variants of TNFRSF1A or other diseases it would most likely have a limited to no meaning based on the large differences in structures that were modeled (Figures \ref{fig:I_Tasser_Robetta_models}). $\sim57\%$ of TNFRSF1As structure was known (1EXT\cite{naismith_structures_1996} , 1ICH\cite{sukits_solution_2001}), but probably made it difficult is that it is a transmembrane protein of which nothing is known between the two fragments.
-%Structures of the extracellular domain of the type I tumor necrosis factor receptor, Naismith
-%Solution structure of the tumor necrosis factor receptor-1 death domain, Suktis et al.
-SPVAA is currently not an informative method and requires expert knowledge to evaluate changes in multiple situations.
-
-Fragments were only available of 1EXT and 1TNR because it is a transmembrane protein which is difficult to make a structure from with X-ray crystallography.
-
-At its current state the software has limited use and is not production ready to perform mass diagnosis.
-
-%For individual missense mutations HOPE is an excellent tool that gives insight in situations where information is known about the: protein, mutation, domain.
-%
-%hodiagnoses HOPE can be an excellent tool to give insight in the effects a missene mutation gives to  giving a wide context of information related to 
+All methods used to determine structural information are dependent on experimentally determined structures, which are expensive and less common than sequencing methods. At its current state VIPUR is not usable for diagnosing defects within proteins and severe changes should be made to make it usable. SPVAA is only helpful when an expert is available to determine if a mutation has any affect on the protein structure, neither is it at its current state operable for inexperienced users. HOPE is an informative tool that can give decent insights in what the effect of a mutation is and could be helpful for single uses cases but not for large scale.

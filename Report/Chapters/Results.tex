@@ -57,6 +57,9 @@
 		\label{fig:I_Tasser_Robetta_models}
 	\end{figure}
 	\label{subsubsec:RES_Expanding_Models}
+	
+	\subsection{Practical use of VIPUR}
+	With the hindrance of software incompatibility on the cluster, difference in produced models between the web services, discovery of consequences by removing elements from structures, and the time it would take to reverse engineer VIPUR a new decision was formed. VIPUR would be set aside for now and if time was left there would be further looked into to make it applicable for protein structure evaluation.
 
 \newpage
 \subsection{Analyses of proteins variants TNFRSF1A}
@@ -69,64 +72,15 @@
 	
 	A different aspect that can change with mutations is the alteration in motions between structures which can allow or disallow certain movements to occur and with inhibit processes.
 	
-%	In context of TNFRSF1A dimers that are formed when unbound can be altered by mutations and 
+	\subsection{Simple protein variant analysis approach}
+	A different method for determining function loss in a protein variant is through assessment of difference in energy levels between a wild type and a variant in the complex where it resides. Analyzing mutations from this perspective gives the ability to view a protein in whole and determine how residues cause perturbations in a protein. To make a variant of the wild type, a structure was required wherein a missense mutation could be introduced with Modeller (Section \ref{subsec:MM_Modeller}). The backbone structure of the variant was modified with the backrub application (Section \ref{subsubsec:MM_Backrub}) to make it better interact with other amino acid backbones in the structure resulting in 1000 models. The lowest Rosetta scoring (Section \ref{subsec:MM_Rosetta}) one would be selected to further improve the side chains with the Relax application	(Section \ref{subsubsec:MM_Relax}) which makes the side chains of the protein move into lower energy formations. From these 64 models were made where its energies levels were compared to the native structure to determine the effects a mutation would have on the protein, the lowest scoring ones were used as figures. This method shows similarities to that of VIPUR and was only tested on TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) and its ligands TNF $\alpha$ and $\beta$. This method keeps: duplicate chains and protein ligands within the structure, water is excluded since it can cause issues with Rosetta tools (Section \ref{subsec:MM_Rosetta}). This procedure with these steps is defined as the Simple protein variant analysis approach (SPVAA).
 	
-%	Other parts that alter to protein and play a role in function are ligands and co-receptors that 
-%	To get the appropriate structural information of a protein 
-%	
-%	the informational search scope has been limited to structural information and 
-%	
-%	 therefore the search scope has been limited to structural information.
-%	For structurally assessing protein variants a there are several requirements, 
-
-
-%	SOMETHING ABOUT 1TNR and 1EXT!
-%	Structural information of proteins describes how a protein functions and how it behaves within a cell, however it is difficult to analyze since
-%	
-%	Proteins variants can be assessed from different perspectives and all are necessary to 
-%	Assessing protein variants and its effects 
-%	
-%	Assessing protein variants and the effects that a variant might cause can be assessed from different fields of view and could give a holistic view on problem that arise during mutations. However adding every perspective in an analyses is difficult because collecting all available information often has to be done manually and to determine which information is relevant requires expertise. However it can be complex to put all the information and since  
-%	
-%	
-%	Because the VTS mainly consists of structural features and 
-%	
-%	To make assessment less complex and because the VTS has mainly structural features 
-%	
-%	 a structural point of view was taken for the protein TNFRSF1A 
-%	
-%	To simplify the complexity of the problem only a structural point of view with limited alterations was taken
-%	
-%	To simplify the problem it has been recapitulated into 
-%	
-%	the perspectives of form and function.
-%	
-%	The perspective of form describes how a protein takes shape based on the environment and amino acid sequence, within the context of TNFRSF1A it describes how dimer structures are formed on the cell surface when unbound and that it forms a trimeric structure when it is bound by TNF 
-%	
-%	Function determines how certain parts of a protein behave within an environment and determine its effects on a pathway. 
-%	
-%	In context with TNFRSF1A one part resides on the cell surface where it binds ligands and on the cytoplasmic side it can interact with protein that triggers an inflammatory response or apoptosis. When a mutation is introduced at the cell surface side it might not be able to form dimer formations that interact with TNF ligands or during transformation with the binding of TNF it is unable to bind trimers. 
-%	
-%	Wherein the perspective of form the deciding factors are the amino acid sequence and where it resides within the cell.
-%	
-%	A different perspective is form wherein the amino acid sequence determines how a protein structure will be formed.
-%	
-%	Before the moment of writing no protocol was available which dealt with structural variation 
-%	
-%	Currently there is no protocol available to asses protein variants with structural information, 
-	
-%	Assessing protein variants and its effects should be studied with a multidisciplinary view wherein form and function are assessed. Within the aspect of form should be seen how a protein is formed
-%	
-%	
-%	However due to difficulties with experiments it can be hard to unravel all the effects that can be caused by mutations.
-%	
-%	 A part of this view is to know what function the protein has before its mutated to determine its effect on a pathway or function. 
-%	
-%	How does the 
-%	
-%	
-%%	 Effect
-%	Can a cell or pathway still function without this protein? or is there an alternative mechanism within the cell that is less efficient in performing similar role? 
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.5\textwidth]{Flowcharts/SPVAA_pipeline.pdf}
+		\caption[Flowchart SPVAA pipeline]{hoi}
+	\end{figure}
+	\newpage
 	
 	\subsubsection{Single protein variant analysis approach and its tools}
 	Before introducing mutations into a protein structure it is helpful to know if a mutation has been observed to avoid allocating resources to something that does not occur. Therefore three tables with observed TNFRSF1A mutations (Sections \ref{subsec:MM_GAVIN_data_table}, \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}) have been combined with an R script (Section \ref{subsec:MM_R}) into a single table consisting of two columns. The first column (split into three columns \ref{table:Res_Filtered_Mutations}) contains strings that describes the: original residue, position and where it mutates to, the second column describes whether a formed mutation is harmful, with most mutations the effects have not been identified yet. 
@@ -160,7 +114,6 @@
 			\label{table:Res_Modeller_Mutation_Format}
 	\end{table}
 	
-	\newpage
 	To introduce mutations within PDB structures a Python script (Section \ref{subsec:MM_Python}) was written which used the generated mutation table (Table: \ref{table:Res_Modeller_Mutation_Format}) and a matching PDB structure, from the table; it acquires an iteration number which specifies if a mutation has to be stored in a single file or across multiple files; the filename serves as key which determine the PDB that should be used; letters specify chains, numbers are indices within the chains and the last column states the three letter residue where it should mutate to. When a structure is read in through the Python bindings of Modeller (Section \ref{subsec:MM_Modeller}) all non standard atoms and molecules are removed because Rosetta (Section \ref{subsec:MM_Rosetta}) is not able to deal with those atoms. Just before mutagenesis takes place missing atoms are added to the structure that were difficult to determine with experimental methods(Section \ref{subsec:GD_Addition_of_structural_data}). After the insertion of all mutations a last attempt was made by modeller to add dislufide bridges, based on the distance between cysteine residues, into the structure.
 	
 	With the many protein variants generated and limited resources to use SPVAA mutations had to be chosen. All mutations were picked from the Infevers table because that were variants of a single isoform and had a protein structure (1TNR \cite{banner_crystal_1993}) available that interacted with TNF $\beta$. 
