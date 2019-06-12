@@ -7,16 +7,10 @@ The VIPUR approach will be further investigated to test whether the features gen
 %On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation, Bach
 %Interpreting random forests | Diving into data, Datadive
 
-Currently SPVAA is not an automated method to predict pathogencity or deleteriouness of proteins, to transform it into an automated method the approach described in section \ref{subsec:GD_theoratical_large_scale_implementation} would be its guideline. 
+SPVAA is highly dependent on available resources and currently comes short to display more potential on the cluster where it ran on, which can be resolved by replacing the Rosetta software which tries to minimize structures of mutated models with other software, Or another possibility is by running SPVAA on a different that has more nodes in its cluster and allows setup jobs that use multiple nodes. SPVAA is not a prediction method and has to be drastically modified to become a variant predictor that is able to predict pathogencity or deleteriouness, a good starting point for such a predictor would according to the guidelines predicted in section \ref{subsec:GD_theoratical_large_scale_implementation}.
 
-
-%However it is at its current state it is a pipeline instead of a automated prediction tool that classifies protein variants. 
-
-At the moment when its 
-
-
-The cluster on which it is build does not optimal ran does not suffice to predict 
-SPVAA is not feasible on the current cluster due to the lack of nodes and support for multi-node jobs which in both influence the amount of structures produced and therefore affect prediction accuracy. Two options are possible to improve the and has to use different software which is less resource intensive for predicting protein structures or it should only be used on larger clusters which have more nodes and support multi-node jobs. 
+% MOLECULAR DYNAMICS
+VIPUR and SPVAA could both be improved in various ways, one of them would be by doing molecular dynamic simulations on the mutated structures to determine the effects of structural changes. With SPVAA it would have most likely become clear if the loss of the disulfide bridge from CYS 62 GLY  in TNFRSF1A would have caused structural issues. VIPUR could benefit from it as new machine learning feature in situations where limited movement is observed and it changes tremendously when a missense mutation occurred in a protein increases with a mutation or vice versa.
 
 
 
