@@ -4,7 +4,7 @@
 		%VIPUR: Variant Interpretation and Prediction Using Rosetta, Baugh
 	\label{subsubsec:RES_Prepare}
 	
-	\subsubsection{VIPUR resolving system incompatibilities}
+	\subsubsection{Resolving VIPUR system incompatibilities}
 	Within the VIPUR pipeline residues were mutated to determine the effects of a structural mutation, by default missense mutations were inserted with PyMOL (Section \ref{subsec:MM_PyMOL}), an alternative method integrated within the pipeline for situations wherein PyMOL was not accessible Pyrosetta (Section \ref{subsec:MM_PyRosetta}) could be used. Neither of these programs could be built or compiled because the lack of Open graphics library (OpenGL) for PyMOL and having the incorrect C++ and C libraries for PyRosetta. To bypass both programs and still be able to introduce mutations into PDB files Modeller (Secton \ref{subsec:MM_Modeller}) was introduced and built.
 	
 	\begin{figure}[!ht]
@@ -58,7 +58,7 @@
 	\end{figure}
 	\label{subsubsec:RES_Expanding_Models}
 	
-	\subsubsection{Practical use of VIPUR}
+	\subsubsection{Practical VIPUR usage}
 	With the hindrance of software incompatibility on the cluster, difference in produced models between the web services, discovery of consequences by removing elements from structures, and the time it would take to reverse engineer VIPUR a new decision was formed. VIPUR would be set aside for now and if time was left there would be further looked into to make it applicable for protein structure evaluation.
 
 \newpage
@@ -72,7 +72,7 @@
 	
 	A different aspect that can change with mutations is the alteration in motions between structures which can allow or disallow certain movements to occur and with inhibit processes.
 	
-	\subsubsection{Simple protein variant analysis approach}
+	\subsubsection{Introduction of the simple protein variant analysis approach}
 	A different method for determining function loss in a protein variant is through assessment of difference in energy levels between a wild type and a variant in the complex where it resides. Analyzing mutations from this perspective gives the ability to view a protein in whole and determine how residues cause perturbations in a protein. To make a variant of the wild type, a structure was required wherein a missense mutation could be introduced with Modeller (Section \ref{subsec:MM_Modeller}). The backbone structure of the variant was modified with the backrub application (Section \ref{subsubsec:MM_Backrub}) to make it better interact with other amino acid backbones in the structure resulting in 1000 models. The lowest Rosetta scoring (Section \ref{subsec:MM_Rosetta}) one would be selected to further improve the side chains with the Relax application	(Section \ref{subsubsec:MM_Relax}) which makes the side chains of the protein move into lower energy formations. From these 64 models were made where its energies levels were compared to the native structure to determine the effects a mutation would have on the protein, the lowest scoring ones were used as figures. This method shows similarities to that of VIPUR and was only tested on TNFRSF1A (Section \ref{subsec:CD_TNFRSF1A}) and its ligands TNF $\alpha$ and $\beta$. This method keeps: duplicate chains and protein ligands within the structure, water is excluded since it can cause issues with Rosetta tools (Section \ref{subsec:MM_Rosetta}). This procedure with these steps is defined as the Simple protein variant analysis approach (SPVAA).
 	
 	\begin{figure}[!ht]
@@ -82,7 +82,7 @@
 	\end{figure}
 	\newpage
 	
-	\subsubsection{Single protein variant analysis approach and its tools}
+	\subsubsection{Carrying out SPVAA on TNFRSF1A}
 	Before introducing mutations into a protein structure it is helpful to know if a mutation has been observed to avoid allocating resources to something that does not occur. Therefore three tables with observed TNFRSF1A mutations (Sections \ref{subsec:MM_GAVIN_data_table}, \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}) have been combined with an R script (Section \ref{subsec:MM_R}) into a single table consisting of two columns. The first column (split into three columns \ref{table:Res_Filtered_Mutations}) contains strings that describes the: original residue, position and where it mutates to, the second column describes whether a formed mutation is harmful, with most mutations the effects have not been identified yet. 
 	\begin{table}[ht]
 		\begin{tabular}{ l | l | l | l}
@@ -91,7 +91,7 @@
 			Thr & 44 & Pro & PATHOGENIC\\
 			Thr & 44 & Ser & PATHOGENIC\\
 		\end{tabular}
-		\caption[Sample of combined tables with observed mutations]{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}),  describe whether a structural mutation is harmful or not. For many mutations it is unknown and other classifications are available, to view the whole table visit the supplementary.}
+		\caption[Sample from the combined observed TNFRSF1A mutations table]{The format wherein mutations were filtered from the GAVIN, GenomAD and Infevers tables (Sections \ref{subsec:MM_GAVIN_data_table},  \ref{subsec:MM_GnomAD}, \ref{subsec:MM_Infevers}),  describe whether a structural mutation is harmful or not. For many mutations it is unknown and other classifications are available, to view the whole table visit the supplementary.}
 		\label{table:Res_Filtered_Mutations}
 	\end{table}
 	
@@ -110,7 +110,7 @@
 			36 & 1tnr3\_TNFA & T & 0 & SER\\
 			36 & 1tnr3\_TNFA & S & 0 & SER\\
 		\end{tabular}
-		\caption[Sample of table with applicable missense mutations to TNFRSF1A]{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}), with specifications of the: model, file. chain, residue index and the new residue. The whole table for TNFA and TNFB are visible within the supplementary.}
+		\caption[Sample of the TNFRSF1A PDB residue mutation table]{The format that describes the mutations that should be made by Modeller (Section \ref{subsec:MM_Modeller}), with specifications of the: model, file. chain, residue index and the new residue. The whole table for TNFA and TNFB are visible within the supplementary.}
 			\label{table:Res_Modeller_Mutation_Format}
 	\end{table}
 	
@@ -124,7 +124,7 @@
 	\begin{figure}[!ht]
 		\centering
 		\includegraphics[width=\linewidth]{Rosetta_Backrub_Relax_Density_Plots/relax_Alpha_plot.pdf}
-		\caption[TNFRSF1A homotimer with TNF$\alpha$ homotrimer relax score density plots]{Density of different scoring metrics from the models produced with relax of the wild type and all mutants that interacted with TNF$\alpha$. Most of the total scores, fa\_atr values and fa\_elec values of the mutated model are lower than the wild type that is bound to TNF$\alpha$ and the fa\_sol values are higher of the wild type than the mutants. TNFA CYS 62 GLY has more higher values at the dslf\_fa13 (disulfide geometry potential) than all other mutations. (Plots of backrub TNF$\alpha$ scores are in the supplementary.)(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
+		\caption[TNFRSF1A homotrimer with TNF$\alpha$ homotrimer relax density plots]{Density of different scoring metrics from the models produced with relax of the wild type and all mutants that interacted with TNF$\alpha$. Most of the total scores, fa\_atr values and fa\_elec values of the mutated model are lower than the wild type that is bound to TNF$\alpha$ and the fa\_sol values are higher of the wild type than the mutants. TNFA CYS 62 GLY has more higher values at the dslf\_fa13 (disulfide geometry potential) than all other mutations. (Plots of backrub TNF$\alpha$ scores are in the supplementary.)(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
 		\label{fig:relax_TNFA_scores}
 	\end{figure}
 
@@ -133,7 +133,7 @@
 	\begin{figure}[!ht]
 		\centering
 		\includegraphics[width=\linewidth]{Rosetta_Backrub_Relax_Density_Plots/relax_Beta_plot.pdf}
-		\caption[TNFRSF1A homotimer with TNF$\beta$ homotrimer relax score density plots]{Density distributions of the scores generated by relax for the wild type and mutations of TNFRSF1A that interact with TNF$\beta$. The total score values of TNFB GLU 138 ALA are lower than all other models and dslf\_fa13 (disulfide geometry potential) values are higher at TNFB CYS 62 GLY than the other models. fa\_intra\_rep (Lennard-Jones repulsive between atoms in the same residue) is higher within the models of PHE 141 ILE and hbond\_lr\_bb (Backbone-backbone hbonds distant in primary sequence) is higher at CYS 62 GLY and PHE 141 ILE.
+		\caption[TNFRSF1A homotrimer with TNF$\beta$ homotrimer relax density plots]{Density distributions of the scores generated by relax for the wild type and mutations of TNFRSF1A that interact with TNF$\beta$. The total score values of TNFB GLU 138 ALA are lower than all other models and dslf\_fa13 (disulfide geometry potential) values are higher at TNFB CYS 62 GLY than the other models. fa\_intra\_rep (Lennard-Jones repulsive between atoms in the same residue) is higher within the models of PHE 141 ILE and hbond\_lr\_bb (Backbone-backbone hbonds distant in primary sequence) is higher at CYS 62 GLY and PHE 141 ILE.
 		(Plots of backrub TNF$\beta$ scores are in the supplementary.)(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
 		\label{fig:relax_TNFB_scores}
 	\end{figure}
@@ -165,7 +165,7 @@
 			\caption{TNFRSF1A PHE 141 ILE with TNF$\alpha$}
 			\label{fig:RES_TNFA_97}
 			\end{subfigure}
-		\caption[TNFRSF1A homo trimer with TNF$\alpha$ homo trimers wild type and mutated relaxed models]{3D structures of a homotrimer TNFRSF1As (black) with a homotimer TNF$\alpha$s (gray) and disulfide bridges (dark yellow). The wild type (\ref{fig:RES_TNFA_wild}) has three red colored areas which are the original residues of the protein before any form of mutation. Within CYS 62 GLY (\ref{fig:RES_TNFA_18}) it is visible that at the position where a mutation is introduced (red) a disulfide bridge is missing. The mutations of GLU 138 ALA (\ref{fig:RES_TNFA_94}) and PHE 141 ILE (\ref{fig:RES_TNFA_97}) show no large differences at the mutated spots (red).(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
+		\caption[TNFRSF1A homotrimer with TNF$\alpha$ homo trimers wild type and mutated relaxed models]{3D structures of a homotrimer TNFRSF1As (black) with a homotimer TNF$\alpha$s (gray) and disulfide bridges (dark yellow). The wild type (\ref{fig:RES_TNFA_wild}) has three red colored areas which are the original residues of the protein before any form of mutation. Within CYS 62 GLY (\ref{fig:RES_TNFA_18}) it is visible that at the position where a mutation is introduced (red) a disulfide bridge is missing. The mutations of GLU 138 ALA (\ref{fig:RES_TNFA_94}) and PHE 141 ILE (\ref{fig:RES_TNFA_97}) show no large differences at the mutated spots (red).(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
 		\end{figure}
 		\newpage
 		
@@ -192,13 +192,13 @@
 			\caption{TNFRSF1A PHE 141 ILE with TNF$\beta$}
 			\label{fig:RES_TNFB_97}
 		\end{subfigure}
-	\caption[TNFRSF1A homo trimer with TNF$\beta$ homo trimers wild type and mutated relaxed models]{3D structures of a homotrimer TNFRSF1As (black) with a homotimer TNF$\beta$s (gray) and disulfide bridges (dark yellow). The wild type (\ref{fig:RES_TNFB_wild}) has three red colored areas which are the original residues of the protein before any form of mutation. Within CYS 62 GLY (\ref{fig:RES_TNFB_18}) it is visible that at the position where a mutation is introduced (red) a disulfide bridge is missing. The mutations of GLU 138 ALA (\ref{fig:RES_TNFB_94}) and PHE 141 ILE (\ref{fig:RES_TNFB_97}) show no large differences at the mutated spots (red).(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
+	\caption[TNFRSF1A homotrimer with TNF$\beta$ homo trimers wild type and mutated relaxed models]{3D structures of a homotrimer TNFRSF1As (black) with a homotimer TNF$\beta$s (gray) and disulfide bridges (dark yellow). The wild type (\ref{fig:RES_TNFB_wild}) has three red colored areas which are the original residues of the protein before any form of mutation. Within CYS 62 GLY (\ref{fig:RES_TNFB_18}) it is visible that at the position where a mutation is introduced (red) a disulfide bridge is missing. The mutations of GLU 138 ALA (\ref{fig:RES_TNFB_94}) and PHE 141 ILE (\ref{fig:RES_TNFB_97}) show no large differences at the mutated spots (red).(To zoom in on the details within the figure it is recommend to look at the PDF version.)}
 	\end{figure}
 	
 \newpage
 	
 \newpage	
-\subsection{Finding structural information and its mutations through HOPE}
+\subsection{Finding mutation information with HOPE}
 	With uncertainty in the numbers provided by SPVAA a more textual informative approach was used with the web service HOPE (Section \ref{subsec:MM_HOPE}). The mutations that were known from Infevers (Section \ref{subsec:MM_Infevers}) and were also used with SPVAA were tested by HOPE (CYS62GLY, GLU138ALA and PHE141IlE), all reports are visible within the supplementary.
 	
 	HOPEs first test was the mutation of Cysteine 62 to glycine, which is known within the Infevers table as pathogenic and was validated. It discovered that the residue was involved in a disulfide bridge and was 100\% conserved in related protein sequences, based on the observation that cysteine formed a disulfide bridge it expected that with te replacement of it glycine would make the whole structures less rigid. HOPE predicts that mutation is pathogenic because of the high conservation of the residue, which is further confirmed by its search results in which if found the original publication where the observation has been described and associated to TRAPS \cite{aksentijevich_tumor-necrosis-factor_2001}.
