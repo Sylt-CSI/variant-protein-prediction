@@ -59,7 +59,6 @@ textwidth=20cm
 	
 	\section*{Abstract}
 	\input{Chapters/Abstract}
-	\label{section:Chap_Introduction}
 	\newpage
 	
 	\section*{Acknowledgment}
@@ -81,14 +80,18 @@ textwidth=20cm
 	\newpage
 	
 	\pagenumbering{arabic}
-%	\section[Section Title. Section Subtitle]{Section 
-%		Title\\ {\large Section Subtitle}}
-	\section[Introduction]{Introduction: Variant prediction in genome diagnostics and the addition of protein modeling}
+	
+	\section{Introduction}
+	\input{Chapters/Introduction}
+	\label{section:Chap_Introduction}
+	\newpage
+	
+	
+	\section[Theory]{Variant prediction in genome diagnostics and the addition of protein modeling}
 	\input{Chapters/Variant_Prediction_Genome_Diagnostics}
 	\label{section:Chap_Variant_Prediction_In_Genome_Diagnostics}
 	\newpage
 	
-	\section{Theory}
 	\input{Chapters/Protein_Modeling_Techniques}
 	\label{section:Chap_PMT}
 	\newpage
