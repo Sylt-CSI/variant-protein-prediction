@@ -77,7 +77,7 @@ class MutantFileGenerator:
                                      type=str,
                                      nargs=1,
                                      dest="C",
-                                     help="Select the chain from the PDB where the mutant should be generated (multiple chains goes like this: A,X,Z), no spaces!.")
+                                     help="Select the chain from the PDB where the mutant should be generated (multiple chains goes like this: A,X,Z), no spaces!).")
         # TODO Make it for all chains separate.
         argument_parser.add_argument("-S",
                                      required=False,
