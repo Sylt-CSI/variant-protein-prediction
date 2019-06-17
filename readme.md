@@ -10,16 +10,17 @@ The scripts within this repository are used by SPVAA and can introduce mutations
 With these script in the repos mutations can be introduced at specific postions in chains and can be relaxed, the defaults of many scripts are made for single system but can be adjusted or can be filled in as parameter.
 
 
-###Table of contents
+### Table of contents
 
-1.[ Report](#Report)\
-2.[ Prerequisites](#Prerequisites)\
-3.[ Usage SPVAA](#SPVAA)
-3. [Mutant file generator](#mSPVAA)\
-3. [Multi mutator](multi_mutation.py)\
-3. [Backrub Relax pipeline](Backrub_pipeline.py)\
-
-4.[ Usage HOPE](#HOPE)
+- [Protein variant prediction (project)](#protein-variant-prediction-project)
+    - [Table of contents](#table-of-contents)
+  - [Report](#report)
+  - [Prerequisites](#prerequisites)
+    - [SPVAA](#spvaa)
+      - [mutant_file_generator.py](#mutant_file_generatorpy)
+      - [multi_mutation.py](#multi_mutationpy)
+      - [Backrub_pipeline.py](#backrub_pipelinepy)
+    - [HOPE](#hope)
 
 
 ## Report
