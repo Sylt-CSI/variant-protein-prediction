@@ -2,7 +2,7 @@ library(ggplot2)
 library(data.table)
 
 
-backrub.Relax.Score.Files <- list.files("~/Desktop/scores/testing_ground/", pattern = "*.sc", recursive = T)
+backrub.Relax.Score.Files <- list.files("scores/testing_ground/", pattern = "*.sc", recursive = T)
 backrub.Relax.Score.Files
 
 new.Names <- c("TNFA GLU 138 ALA",
@@ -91,6 +91,6 @@ lapply(combined.TNF.Backrub.Relax.Data, function(TNF.Group){
     xlab(NULL) +
     ylab("Density")
     print(as.character(TNF.Group$L2[1]))
-  ggsave(paste0("~/Desktop/scores/testing_ground/",as.character(TNF.Group$L2[1]),"_plot.pdf"),width=9, height = 9)
+  ggsave(paste0("scores/testing_ground/",as.character(TNF.Group$L2[1]),"_plot.pdf"),width=9, height = 9)
 })
 
