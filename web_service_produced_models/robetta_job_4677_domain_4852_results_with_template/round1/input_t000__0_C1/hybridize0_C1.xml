@@ -1,0 +1,27 @@
+<ROSETTASCRIPTS>
+    <TASKOPERATIONS></TASKOPERATIONS>
+    <SCOREFXNS>
+        <ScoreFunction name="stage1" weights="input_t000__0_C1/stage1.wts" symmetric="0">
+            <Reweight scoretype="atom_pair_constraint" weight="0.5"/>
+        </ScoreFunction>
+        <ScoreFunction name="stage2" weights="input_t000__0_C1/stage2.wts" symmetric="0">
+            <Reweight scoretype="atom_pair_constraint" weight="0.3"/>
+        </ScoreFunction>
+        <ScoreFunction name="fullatom" weights="input_t000__0_C1/ref2015_cart.wts" symmetric="0">
+            <Reweight scoretype="atom_pair_constraint" weight="0.3"/>
+        </ScoreFunction>
+    </SCOREFXNS>
+    <FILTERS></FILTERS>
+    <MOVERS>
+        <Hybridize name="hybridize" stage1_scorefxn="stage1" stage2_scorefxn="stage2" fa_scorefxn="fullatom" batch="1" stage1_increase_cycles="1" stage2_increase_cycles="1" linmin_only="0" skip_long_min="1">
+            <Fragments three_mers="input_t000__0_C1/t000_.200.3mers.index.gz" nine_mers="input_t000__0_C1/t000_.200.9mers.index.gz"/>
+            <Template pdb="input_t000__0_C1/user1_w100_aln.cl0.pdb" weight="1.00" cst_file="input_t000__0_C1/cluster0.filt.dist_csts"/>
+            <Template pdb="input_t000__0_C1/user2_w100_aln.cl0.pdb" weight="1.00" cst_file="input_t000__0_C1/cluster0.filt.dist_csts"/>
+        </Hybridize>
+    </MOVERS>
+    <APPLY_TO_POSE></APPLY_TO_POSE>
+    <PROTOCOLS>
+        <Add mover="hybridize"/>
+    </PROTOCOLS>
+    <OUTPUT scorefxn="fullatom"/>
+</ROSETTASCRIPTS>

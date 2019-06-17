@@ -1,0 +1,8 @@
+# The rosetta application and database are available at:
+#  http://boinc.bakerlab.org/rosetta/download/rosetta_4.08_x86_64-pc-linux-gnu
+#  http://boinc.bakerlab.org/rosetta/download/minirosetta_database_1a38360_n_methyl.zip
+#
+# To output PDBs instead of Rosetta specific "silent files" remove all occurrences of "-silent_gz", "-out:file:silent_struct_type binary" and "-out:file:silent default.out" from the commands, "flags_*", and "_FLAGS" files.
+
+rosetta_4.08_x86_64-pc-linux-gnu  -run:protocol jd2_scripting -database minirosetta_database @flags_rb_05_31_4677_4852__t000__0_C1_robetta -silent_gz -mute all -out:file:silent default.out -in:file:boinc_wu_zip input_rb_05_31_4677_4852__t000__0_C1_robetta.zip 
+ -nstruct 1000 -cpu_run_time 14400 checkpoint_interval 120 -mute all -database minirosetta_database -in::file::zip minirosetta_database_1a38360_n_methyl.zip
