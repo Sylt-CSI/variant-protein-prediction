@@ -15,9 +15,9 @@ With these script in the repos mutations can be introduced at specific postions 
 1.[ Report](#Report)\
 2.[ Prerequisites](#Prerequisites)\
 3.[ Usage SPVAA](#SPVAA)
-3. [Mutant file generator](#mSPVAA)
-3. [Multi mutator](multi_mutation.py)
-3. [Backrub Relax pipeline](Backrub_pipeline.py)
+3. [Mutant file generator](#mSPVAA)\
+3. [Multi mutator](multi_mutation.py)\
+3. [Backrub Relax pipeline](Backrub_pipeline.py)\
 
 4.[ Usage HOPE](#HOPE)
 
@@ -26,14 +26,14 @@ With these script in the repos mutations can be introduced at specific postions 
 The report is 
 
 ## Prerequisites
-VIPUR\
+#####VIPUR
 [Probe](http://kinemage.biochem.duke.edu/software/probe.php)\
 [PSI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)\
 [PyMOL](https://github.com/schrodinger/pymol-open-source) (With Python bindings) or [PyRosetta](http://www.pyrosetta.org/) (License required)\
 [Rosetta](https://www.rosettacommons.org/) (License required) (MPI recommended)\
 [VIPUR script and materials](https://osf.io/bd2h4/)
 
-SPVAA\
+#####SPVAA
 [Modeller](https://salilab.org/modeller/) (License required)\
 [Python 2.7](https://www.python.org/download/releases/2.7/)\
 [Rosetta](https://www.rosettacommons.org/) (License required) (MPI recommended)
