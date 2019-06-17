@@ -37,7 +37,8 @@ The report contains the flow of the scripts and the aspects that were investigat
 #### SPVAA
 [Modeller](https://salilab.org/modeller/) (License required)\
 [Python 2.7](https://www.python.org/download/releases/2.7/)\
-[Rosetta](https://www.rosettacommons.org/) (License required) (MPI recommended)
+[Rosetta](https://www.rosettacommons.org/) (License required) (MPI recommended)\
+[SLURM](https://slurm.schedmd.com/overview.html)
 
 To make Modeller and Rosetta work follow the instructions given by them.\
 Do not forget to add all requested dirs from modeller to your path otherwise Modeller does not work.
@@ -118,7 +119,7 @@ From mutant_file_generator.py a file is produced that describes mutations for a 
     203,1tnr3_TNFA:T:68:MET
     203,1tnr3_TNFA:S:68:MET
 
-The first number ,before the comma, from table is the iteration number and gives the information in which protein the mutation should be introduced,
+The first number, before the comma, from table is the iteration number and gives the information in which protein the mutation should be introduced,
 if the number is identical it will be in the same model.
 After the comma comes the name of the protein that is going to be mutated, it is used as key by the software, it could be beneficial when further developed to mutate multiple proteins at once.
 The single letter describes the chain where the mutation should take place and the number describes the index of the chain that should be modified.
@@ -127,14 +128,16 @@ The final three characters represent the new amino acid that can be introduced b
 
 #### multi_mutation.py
 
-When the table is generated it can be given to Modeller which will introduce all mutations into a structure.
+With the produced table from [mutant_file_generator.py](#mutant_file_generator.py) it is possible to introduce mutations into the specified PDB file with Modeller.
+
+
 
 
 Options multi_mutation.py:
     
     (Mutually exclusive)
-    -ifi = A single folder that contains all the pdb files where mutations should be integrated in.
-    -ifo = A single pdb where mutations should be introduced in. (Not working properly at the moment.)
+    -ifi = A single folder that contains all the pdb files where mutations should be integrated in (Not working properly at the moment.).
+    -ifo = A single pdb where mutations should be introduced in. 
     
     -ep = Specify extra file extensions that should be looked for when searching for PDB. CIF is not supported by Modeller.
     -mm = Give a mutation file that describes which residues at which chain it should mutate.
@@ -147,14 +150,57 @@ Example of running multi_mutation.py
         -mm /Users/gcc/Desktop/GCC/pipeline/data_scratch/TNFRS1A_TNFA_modified_list.txt 
         -ofo /Users/gcc/Desktop/GCC/pipeline/data_scratch/mutated_1tnr3_TNFA_pdb_s/    
     
-    
+By running this all mutations are made that are specified in table as separate PDB.
 
+Output PDB files from the example:
 
-From the mutated file 
+    1tnr3_TNFA_196_65_ALA_65_ALA_65_ALA.pdb
+    1tnr3_TNFA_197_66_ILE_66_ILE_66_ILE.pdb
+    1tnr3_TNFA_198_67_LEU_67_LEU_67_LEU.pdb
+    1tnr3_TNFA_199_67_LYS_67_LYS_67_LYS.pdb
+    1tnr3_TNFA_200_68_PRO_68_PRO_68_PRO.pdb
+    1tnr3_TNFA_201_68_LEU_68_LEU_68_LEU.pdb
+    1tnr3_TNFA_202_68_TYR_68_TYR_68_TYR.pdb
+    1tnr3_TNFA_203_68_MET_68_MET_68_MET.pdb
 
 
 #### Backrub_pipeline.py
 
+The final step is lowering the energy state of the mutated proteins and with [Backrub](https://www.rosettacommons.org/docs/latest/application_documentation/structure_prediction/backrub) and [Relax](https://www.rosettacommons.org/docs/latest/application_documentation/structure_prediction/relax) from the Rosetta suite. 
+It is recommend to run this process within [tmux](https://github.com/tmux/tmux/wiki) or [Screen](https://www.gnu.org/software/screen/) because the processes are monitored by a Python script and will follow each other up when monitored.
+A "weak" checkpointing system is integrated which looks if a score file has been made, when crashes it will state it is already finished. Without changes it produces 1000 Backrubbed models with 10000 Monte Carlo moves and 64 Relaxed structures will be made. The scripts have to be modified to change these values.
+To run this pipeline SLURM is required because the scripts are built for a SLURM cluster.
+
+Options Backrub_pipeline.py:
+
+    -rdb = Path to Rosetta database required for Backrub and Relax
+    -pdb = The pdb structure that will be backrubbed and relaxed, must contain lignand and protein.
+    -bscri = The Rosetta backrub script with fullpath.
+    -rscri = The Rosetta relax script with fullpath.
+    -out = Output directory of where the backrubbed and relaxed structures will be stored.
+    -ignore = Ignores when an error occures with a previous part in the pipeline and continues with wath there is.
+    -dry = Prints the command that will be used to launch the slurm job scripts.
+    
+Example Backrub_pipeline.py
+
+    python2.7 rosetta_backrub_relax_dock_pipeline.py 
+        -pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY.pdb 
+        -out /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1TNR3_TNFA_GLY_18/
+
+
+Example output Backrub_pipeline.py
+
+    testing_ground/1TNR3_TNFA_GLY_18/
+    ├── backrub
+    │   ├── 1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0001_last.pdb
+    │   ├── 1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0001_low.pdb
+    │   ├── 1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0001.pdb
+    │   ├── ...........
+    │   └── score_back_rub.sc
+    └── relax
+        ├── 1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0759_relax_0001.pdb
+        ├── ...........
+        └── score_relax.sc
 ### HOPE
 
 A tool that gives information regarding single mutations in a protein structure and has been published in: **Protein structure analysis of mutations causing inheritable diseases. An e-Science approach with life scientist friendly interfaces** [Venselaar et al. 2010](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-548) 

@@ -62,7 +62,7 @@ class RosettaBackRubRelaxDockPipeline:
         protein_feature_pipeline_arguments = argparse.ArgumentParser()
         protein_feature_pipeline_arguments.add_argument("-rdb",
                                                         type=str,
-                                                        help="Specify the path to the full Rosetta database for the ddg monomer application.",
+                                                        help="Specify the path to the full Rosetta database for the Backrub and Relax application.",
                                                         required=False,
                                                         default=[
                                                             "/groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database"],
@@ -71,7 +71,7 @@ class RosettaBackRubRelaxDockPipeline:
 
         protein_feature_pipeline_arguments.add_argument("-pdb",
                                                         type=str,
-                                                        help="The pdb structure that will be backrubed, relaxed and docked, must contain lignand and protein",
+                                                        help="The pdb structure that will be backrubbed and relaxed, must contain lignand and protein",
                                                         nargs=1,
                                                         required=True,
                                                         dest="pdb")
