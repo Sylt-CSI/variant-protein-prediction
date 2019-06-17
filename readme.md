@@ -20,11 +20,10 @@ The defaults of many scripts are made for single system but can be modified or c
   - [mutant_file_generator.py](#mutant_file_generatorpy)
   - [multi_mutation.py](#multi_mutationpy)
   - [Backrub_pipeline.py](#backrub_pipelinepy)
-- [HOPE](#hope)
 
 
 ## Report
-The report contains the flow of the scripts and the aspects that were investigated.
+The report contains the flow of the scripts, the aspects that were investigated and the results.
 
 ## Prerequisites
 #### VIPUR
@@ -130,9 +129,6 @@ The final three characters represent the new amino acid that can be introduced b
 
 With the produced table from [mutant_file_generator.py](#mutant_file_generator.py) it is possible to introduce mutations into the specified PDB file with Modeller.
 
-
-
-
 Options multi_mutation.py:
     
     (Mutually exclusive)
@@ -201,6 +197,3 @@ Example output Backrub_pipeline.py
         ├── 1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY_back_rub_0759_relax_0001.pdb
         ├── ...........
         └── score_relax.sc
-### HOPE
-
-A tool that gives information regarding single mutations in a protein structure and has been published in: **Protein structure analysis of mutations causing inheritable diseases. An e-Science approach with life scientist friendly interfaces** [Venselaar et al. 2010](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-548) 
