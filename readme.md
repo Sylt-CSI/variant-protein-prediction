@@ -1,4 +1,4 @@
-# Protein variant prediction (graduation project)
+# Protein structural modeling for variant pathogenicity prediction (graduation project)
 
 ## Background
 These scripts and the report have been written for the University Medical Center Groningen: Genomic Coordination Center (GCC) at the department of genetics.
