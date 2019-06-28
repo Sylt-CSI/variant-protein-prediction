@@ -103,14 +103,14 @@ class RosettaBackRubRelaxDockPipeline:
 
         protein_feature_pipeline_arguments.add_argument("-ignore",
                                                         action='store_const',
-                                                        default=not (True),
+                                                        default=not True,
                                                         const=True,
                                                         required=False,
                                                         dest="ignore")
 
         protein_feature_pipeline_arguments.add_argument("-dry",
                                                         action='store_const',
-                                                        default=not (True),
+                                                        default=not True,
                                                         const=True,
                                                         required=False,
                                                         dest="dry")

@@ -135,7 +135,7 @@ Options multi_mutation.py:
     -ifi = A single folder that contains all the pdb files where mutations should be integrated in (Not working properly at the moment.).
     -ifo = A single pdb where mutations should be introduced in. 
     
-    -ep = Specify extra file extensions that should be looked for when searching for PDB. CIF is not supported by Modeller.
+    -ep = Specify extra file extensions that should be looked for when searching for PDB. CIF is not supported by Modeller.(Optional)
     -mm = Give a mutation file that describes which residues at which chain it should mutate.
     -ofo = Output folder where the mutated PDB's will be stored, if nothing specified it will go to the input directory
     
@@ -179,7 +179,10 @@ Options Backrub_pipeline.py:
     
 Example Backrub_pipeline.py
 
-    python2.7 rosetta_backrub_relax_dock_pipeline.py 
+    python2.7 rosetta_backrub_relax_dock_pipeline.py
+        -rscri /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/rosetta_relax.sh 
+        -bscri /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/backrub_run.sh
+        -rdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/source_code_tools/rosetta_src_2018.33.60351_bundle/main/database
         -pdb /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1tnr3_TNFA_67_18_GLY_18_GLY_18_GLY.pdb 
         -out /groups/umcg-gcc/tmp03/umcg-sschuurmans/testing_ground/1TNR3_TNFA_GLY_18/
 
